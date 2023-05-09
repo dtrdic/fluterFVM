@@ -12,7 +12,7 @@ workflows:
           groups:
             - google_play_credentials2
           vars:
-            PACKAGE_NAME: "io.codemagic.dtrdic7"
+            PACKAGE_NAME: "io.codemagic.dtrdic6"
           java: 19
         triggering:
           events:
