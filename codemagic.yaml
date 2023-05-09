@@ -1,0 +1,38 @@
+workflows:
+    android-workflow:
+        name: Android Workflow
+        max_build_duration: 120
+        instance_type: mac_mini_m1
+        environment:
+          flutter:
+            version: fvm
+            flavor: dev
+          android_signing:
+            - testKeystore
+          groups:
+            - google_play_credentials2
+          vars:
+            PACKAGE_NAME: "io.codemagic.dtrdic7"
+          java: 19
+        triggering:
+          events:
+              - pull_request
+              - push
+          branch_patterns:
+          - pattern: "master"
+            include: true
+            source: false
+        scripts:
+          - name: Set up local.properties
+            script: | 
+              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+          - name: Get Flutter packages
+            script: | 
+              flutter packages pub get
+          - name: Build AAB with Flutter
+            script: | 
+              flutter build appbundle --release
+        artifacts:
+          - build/**/outputs/**/*.aab
+          - build/**/outputs/**/mapping.txt
+          - flutter_drive.log
