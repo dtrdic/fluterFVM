@@ -1,4 +1,4 @@
-package com.example.flutter_fvm
+package io.codemagic.dtrdic6
 
 import io.flutter.embedding.android.FlutterActivity
 
