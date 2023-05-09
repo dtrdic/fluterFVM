@@ -4,9 +4,6 @@ workflows:
         max_build_duration: 120
         instance_type: mac_mini_m1
         environment:
-          flutter:
-            version: fvm
-            flavor: dev
           android_signing:
             - testKeystore
           groups:
