@@ -38,6 +38,6 @@ workflows:
           - flutter_drive.log
         publishing:
           google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
             track: internal
             submit_as_draft: true
