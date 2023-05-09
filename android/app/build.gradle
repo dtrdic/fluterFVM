@@ -41,6 +41,8 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+    def latestGooglePlayBuildNumber = Integer.valueOf(System.env.LATEST_GOOGLE_PLAY_BUILD_NUMBER ?: System.env.BUILD_NUMBER ?: 0)
+
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
@@ -49,8 +51,8 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode latestGooglePlayBuildNumber + 1
+        versionName "1.0." + String.valueOf(latestGooglePlayBuildNumber + 1)
     }
     signingConfigs {
           release {
