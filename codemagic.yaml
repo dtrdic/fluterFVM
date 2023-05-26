@@ -55,6 +55,6 @@ workflows:
               # android:
               #   app_id: androidnativetestapp2
           google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
             track: internal
             submit_as_draft: true
