@@ -52,8 +52,8 @@ workflows:
         publishing:
           firebase:
               firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-              android:
-                app_id: androidnativetestapp2
+              # android:
+              #   app_id: androidnativetestapp2
           # google_play:
           #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
           #   track: internal
