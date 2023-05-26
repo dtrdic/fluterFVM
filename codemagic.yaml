@@ -4,7 +4,7 @@ workflows:
         max_build_duration: 120
         instance_type: mac_mini_m1
         environment:
-          #flutter: fvm
+          flutter: fvm
           android_signing:
             - davidKeystore
           groups: 
@@ -21,40 +21,40 @@ workflows:
             include: true
             source: false
         scripts:
-          - name: Decode Google credentials
-            script: | 
-              echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
-          - name: Build the app
-            script: | 
-              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-              flutter packages pub get
-              flutter build apk --release
-          - name: Distribute app to firebase with gradle plugin
-            script: | 
-              cd android && ./gradlew appDistributionUploadRelease
-
-          # - name: Set up local.properties
+          # - name: Decode Google credentials
+          #   script: | 
+          #     echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+          # - name: Build the app
           #   script: | 
           #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-          # - name: Get Flutter packages
-          #   script: | 
           #     flutter packages pub get
-          # - name: Build AAB with Flutter
+          #     flutter build apk --release
+          # - name: Distribute app to firebase with gradle plugin
           #   script: | 
-          #     BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
-          #     flutter build appbundle --release \
-          #       --build-name=1.0.$BUILD_NUMBER \
-          #       --build-number=$BUILD_NUMBER
+          #     cd android && ./gradlew appDistributionUploadRelease
+
+          - name: Set up local.properties
+            script: | 
+              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+          - name: Get Flutter packages
+            script: | 
+              flutter packages pub get
+          - name: Build AAB with Flutter
+            script: | 
+              BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
+              flutter build appbundle --release \
+                --build-name=1.0.$BUILD_NUMBER \
+                --build-number=$BUILD_NUMBER
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
         publishing:
-          firebase:
-              firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+          # firebase:
+          #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
               # android:
               #   app_id: androidnativetestapp2
-          # google_play:
-          #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-          #   track: internal
-          #   submit_as_draft: true
+          google_play:
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
+            track: internal
+            submit_as_draft: true
