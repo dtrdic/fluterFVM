@@ -21,9 +21,9 @@ workflows:
             include: true
             source: false
         scripts:
-          # - name: Decode Google credentials
-          #   script: | 
-          #     echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+          - name: Decode Google credentials
+            script: | 
+              echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
           # - name: Build the app
           #   script: | 
           #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
