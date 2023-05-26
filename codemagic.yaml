@@ -7,8 +7,8 @@ workflows:
           #flutter: fvm
           android_signing:
             - davidKeystore
-            - firebase_credentials
           groups: 
+            - firebase_credentials
             - google_play_credentials
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6" 
