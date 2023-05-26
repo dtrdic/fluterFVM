@@ -6,7 +6,7 @@ workflows:
         environment:
           #flutter: fvm
           android_signing:
-            - testKeystore
+            - davidKeystore
             - firebase_credentials
           groups: 
             - google_play_credentials
