@@ -6,10 +6,10 @@ workflows:
         environment:
           flutter: fvm
           android_signing:
-            - davidKeystore
+            - testKeystore
           groups: 
-            - firebase_credentials
-            - google_play_credentials
+            ##- firebase_credentials
+            - google_play_credentials2
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6" 
         triggering:
@@ -55,6 +55,6 @@ workflows:
               # android:
               #   app_id: androidnativetestapp2
           google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
             track: internal
             submit_as_draft: true
