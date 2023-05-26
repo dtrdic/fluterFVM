@@ -23,7 +23,7 @@ workflows:
         scripts:
           - name: Decode Google credentials
             script: | 
-              echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+              echo $FIREBASE_SERVICE_ACCOUNT > $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
           # - name: Build the app
           #   script: | 
           #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
