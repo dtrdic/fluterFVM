@@ -9,7 +9,7 @@ workflows:
             - testKeystore
             - firebase_credentials
           groups: 
-            - google_play_credentials2
+            - google_play_credentials
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6" 
         triggering:
