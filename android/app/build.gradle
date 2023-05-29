@@ -79,10 +79,10 @@ android {
             signingConfig signingConfigs.release
 
         }
+    }
             firebaseAppDistribution {
             serviceCredentialsFile=System.getenv('GOOGLE_APPLICATION_CREDENTIALS')
         }
-    }
 }
 
 flutter {
