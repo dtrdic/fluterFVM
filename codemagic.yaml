@@ -23,15 +23,15 @@ workflows:
         scripts:
           - name: Decode Google credentials
             script: | 
-              echo $FIREBASE_SERVICE_ACCOUNT > $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
-          # - name: Build the app
-          #   script: | 
-          #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-          #     flutter packages pub get
-          #     flutter build apk --release
-          # - name: Distribute app to firebase with gradle plugin
-          #   script: | 
-          #     cd android && ./gradlew appDistributionUploadRelease
+              echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+          - name: Build the app
+            script: | 
+              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+              flutter packages pub get
+              flutter build apk --release
+          - name: Distribute app to firebase with gradle plugin
+            script: | 
+              cd android && ./gradlew appDistributionUploadRelease
 
           - name: Set up local.properties
             script: | 
@@ -54,7 +54,7 @@ workflows:
               firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
               android:
                 app_id: androidnativetestapp2
-          google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-            track: internal
-            submit_as_draft: true
+          # google_play:
+          #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
+          #   track: internal
+          #   submit_as_draft: true

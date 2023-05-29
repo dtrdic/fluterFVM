@@ -75,10 +75,12 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            firebaseAppDistribution {
-            serviceCredentialsFile=System.getenv('GCLOUD_SERVICE_ACCOUNT_CREDENTIALS')
-        }
+      
             signingConfig signingConfigs.release
+
+            firebaseAppDistribution {
+            serviceCredentialsFile=System.getenv('GOOGLE_APPLICATION_CREDENTIALS')
+        }
         }
     }
 }
