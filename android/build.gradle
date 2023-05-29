@@ -29,11 +29,3 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
-
-buildTypes {
-    release {
-        firebaseAppDistribution {
-        serviceCredentialsFile=System.getenv('GOOGLE_APPLICATION_CREDENTIALS')
-    }
-    }
-}
