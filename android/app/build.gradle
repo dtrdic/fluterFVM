@@ -22,6 +22,7 @@ if (flutterVersionName == null) {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.firebase.appdistribution'
 // START: FlutterFire Configuration
 apply plugin: 'com.google.gms.google-services'
 // END: FlutterFire Configuration
