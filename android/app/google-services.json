@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1037460898728",
+    "project_id": "androidnativetestapp2",
+    "storage_bucket": "androidnativetestapp2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037460898728:android:d0779b82fdcb0f3e95539d",
+        "android_client_info": {
+          "package_name": "io.codemagic.dtrdic6"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHQiGjuKpG8RJPbe0MY4AefeRald5_Ve8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
