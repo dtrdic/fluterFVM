@@ -24,6 +24,15 @@ workflows:
           - name: Decode Google credentials
             script: | 
               echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+
+          - name: Flutter integration tests (iOS) [1 test only - Warmup]
+            script: |
+              flutter emulators
+              flutter emulators --launch apple_ios_simulator
+              flutter devices
+              flutter -d iPhone test --no-pub --dart-define=testing_mode=true --flavor integration_test integration_test/suites/single_test_smoke_suite --machine > test-results/warmup-results.json || true
+              test_report: test-results/warmup-results.json
+
           - name: Build the app
             script: | 
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
