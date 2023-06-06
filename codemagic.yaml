@@ -47,7 +47,7 @@ workflows:
               rm android-ndk-r25c-linux.zip
               
               # Set NDK environment variable
-              export ANDROID_NDK_HOME=$PWD/android-ndk-r23
+              export ANDROID_NDK_HOME=/usr/local/share/android-sdk/ndk/android-ndk-r23
               export PATH=$PATH:$ANDROID_NDK_HOME
 
 
