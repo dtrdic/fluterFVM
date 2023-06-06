@@ -5,7 +5,6 @@ workflows:
         instance_type: mac_mini_m1
         environment:
           flutter: fvm
-          ndk: 23.1
           android_signing:
             - testKeystore
           groups: 
