@@ -49,7 +49,7 @@ workflows:
               
               # Set NDK environment variable
               export ANDROID_NDK_HOME=$PATH_TO_NDK
-              export PATH=$PATH:$ANDROID_NDK_HOME
+              export NDK_HOME=$PATH:$ANDROID_NDK_HOME
 
 
           - name: Build the app
