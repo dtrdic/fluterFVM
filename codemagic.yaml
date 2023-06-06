@@ -52,7 +52,7 @@ workflows:
               export NDK_HOME=$PATH:$ANDROID_NDK_HOME
 
               #ndk build?
-              $CM_BUILD_DIR/ndk-build
+              run ndk-build
 
 
           - name: Build the app
