@@ -12,6 +12,7 @@ workflows:
             - google_play_credentials2
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6" 
+            PATH_TO_NDK: "/usr/local/share/android-sdk/ndk/android-ndk-r23"
         triggering:
           events:
               - pull_request
@@ -47,7 +48,7 @@ workflows:
               rm android-ndk-r25c-linux.zip
               
               # Set NDK environment variable
-              export ANDROID_NDK_HOME=/usr/local/share/android-sdk/ndk/android-ndk-r23
+              export ANDROID_NDK_HOME=$PATH_TO_NDK
               export PATH=$PATH:$ANDROID_NDK_HOME
 
 
