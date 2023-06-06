@@ -51,6 +51,9 @@ workflows:
               export ANDROID_NDK_HOME=$PATH_TO_NDK
               export NDK_HOME=$PATH:$ANDROID_NDK_HOME
 
+              #ndk build?
+              ndk-build
+
 
           - name: Build the app
             script: | 
