@@ -5,7 +5,6 @@ workflows:
         instance_type: mac_mini_m1
         environment:
           flutter: fvm
-          ndk: 23.1
           android_signing:
             - testKeystore
           groups: 
@@ -13,7 +12,6 @@ workflows:
             - google_play_credentials2
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6" 
-            PATH_TO_NDK: "/usr/local/share/android-sdk/ndk/android-ndk-r23"
         triggering:
           events:
               - pull_request
@@ -39,32 +37,36 @@ workflows:
           #     flutter -d iPhone test --no-pub --dart-define=testing_mode=true --flavor integration_test integration_test/contacts --machine > test-results/contacts-suite-results.json
           #   test_report: test-results/contacts-suite-results.json`
 
-          - name: Install NDK
-            script: |
-              # Download NDK
-              curl -LO https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
+          # - name: Install NDK
+          #   script: |
+          #     # Download NDK
+          #     curl -LO https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
               
-              # Unzip NDK
-              unzip -q android-ndk-r25c-linux.zip
-              rm android-ndk-r25c-linux.zip
+          #     # Unzip NDK
+          #     unzip -q android-ndk-r25c-linux.zip
+          #     rm android-ndk-r25c-linux.zip
               
-              # Set NDK environment variable
-              export ANDROID_NDK_HOME=$PATH_TO_NDK
-              export NDK_HOME=$PATH:$ANDROID_NDK_HOME
+          #     # Set NDK environment variable
+          #     export ANDROID_NDK_HOME=$PATH_TO_NDK
+          #     export NDK_HOME=$PATH:$ANDROID_NDK_HOME
 
 
-          - name: Build the app
-            script: | 
-              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-              flutter packages pub get
-              flutter build apk --release
-          - name: Distribute app to firebase with gradle plugin
-            script: | 
-              cd android && ./gradlew appDistributionUploadRelease
+          # - name: Build the app
+          #   script: | 
+          #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+          #     flutter packages pub get
+          #     flutter build apk --release
+          # - name: Distribute app to firebase with gradle plugin
+          #   script: | 
+          #     cd android && ./gradlew appDistributionUploadRelease
 
           - name: Set up local.properties
             script: | 
-              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+                # set up local properties
+                echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
+                # get the first folder from ndk
+                NDK_VER=$(ls $ANDROID_SDK_ROOT/ndk | head -1)
+                echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/$NDK_VER" >> "$FCI_BUILD_DIR/android/local.properties"
           - name: Get Flutter packages
             script: | 
               flutter packages pub get
