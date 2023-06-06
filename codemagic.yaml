@@ -2,9 +2,10 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: linux_x2
+        instance_type: mac_mini_m1
         environment:
           flutter: fvm
+          ndk: 23.1
           android_signing:
             - testKeystore
           groups: 
@@ -50,9 +51,6 @@ workflows:
               # Set NDK environment variable
               export ANDROID_NDK_HOME=$PATH_TO_NDK
               export NDK_HOME=$PATH:$ANDROID_NDK_HOME
-
-              #ndk build?
-              run ndk-build
 
 
           - name: Build the app
