@@ -70,12 +70,12 @@ workflows:
 
           - name: SUpdate up Android SDK
             script: |
-              touch $HOME/.android/repositories.cfg
+              touch $CM_BUILD_DIR/.android/repositories.cfg
               wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
-              unzip commandlinetools.zip -d $ANDROID_HOME/
-              export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin
-              sdkmanager --sdk_root=$ANDROID_HOME --install "platforms;android-30"
-              sdkmanager --sdk_root=$ANDROID_HOME --install "build-tools;30.0.3"
+              unzip commandlinetools.zip -d $CM_BUILD_DIR/android/
+              export PATH=$PATH:$CM_BUILD_DIR/android/cmdline-tools/bin
+              sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "platforms;android-30"
+              sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "build-tools;30.0.3"
           - name: Build AAB with Flutter
             script: | 
               BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
