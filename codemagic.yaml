@@ -17,10 +17,10 @@ workflows:
           events:
               - pull_request
               - push
-        # when:
-        #   changeset:
-        #     includes:
-        #       - 'android/'
+        when:
+          changeset:
+            includes:
+              - 'android/'
           # branch_patterns:
           # - pattern: "main"
           #   include: true
@@ -118,10 +118,10 @@ workflows:
           events:
               - pull_request
               - push
-        # when:
-        #   changeset:
-        #     includes:
-        #       - 'ios/'
+        when:
+          changeset:
+            includes:
+              - 'ios/'
           # branch_patterns:
           # - pattern: "main"
           #   include: true
