@@ -109,7 +109,7 @@ ios-workflow:
           android_signing:
             - testKeystore
           groups:
-            - firebase_credentials
+            - firebase_credentials 
             - google_play_credentials2
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
