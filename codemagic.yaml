@@ -70,7 +70,7 @@ workflows:
 
           - name: SUpdate up Android SDK
             script: |
-              touch $CM_BUILD_DIR/.android/repositories.cfg
+              touch $HOME/.android/repositories.cfg
               wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
               unzip commandlinetools.zip -d $CM_BUILD_DIR/android/
               export PATH=$PATH:$CM_BUILD_DIR/android/cmdline-tools/bin
