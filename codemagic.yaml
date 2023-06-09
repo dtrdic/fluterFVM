@@ -5,6 +5,7 @@ workflows:
         instance_type: mac_mini_m1
         environment:
           flutter: fvm
+          ndk: 23.1
           android_signing:
             - testKeystore
           groups: 
@@ -12,6 +13,7 @@ workflows:
             - google_play_credentials2
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6" 
+            PATH_TO_NDK: "/usr/local/share/android-sdk/ndk/android-ndk-r23"
         triggering:
           events:
               - pull_request
@@ -62,17 +64,19 @@ workflows:
 
           - name: Set up local.properties
             script: | 
-                # set up local properties
-                echo "flutter.sdk=$HOME/programs/flutter" > "$FCI_BUILD_DIR/android/local.properties"
-                # get the first folder from ndk
-                NDK_VER=$(ls $ANDROID_SDK_ROOT/ndk | head -1)
-                echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/$NDK_VER" >> "$FCI_BUILD_DIR/android/local.properties"
+              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
           - name: Get Flutter packages
             script: | 
               flutter packages pub get
-          - name: sdkmanager licenses
-            script: | 
-              yes | sdkmanager --licenses
+
+          - name: SUpdate up Android SDK
+            script: |
+              touch $HOME/.android/repositories.cfg
+              wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
+              unzip commandlinetools.zip -d $ANDROID_HOME/
+              export PATH=$PATH:$ANDROID_HOME/cmdline-tools/bin
+              sdkmanager --sdk_root=$ANDROID_HOME --install "platforms;android-30"
+              sdkmanager --sdk_root=$ANDROID_HOME --install "build-tools;30.0.3"
           - name: Build AAB with Flutter
             script: | 
               BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
