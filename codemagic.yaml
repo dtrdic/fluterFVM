@@ -7,27 +7,27 @@ workflows:
           flutter: fvm
           android_signing:
             - testKeystore
-          groups: 
+          groups:
             - firebase_credentials
             - google_play_credentials2
           vars:
-            PACKAGE_NAME: "io.codemagic.dtrdic6" 
+            PACKAGE_NAME: "io.codemagic.dtrdic6"
             PATH_TO_NDK: "/usr/local/share/android-sdk/ndk/android-ndk-r23"
         triggering:
           events:
               - pull_request
               - push
-        when:
-          changeset:
-            includes:
-              - 'android/'
+        # when:
+        #   changeset:
+        #     includes:
+        #       - 'android/'
           # branch_patterns:
-          # - pattern: "main" 
+          # - pattern: "main"
           #   include: true
           #   source: false
         scripts:
           - name: Decode Google credentials
-            script: | 
+            script: |
               echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
 
           # - name: Flutter integration tests (iOS) [1 test only - Warmup]
@@ -46,30 +46,30 @@ workflows:
           #   script: |
           #     # Download NDK
           #     curl -LO https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
-              
+
           #     # Unzip NDK
           #     unzip -q android-ndk-r25c-linux.zip
           #     rm android-ndk-r25c-linux.zip
-              
+
           #     # Set NDK environment variable
           #     export ANDROID_NDK_HOME=$PATH_TO_NDK
           #     export NDK_HOME=$PATH:$ANDROID_NDK_HOME
 
 
           # - name: Build the app
-          #   script: | 
+          #   script: |
           #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
           #     flutter packages pub get
           #     flutter build apk --release
           # - name: Distribute app to firebase with gradle plugin
-          #   script: | 
+          #   script: |
           #     cd android && ./gradlew appDistributionUploadRelease
 
           - name: Set up local.properties
-            script: | 
+            script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
           - name: Get Flutter packages
-            script: | 
+            script: |
               flutter packages pub get
 
           - name: SUpdate up Android SDK
@@ -81,8 +81,8 @@ workflows:
               sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "platforms;android-30"
               sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "build-tools;30.0.3"
           - name: Build AAB with Flutter
-            script: | 
-              BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
+            script: |
+              BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
               flutter build appbundle --release \
                 --build-name=1.0.$BUILD_NUMBER \
                 --build-number=$BUILD_NUMBER
@@ -108,11 +108,11 @@ ios-workflow:
           flutter: fvm
           android_signing:
             - testKeystore
-          groups: 
+          groups:
             - firebase_credentials
             - google_play_credentials2
           vars:
-            PACKAGE_NAME: "io.codemagic.dtrdic6" 
+            PACKAGE_NAME: "io.codemagic.dtrdic6"
             PATH_TO_NDK: "/usr/local/share/android-sdk/ndk/android-ndk-r23"
         triggering:
           events:
@@ -123,12 +123,12 @@ ios-workflow:
             includes:
               - 'ios/'
           # branch_patterns:
-          # - pattern: "main" 
+          # - pattern: "main"
           #   include: true
           #   source: false
         scripts:
           - name: Decode Google credentials
-            script: | 
+            script: |
               echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
 
           # - name: Flutter integration tests (iOS) [1 test only - Warmup]
@@ -147,30 +147,30 @@ ios-workflow:
           #   script: |
           #     # Download NDK
           #     curl -LO https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
-              
+
           #     # Unzip NDK
           #     unzip -q android-ndk-r25c-linux.zip
           #     rm android-ndk-r25c-linux.zip
-              
+
           #     # Set NDK environment variable
           #     export ANDROID_NDK_HOME=$PATH_TO_NDK
           #     export NDK_HOME=$PATH:$ANDROID_NDK_HOME
 
 
           # - name: Build the app
-          #   script: | 
+          #   script: |
           #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
           #     flutter packages pub get
           #     flutter build apk --release
           # - name: Distribute app to firebase with gradle plugin
-          #   script: | 
+          #   script: |
           #     cd android && ./gradlew appDistributionUploadRelease
 
           - name: Set up local.properties
-            script: | 
+            script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
           - name: Get Flutter packages
-            script: | 
+            script: |
               flutter packages pub get
 
           - name: SUpdate up Android SDK
@@ -182,8 +182,8 @@ ios-workflow:
               sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "platforms;android-30"
               sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "build-tools;30.0.3"
           - name: Build AAB with Flutter
-            script: | 
-              BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
+            script: |
+              BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
               flutter build appbundle --release \
                 --build-name=1.0.$BUILD_NUMBER \
                 --build-number=$BUILD_NUMBER
