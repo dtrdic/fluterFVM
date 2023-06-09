@@ -20,7 +20,7 @@ workflows:
         when:
           changeset:
             includes:
-              - 'android/'
+              - 'ios/'
           # branch_patterns:
           # - pattern: "main"
           #   include: true
@@ -120,8 +120,8 @@ workflows:
               - push
         when:
           changeset:
-            includes:
-              - 'ios/'
+            excludes:
+              - 'android/'
           # branch_patterns:
           # - pattern: "main"
           #   include: true
