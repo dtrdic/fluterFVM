@@ -17,10 +17,115 @@ workflows:
           events:
               - pull_request
               - push
-          branch_patterns:
-          - pattern: "main" 
-            include: true
-            source: false
+        when:
+          changeset:
+            includes:
+              - 'android/'
+          # branch_patterns:
+          # - pattern: "main" 
+          #   include: true
+          #   source: false
+        scripts:
+          - name: Decode Google credentials
+            script: | 
+              echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+
+          # - name: Flutter integration tests (iOS) [1 test only - Warmup]
+          #   script: |
+          #     flutter emulators
+          #     flutter emulators --launch apple_ios_simulator
+          #     flutter devices
+          #     flutter -d iPhone test --no-pub --dart-define=testing_mode=true --flavor integration_test integration_test/single_test_smoke_suite --machine > test-results/warmup-results.json || true
+          #   test_report: test-results/warmup-results.json
+          # - name: Contacts suite
+          #   script: |
+          #     flutter -d iPhone test --no-pub --dart-define=testing_mode=true --flavor integration_test integration_test/contacts --machine > test-results/contacts-suite-results.json
+          #   test_report: test-results/contacts-suite-results.json`
+
+          # - name: Install NDK
+          #   script: |
+          #     # Download NDK
+          #     curl -LO https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
+              
+          #     # Unzip NDK
+          #     unzip -q android-ndk-r25c-linux.zip
+          #     rm android-ndk-r25c-linux.zip
+              
+          #     # Set NDK environment variable
+          #     export ANDROID_NDK_HOME=$PATH_TO_NDK
+          #     export NDK_HOME=$PATH:$ANDROID_NDK_HOME
+
+
+          # - name: Build the app
+          #   script: | 
+          #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+          #     flutter packages pub get
+          #     flutter build apk --release
+          # - name: Distribute app to firebase with gradle plugin
+          #   script: | 
+          #     cd android && ./gradlew appDistributionUploadRelease
+
+          - name: Set up local.properties
+            script: | 
+              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+          - name: Get Flutter packages
+            script: | 
+              flutter packages pub get
+
+          - name: SUpdate up Android SDK
+            script: |
+              touch $HOME/.android/repositories.cfg
+              wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
+              unzip commandlinetools.zip -d $CM_BUILD_DIR/android/
+              export PATH=$PATH:$CM_BUILD_DIR/android/cmdline-tools/bin
+              sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "platforms;android-30"
+              sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "build-tools;30.0.3"
+          - name: Build AAB with Flutter
+            script: | 
+              BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
+              flutter build appbundle --release \
+                --build-name=1.0.$BUILD_NUMBER \
+                --build-number=$BUILD_NUMBER
+        artifacts:
+          - build/**/outputs/**/*.aab
+          - build/**/outputs/**/mapping.txt
+          - flutter_drive.log
+        publishing:
+          firebase:
+              firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+              android:
+                app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
+          # google_play:
+          #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
+          #   track: internal
+          #   submit_as_draft: true
+
+ios-workflow:
+        name: Android Workflow
+        max_build_duration: 120
+        instance_type: mac_mini_m1
+        environment:
+          flutter: fvm
+          android_signing:
+            - testKeystore
+          groups: 
+            - firebase_credentials
+            - google_play_credentials2
+          vars:
+            PACKAGE_NAME: "io.codemagic.dtrdic6" 
+            PATH_TO_NDK: "/usr/local/share/android-sdk/ndk/android-ndk-r23"
+        triggering:
+          events:
+              - pull_request
+              - push
+        when:
+          changeset:
+            includes:
+              - 'ios/'
+          # branch_patterns:
+          # - pattern: "main" 
+          #   include: true
+          #   source: false
         scripts:
           - name: Decode Google credentials
             script: | 
