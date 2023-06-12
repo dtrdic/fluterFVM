@@ -13,7 +13,6 @@ workflows:
           java: 11
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            PATH_TO_NDK: "/usr/local/share/android-sdk/ndk/android-ndk-r23"
         triggering:
           events:
               #- pull_request
@@ -57,14 +56,14 @@ workflows:
             script: |
               flutter packages pub get
 
-          - name: SUpdate up Android SDK
+          - name: SUpdate build tools with Android SDK manager
             script: |
-              touch $HOME/.android/repositories.cfg
-              wget "https://dl.google.com/android/repository/commandlinetools-linux-7302050_latest.zip" -O commandlinetools.zip
-              unzip commandlinetools.zip -d $CM_BUILD_DIR/android/
-              export PATH=$PATH:$CM_BUILD_DIR/android/cmdline-tools/bin
-              sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "platforms;android-30"
-              sdkmanager --sdk_root=$CM_BUILD_DIR/android --install "build-tools;30.0.3"
+              set -e
+              set -x
+              $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
+              && mv d8 dx \
+              && cd lib \
+              && mv d8.jar dx.jar
           - name: Build AAB with Flutter
             script: |
               BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
