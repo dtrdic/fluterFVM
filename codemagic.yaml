@@ -40,14 +40,27 @@ workflows:
           #     export NDK_HOME=$PATH:$ANDROID_NDK_HOME
 
 
-          # - name: Build the app
-          #   script: |
-          #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-          #     flutter packages pub get
-          #     flutter build apk --release
-          # - name: Distribute app to firebase with gradle plugin
-          #   script: |
-          #     cd android && ./gradlew appDistributionUploadRelease
+          - name: Install Android NDK
+            script: |
+                set -e
+                set -x
+                NDK_VERSION="android-ndk-r25c"
+                NDK_URL="https://dl.google.com/android/repository/${NDK_VERSION}-linux.zip"
+                NDK_DIR="/usr/local/share/android-ndk"
+
+                # Download NDK
+                curl -o ${NDK_VERSION}.zip ${NDK_URL}
+                unzip -q ${NDK_VERSION}.zip -d ${NDK_DIR}
+                rm ${NDK_VERSION}.zip
+
+                # Set NDK environment variable
+                export ANDROID_NDK_HOME=${NDK_DIR}/${NDK_VERSION}
+
+                # Add NDK to PATH
+                export PATH=${ANDROID_NDK_HOME}:$PATH
+
+                # Print NDK version
+                ndk-build --version
 
           - name: Set up local.properties
             script: |
