@@ -30,7 +30,7 @@ workflows:
             script: |
               set -e
               set -x
-              JAXB_DIR="usr/local/share/android-sdk/jaxb"
+              JAXB_DIR="/usr/local/share/android-sdk/jaxb"
               JAXB_VERSION="2.2"
               JAXB_URL="http://www.java2s.com/Code/JarDownload/jaxb/jaxb-api-2.2.jar.zip"
               
@@ -41,7 +41,7 @@ workflows:
               curl -o ${JAXB_DIR}/jaxb-api.jar ${JAXB_URL}
 
               export CLASSPATH=/usr/local/share/android-sdk/jaxb/jaxb-api.jar:$CLASSPATH
-
+         
           # - name: SUpdate build tools with Android SDK manager
           #   script: |
           #     set -e
