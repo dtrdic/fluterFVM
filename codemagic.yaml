@@ -42,14 +42,14 @@ workflows:
 
               export CLASSPATH=/usr/local/share/android-sdk/jaxb/jaxb-api.jar:$CLASSPATH
 
-          - name: SUpdate build tools with Android SDK manager
-            script: |
-              set -e
-              set -x
-              $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
-              && mv d8 dx \
-              && cd lib \
-              && mv d8.jar dx.jar
+          # - name: SUpdate build tools with Android SDK manager
+          #   script: |
+          #     set -e
+          #     set -x
+          #     $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
+          #     && mv d8 dx \
+          #     && cd lib \
+          #     && mv d8.jar dx.jar
 
 
           - name: Install Android NDK
