@@ -26,18 +26,20 @@ workflows:
             script: |
               echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
 
-          # - name: Install NDK
-          #   script: |
-          #     Download NDK
-          #     curl -LO https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
+          - name: Install JAXB API
+            script: |
+              set -e
+              set -x
+              JAXB_DIR="$HOME/jaxb"
+              JAXB_VERSION="2.2"
+              JAXB_URL="http://central.maven.org/maven2/javax/xml/bind/jaxb-api/${JAXB_VERSION}/jaxb-api-${JAXB_VERSION}.jar"
+              
+              # Create the target directory
+              mkdir -p ${JAXB_DIR}
+              
+              # Download JAXB API
+              curl -o ${JAXB_DIR}/jaxb-api.jar ${JAXB_URL}
 
-          #     Unzip NDK
-          #     unzip -q android-ndk-r25c-linux.zip
-          #     rm android-ndk-r25c-linux.zip
-
-          #     Set NDK environment variable
-          #     export ANDROID_NDK_HOME=$PATH_TO_NDK
-          #     export NDK_HOME=$PATH:$ANDROID_NDK_HOME
 
           # - name: SUpdate build tools with Android SDK manager
           #   script: |
