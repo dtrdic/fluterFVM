@@ -34,13 +34,14 @@ workflows:
               JAXB_VERSION="2.2"
               JAXB_URL="http://www.java2s.com/Code/JarDownload/jaxb/jaxb-api-2.2.jar.zip"
               
-              # Create the target directory
+               # Create the target directory
               mkdir -p ${JAXB_DIR}
               
               # Download JAXB API
               curl -o ${JAXB_DIR}/jaxb-api.jar ${JAXB_URL}
-
-              export CLASSPATH=/usr/local/share/android-sdk/jaxb/jaxb-api.jar:$CLASSPATH
+              
+              # Set the classpath for the sdkmanager command
+              CLASSPATH="${JAXB_DIR}/jaxb-api.jar:$CLASSPATH"
          
           # - name: SUpdate build tools with Android SDK manager
           #   script: |
