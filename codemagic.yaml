@@ -44,9 +44,9 @@ workflows:
             script: |
                 set -e
                 set -x
-                NDK_VERSION="android-ndk-r25c"
+                NDK_VERSION="android-ndk-r23c"
                 NDK_URL="https://dl.google.com/android/repository/${NDK_VERSION}-linux.zip"
-                NDK_DIR="android-ndk2"
+                NDK_DIR="android-ndk23"
 
                 # Create the target directory
                 mkdir -p ${NDK_DIR}
@@ -72,14 +72,14 @@ workflows:
             script: |
               flutter packages pub get
 
-          - name: SUpdate build tools with Android SDK manager
-            script: |
-              set -e
-              set -x
-              $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
-              && mv d8 dx \
-              && cd lib \
-              && mv d8.jar dx.jar
+          # - name: SUpdate build tools with Android SDK manager
+          #   script: |
+          #     set -e
+          #     set -x
+          #     $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
+          #     && mv d8 dx \
+          #     && cd lib \
+          #     && mv d8.jar dx.jar
           - name: Build AAB with Flutter
             script: |
               BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
