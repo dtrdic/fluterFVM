@@ -46,7 +46,7 @@ workflows:
                 set -x
                 NDK_VERSION="android-ndk-r25c"
                 NDK_URL="https://dl.google.com/android/repository/${NDK_VERSION}-linux.zip"
-                NDK_DIR="/usr/local/share/android-ndk"
+                NDK_DIR="/android-ndk2"
 
                 # Download NDK
                 curl -o ${NDK_VERSION}.zip ${NDK_URL}
