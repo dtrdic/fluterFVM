@@ -26,18 +26,27 @@ workflows:
             script: |
               echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
 
-          - name: Install NDK
+          # - name: Install NDK
+          #   script: |
+          #     Download NDK
+          #     curl -LO https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
+
+          #     Unzip NDK
+          #     unzip -q android-ndk-r25c-linux.zip
+          #     rm android-ndk-r25c-linux.zip
+
+          #     Set NDK environment variable
+          #     export ANDROID_NDK_HOME=$PATH_TO_NDK
+          #     export NDK_HOME=$PATH:$ANDROID_NDK_HOME
+
+          - name: SUpdate build tools with Android SDK manager
             script: |
-              Download NDK
-              curl -LO https://dl.google.com/android/repository/android-ndk-r25c-linux.zip
-
-              Unzip NDK
-              unzip -q android-ndk-r25c-linux.zip
-              rm android-ndk-r25c-linux.zip
-
-              Set NDK environment variable
-              export ANDROID_NDK_HOME=$PATH_TO_NDK
-              export NDK_HOME=$PATH:$ANDROID_NDK_HOME
+              set -e
+              set -x
+              $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
+              && mv d8 dx \
+              && cd lib \
+              && mv d8.jar dx.jar
 
 
           # - name: Install Android NDK
@@ -72,14 +81,7 @@ workflows:
             script: |
               flutter packages pub get
 
-          # - name: SUpdate build tools with Android SDK manager
-          #   script: |
-          #     set -e
-          #     set -x
-          #     $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
-          #     && mv d8 dx \
-          #     && cd lib \
-          #     && mv d8.jar dx.jar
+
           - name: Build AAB with Flutter
             script: |
               BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
