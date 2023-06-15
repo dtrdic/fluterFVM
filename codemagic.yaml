@@ -15,7 +15,7 @@ workflows:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
         triggering:
           events:
-              #- pull_request
+              #- pull_request 
               - push
           # branch_patterns:
           # - pattern: "main"
