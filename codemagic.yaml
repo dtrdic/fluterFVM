@@ -30,7 +30,7 @@ workflows:
             script: |
               set -e
               set -x
-              JAXB_DIR="$CM_BUILD_DIR/jaxb"
+              JAXB_DIR="usr/local/share/android-sdk/jaxb"
               JAXB_VERSION="2.2"
               JAXB_URL="http://www.java2s.com/Code/JarDownload/jaxb/jaxb-api-2.2.jar.zip"
               
@@ -40,15 +40,16 @@ workflows:
               # Download JAXB API
               curl -o ${JAXB_DIR}/jaxb-api.jar ${JAXB_URL}
 
+              export CLASSPATH=/usr/local/share/android-sdk/jaxb/jaxb-api.jar:$CLASSPATH
 
-          # - name: SUpdate build tools with Android SDK manager
-          #   script: |
-          #     set -e
-          #     set -x
-          #     $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
-          #     && mv d8 dx \
-          #     && cd lib \
-          #     && mv d8.jar dx.jar
+          - name: SUpdate build tools with Android SDK manager
+            script: |
+              set -e
+              set -x
+              $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
+              && mv d8 dx \
+              && cd lib \
+              && mv d8.jar dx.jar
 
 
           - name: Install Android NDK
