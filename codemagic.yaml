@@ -30,9 +30,9 @@ workflows:
             script: |
               set -e
               set -x
-              JAXB_DIR="$HOME/jaxb"
+              JAXB_DIR="$CM_BUILD_DIR/jaxb"
               JAXB_VERSION="2.2"
-              JAXB_URL="http://central.maven.org/maven2/javax/xml/bind/jaxb-api/${JAXB_VERSION}/jaxb-api-${JAXB_VERSION}.jar"
+              JAXB_URL="http://www.java2s.com/Code/JarDownload/jaxb/jaxb-api-2.2.jar.zip"
               
               # Create the target directory
               mkdir -p ${JAXB_DIR}
