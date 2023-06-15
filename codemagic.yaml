@@ -46,7 +46,7 @@ workflows:
                 set -x
                 NDK_VERSION="android-ndk-r25c"
                 NDK_URL="https://dl.google.com/android/repository/${NDK_VERSION}-linux.zip"
-                NDK_DIR="/android-ndk2"
+                NDK_DIR="android-ndk2"
 
                 # Create the target directory
                 mkdir -p ${NDK_DIR}
