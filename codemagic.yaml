@@ -48,6 +48,9 @@ workflows:
                 NDK_URL="https://dl.google.com/android/repository/${NDK_VERSION}-linux.zip"
                 NDK_DIR="/android-ndk2"
 
+                # Create the target directory
+                mkdir -p ${NDK_DIR}
+
                 # Download NDK
                 curl -o ${NDK_VERSION}.zip ${NDK_URL}
                 unzip -q ${NDK_VERSION}.zip -d ${NDK_DIR}
