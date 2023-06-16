@@ -26,12 +26,12 @@ workflows:
             script: |
               echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
 
-          - name: Edit JAVA OPTS
-            script: |
-              export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
-              # or
-              # If the above code does not take effect, then export the java.xml.bind like below code.
-              #export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
+          # - name: Edit JAVA OPTS
+          #   script: |
+          #     export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+          #     # or
+          #     # If the above code does not take effect, then export the java.xml.bind like below code.
+          #     #export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
          
           # - name: Install Android NDK
           #   script: |
@@ -70,7 +70,7 @@ workflows:
           - name: Update build tools with Android SDK manager
             script: |
               # Download and install new Android SDK Command-line Tools
-              ANDROID_HOME=usr/local/share/android-sdk
+              ANDROID_HOME=usr/local/share/android-sdk/tools/bin
               SDK_TOOLS_VERSION="6200805"
               SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS_VERSION}_latest.zip"
               SDK_TOOLS_DIR="${ANDROID_HOME}/command-line-tools"
