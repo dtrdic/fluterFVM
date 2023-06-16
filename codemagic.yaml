@@ -56,7 +56,7 @@ workflows:
 
               --data '{
 
-              "appId": "61f12cd754bf268f7b80f432",
+              "appId": "645a0fafc5f77d006a400bf1",
               "workflowId": "android-workflow",
               "branch": "main",
               "environment": {
