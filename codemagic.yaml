@@ -49,7 +49,7 @@ workflows:
               # done
 
             CLIENTS=(${PACKAGES})
-            for CLIENT in ${PACKAGES[@]}; do
+            for PACKAGE_NAME in ${PACKAGES[@]}; do
               echo "CLIENT: $CLIENT"
               curl -H "Content-Type: application/json" -H "x-auth-token: ${CODEMAGIC_TOKEN}" \
                 --data '{
@@ -69,6 +69,8 @@ workflows:
         name: Android Workflow
         max_build_duration: 120
         instance_type: linux_x2
+        labels:
+          - ${PACKAGE_NAME}
         environment:
           flutter: fvm
           android_signing:
@@ -194,6 +196,8 @@ workflows:
         name: Android Workflow
         max_build_duration: 120
         instance_type: linux_x2
+        labels:
+        - ${PACKAGE_NAME}
         environment:
           flutter: fvm
           android_signing:
