@@ -45,8 +45,7 @@ workflows:
             #       https://api.codemagic.io/builds
             #   done
 
-            CLIENTS=("001" "002" "003")
-            for CLIENT in ${CLIENTS[@]}; do
+            for CLIENT_ID in "{{ CLIENT_IDS }}"; do
               echo "CLIENT: $CLIENT"
               curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
                 --data '{
@@ -64,7 +63,7 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: linux_x2
+        instance_type: mac_mini_m1
         labels:
           - ${PACKAGE_NAME}
         environment:
