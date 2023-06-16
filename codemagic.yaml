@@ -28,9 +28,6 @@ workflows:
             #   # Set the App ID for your project
             #   APP_ID="YOUR_APP_ID"
 
-            #   # Array of client IDs
-            #   CLIENTS=("001" "002" "003")
-
             #   Loop through each client and trigger a build
             #   for CLIENT in "${CLIENTS[@]}"; do
             #     echo "CLIENT: $CLIENT"
@@ -48,10 +45,10 @@ workflows:
             #       https://api.codemagic.io/builds
             #   done
 
-            #CLIENTS=("001" "002" "003")
+            CLIENTS=("001" "002" "003")
             for CLIENT in ${CLIENTS[@]}; do
               echo "CLIENT: $CLIENT"
-              curl -H "Content-Type: application/json" -H "x-auth-token: ${CODEMAGIC_TOKEN}" \
+              curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
                 --data '{
                   "appId": "645a0fafc5f77d006a400bf1",
                   "workflowId": "android-workflow",
