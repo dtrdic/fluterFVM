@@ -28,10 +28,10 @@ workflows:
 
           - name: Edit JAVA OPTS
             script: |
-              # export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+              export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
               # or
               # If the above code does not take effect, then export the java.xml.bind like below code.
-              export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
+              #export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
          
           # - name: Install Android NDK
           #   script: |
