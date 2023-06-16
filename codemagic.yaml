@@ -69,35 +69,31 @@ workflows:
 
           - name: Update build tools with Android SDK manager
             script: |
-              # Download and install new Android SDK Command-line Tools
-              ANDROID_HOME=~
+              # Set the Android home directory
+              ANDROID_HOME="$HOME/android-sdk"
+
+              # Set the download URL and file name
               SDK_TOOLS_VERSION="6200805"
               SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS_VERSION}_latest.zip"
-              SDK_TOOLS_DIR="${ANDROID_HOME}/command-line-tools"
+              SDK_TOOLS_FILE="sdk-tools.zip"
 
-              mkdir -p "${SDK_TOOLS_DIR}"
-              curl -o sdk-tools.zip "${SDK_TOOLS_URL}"
-              unzip -q sdk-tools.zip -d "${SDK_TOOLS_DIR}"
-              rm sdk-tools.zip
+              # Create the command-line tools directory
+              CMDLINE_TOOLS_DIR="${ANDROID_HOME}/command-line-tools"
+              mkdir -p "${CMDLINE_TOOLS_DIR}"
 
-              # Set up environment variables
-              export ANDROID_SDK_ROOT="${SDK_TOOLS_DIR}"
+              # Download the SDK Command-line Tools
+              curl -o "${SDK_TOOLS_FILE}" "${SDK_TOOLS_URL}"
+
+              # Unpack the SDK Command-line Tools to the appropriate directory
+              unzip -q "${SDK_TOOLS_FILE}" -d "${CMDLINE_TOOLS_DIR}"
+
+              # Clean up the downloaded zip file
+              rm "${SDK_TOOLS_FILE}"
+
+              # Set the environment variables
+              export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
               export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
 
-              # Install build tools
-              sdkmanager --install "build-tools;33.0.0"
-
-              # Navigate to the build tools directory
-              cd "${ANDROID_SDK_ROOT}/build-tools/33.0.0"
-
-              # Rename the d8 and dx binaries
-              mv d8 dx
-
-              # Navigate to the lib directory
-              cd lib
-
-              # Rename the d8.jar to dx.jar
-              mv d8.jar dx.jar
 
           - name: Set up local.properties
             script: |
