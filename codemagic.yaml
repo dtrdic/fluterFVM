@@ -10,7 +10,7 @@ workflows:
           groups:
             - firebase_credentials
             - google_play_credentials2
-          #java: 11
+          java: 11
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
         triggering:
