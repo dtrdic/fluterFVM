@@ -49,24 +49,19 @@ workflows:
 
             CLIENTS=("001" "002" "003")
             for CLIENT in ${CLIENTS[@]}; do
-
               echo "CLIENT: $CLIENT"
-
               curl -H "Content-Type: application/json" -H "x-auth-token: ${CODEMAGIC_TOKEN}" \
-
-              --data '{
-
-              "appId": "645a0fafc5f77d006a400bf1",
-              "workflowId": "android-workflow",
-              "branch": "main",
-              "environment": {
-                  "variables": {
-                    "CLIENT_ID": "'${CLIENT}'"
+                --data '{
+                "appId": "645a0fafc5f77d006a400bf1",
+                "workflowId": "android-workflow",
+                "branch": "main",
+                "environment": {
+                    "variables": {
+                      "CLIENT_ID": "'${CLIENT}'"
+                    }
                   }
-                }
-              }' \
-
-              https://api.codemagic.io/builds
+                }' \
+                https://api.codemagic.io/builds
 
               done
     android-workflow:
