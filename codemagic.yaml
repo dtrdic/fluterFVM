@@ -30,7 +30,7 @@ workflows:
               # # Array of client IDs
               # CLIENTS=("001" "002" "003")
 
-              # # Loop through each client and trigger a build
+              # Loop through each client and trigger a build
               # for CLIENT in "${CLIENTS[@]}"; do
               #   echo "CLIENT: $CLIENT"
               #   curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
@@ -57,7 +57,7 @@ workflows:
               --data '{
 
               "appId": "61f12cd754bf268f7b80f432",
-              "workflowId": "ios-release",
+              "workflowId": "android-workflow3",
               "branch": "main",
               "environment": {
                   "variables": {
@@ -83,10 +83,10 @@ workflows:
           java: 11
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-        triggering:
-          events:
-              #- pull_request 
-              - push
+        # triggering:
+        #   events:
+        #       #- pull_request 
+        #       - push
           # branch_patterns:
           # - pattern: "main"
           #   include: true
@@ -207,10 +207,10 @@ workflows:
           java: 11
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-        triggering:
-          events:
-              #- pull_request 
-              - push
+        # triggering:
+        #   events:
+        #       #- pull_request 
+        #       - push
           # branch_patterns:
           # - pattern: "main"
           #   include: true
