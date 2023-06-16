@@ -26,22 +26,12 @@ workflows:
             script: |
               echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
 
-          # - name: Install JAXB API
-          #   script: |
-          #     set -e
-          #     set -x
-          #     JAXB_DIR="/usr/local/share/android-sdk/jaxb"
-          #     JAXB_VERSION="2.2"
-          #     JAXB_URL="http://www.java2s.com/Code/JarDownload/jaxb/jaxb-api-2.2.jar.zip"
-              
-          #      # Create the target directory
-          #     mkdir -p ${JAXB_DIR}
-              
-          #     # Download JAXB API
-          #     curl -o ${JAXB_DIR}/jaxb-api.jar ${JAXB_URL}
-              
-          #     # Set the classpath for the sdkmanager command
-          #     CLASSPATH="${JAXB_DIR}/jaxb-api.jar:$CLASSPATH"
+          - name: Edit JAVA OPTS
+            script: |
+              export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+              or
+              # If the above code does not take effect, then export the java.xml.bind like below code.
+              export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
          
           # - name: Install Android NDK
           #   script: |
