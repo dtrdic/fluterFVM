@@ -23,47 +23,46 @@ workflows:
             #            curl --location 'https://api.codemagic.io/builds' --header "x-auth-token: ${CODEMAGIC_TOKEN}" --header 'Content-Type: application/json' --data  '{"appId": "645a0fafc5f77d006a400bf1", "workflowId": "android-workflow2", "environment": {"variables": {"PACKAGE_NAME": "'${PACKAGE_NAME}'"}}}'
             # done
             # Set your CodeMagic API key
-              # CM_API_KEY="YOUR_API_KEY"
+            #   CM_API_KEY="YOUR_API_KEY"
 
-              # # Set the App ID for your project
-              # APP_ID="YOUR_APP_ID"
+            #   # Set the App ID for your project
+            #   APP_ID="YOUR_APP_ID"
 
-              # # Array of client IDs
-              # CLIENTS=("001" "002" "003")
+            #   # Array of client IDs
+            #   CLIENTS=("001" "002" "003")
 
-              # Loop through each client and trigger a build
-              # for CLIENT in "${CLIENTS[@]}"; do
-              #   echo "CLIENT: $CLIENT"
-              #   curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
-              #     --data '{
-              #       "appId": "'${APP_ID}'",
-              #       "workflowId": "ios-release",
-              #       "branch": "main",
-              #       "environment": {
-              #         "variables": {
-              #           "CLIENT_ID": "'${CLIENT}'"
-              #         }
-              #       }
-              #     }' \
-              #     https://api.codemagic.io/builds
-              # done
+            #   Loop through each client and trigger a build
+            #   for CLIENT in "${CLIENTS[@]}"; do
+            #     echo "CLIENT: $CLIENT"
+            #     curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
+            #       --data '{
+            #         "appId": "'${APP_ID}'",
+            #         "workflowId": "ios-release",
+            #         "branch": "main",
+            #         "environment": {
+            #           "variables": {
+            #             "CLIENT_ID": "'${CLIENT}'"
+            #           }
+            #         }
+            #       }' \
+            #       https://api.codemagic.io/builds
+            #   done
 
-            CLIENTS=(${PACKAGES})
-            for PACKAGE_NAME in ${PACKAGES[@]}; do
+            #CLIENTS=("001" "002" "003")
+            for CLIENT in ${CLIENTS[@]}; do
               echo "CLIENT: $CLIENT"
               curl -H "Content-Type: application/json" -H "x-auth-token: ${CODEMAGIC_TOKEN}" \
                 --data '{
-                "appId": "645a0fafc5f77d006a400bf1",
-                "workflowId": "android-workflow",
-                "branch": "main",
-                "environment": {
-                    "variables": {
-                      "CLIENT_ID": "'${CLIENT}'"
-                    }
+                  "appId": "645a0fafc5f77d006a400bf1",
+                  "workflowId": "android-workflow",
+                  "branch": "main",
+                  "environment": {
+                      "variables": {
+                        "CLIENT_ID": "'${CLIENT}'"
+                      }
                   }
                 }' \
                 https://api.codemagic.io/builds
-
               done
     android-workflow:
         name: Android Workflow
