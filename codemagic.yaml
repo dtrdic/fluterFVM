@@ -26,57 +26,56 @@ workflows:
             script: |
               echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
 
-          - name: Install JAXB API
-            script: |
-              set -e
-              set -x
-              JAXB_DIR="/usr/local/share/android-sdk/jaxb"
-              JAXB_VERSION="2.2"
-              JAXB_URL="http://www.java2s.com/Code/JarDownload/jaxb/jaxb-api-2.2.jar.zip"
-              
-               # Create the target directory
-              mkdir -p ${JAXB_DIR}
-              
-              # Download JAXB API
-              curl -o ${JAXB_DIR}/jaxb-api.jar ${JAXB_URL}
-              
-              # Set the classpath for the sdkmanager command
-              CLASSPATH="${JAXB_DIR}/jaxb-api.jar:$CLASSPATH"
-         
-          # - name: SUpdate build tools with Android SDK manager
+          # - name: Install JAXB API
           #   script: |
           #     set -e
           #     set -x
-          #     $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
-          #     && mv d8 dx \
-          #     && cd lib \
-          #     && mv d8.jar dx.jar
+          #     JAXB_DIR="/usr/local/share/android-sdk/jaxb"
+          #     JAXB_VERSION="2.2"
+          #     JAXB_URL="http://www.java2s.com/Code/JarDownload/jaxb/jaxb-api-2.2.jar.zip"
+              
+          #      # Create the target directory
+          #     mkdir -p ${JAXB_DIR}
+              
+          #     # Download JAXB API
+          #     curl -o ${JAXB_DIR}/jaxb-api.jar ${JAXB_URL}
+              
+          #     # Set the classpath for the sdkmanager command
+          #     CLASSPATH="${JAXB_DIR}/jaxb-api.jar:$CLASSPATH"
+         
+          # - name: Install Android NDK
+          #   script: |
+          #       set -e
+          #       set -x
+          #       NDK_VERSION="android-ndk-r23c"
+          #       NDK_URL="https://dl.google.com/android/repository/${NDK_VERSION}-linux.zip"
+          #       NDK_DIR="android-ndk23"
 
+          #       # Create the target directory
+          #       mkdir -p ${NDK_DIR}
 
-          - name: Install Android NDK
+          #       # Download NDK
+          #       curl -o ${NDK_VERSION}.zip ${NDK_URL}
+          #       unzip -q ${NDK_VERSION}.zip -d ${NDK_DIR}
+          #       rm ${NDK_VERSION}.zip
+
+          #       # Set NDK environment variable
+          #       export ANDROID_NDK_HOME=${NDK_DIR}/${NDK_VERSION}
+
+          #       # Add NDK to PATH
+          #       export PATH=${ANDROID_NDK_HOME}:$PATH
+
+          #       # Print NDK version
+          #       ndk-build --version
+
+          - name: SUpdate build tools with Android SDK manager
             script: |
-                set -e
-                set -x
-                NDK_VERSION="android-ndk-r23c"
-                NDK_URL="https://dl.google.com/android/repository/${NDK_VERSION}-linux.zip"
-                NDK_DIR="android-ndk23"
-
-                # Create the target directory
-                mkdir -p ${NDK_DIR}
-
-                # Download NDK
-                curl -o ${NDK_VERSION}.zip ${NDK_URL}
-                unzip -q ${NDK_VERSION}.zip -d ${NDK_DIR}
-                rm ${NDK_VERSION}.zip
-
-                # Set NDK environment variable
-                export ANDROID_NDK_HOME=${NDK_DIR}/${NDK_VERSION}
-
-                # Add NDK to PATH
-                export PATH=${ANDROID_NDK_HOME}:$PATH
-
-                # Print NDK version
-                ndk-build --version
+              set -e
+              set -x
+              $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
+              && mv d8 dx \
+              && cd lib \
+              && mv d8.jar dx.jar
 
           - name: Set up local.properties
             script: |
