@@ -5,6 +5,7 @@ workflows:
         groups:
           - firebase_credentials
           - google_play_credentials2
+          - token
       scripts:
         - name: Trigger multiple client builds
           script: |
