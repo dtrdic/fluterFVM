@@ -45,19 +45,14 @@ workflows:
             #       https://api.codemagic.io/builds
             #   done
 
-            CLIENTS=("001" "002" "003")
-            for CLIENT in ${CLIENTS[@]}; do
-              echo "CLIENT: $CLIENT"
+            WORKFLOWS=("android-workflow" "android-workflow2")
+            for WORKFLOW in ${WORKFLOWS[@]}; do
+              echo "WORKFLOW: $WORKFLOW"
               curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
                 --data '{
                   "appId": "645a0fafc5f77d006a400bf1",
-                  "workflowId": "android-workflow",
-                  "branch": "main",
-                  "environment": {
-                      "variables": {
-                        "CLIENT_ID": "'${CLIENT}'"
-                      }
-                  }
+                  "workflowId":  "'${WORKFLOW}'",
+                  "branch": "main"
                 }' \
                 https://api.codemagic.io/builds
               done
@@ -76,7 +71,6 @@ workflows:
             - google_play_credentials2
           java: 11
           vars:
-            CLIENTS: "001"
             PACKAGE_NAME: "io.codemagic.dtrdic6"
         # triggering:
         #   events:
@@ -203,7 +197,6 @@ workflows:
             - google_play_credentials2
           java: 11
           vars:
-            CLIENTS: "002"
             PACKAGE_NAME: "io.codemagic.dtrdic6"
         # triggering:
         #   events:
