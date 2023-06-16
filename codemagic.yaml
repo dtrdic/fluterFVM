@@ -69,11 +69,8 @@ workflows:
 
           - name: Update build tools with Android SDK manager
             script: |
-              set -e
-              set -x
-
               # Download and install new Android SDK Command-line Tools
-              ANDROID_HOME=$CM_BUILD_DIR
+              ANDROID_HOME=usr/local/share/android-sdk
               SDK_TOOLS_VERSION="6200805"
               SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS_VERSION}_latest.zip"
               SDK_TOOLS_DIR="${ANDROID_HOME}/command-line-tools"
