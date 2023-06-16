@@ -50,7 +50,7 @@ workflows:
             CLIENTS=(${PACKAGES})
             for PACKAGE_NAME in ${PACKAGES[@]}; do
               echo "CLIENT: $CLIENT"
-              curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
+              curl -H "Content-Type: application/json" -H "x-auth-token: ${CODEMAGIC_TOKEN}" \
                 --data '{
                 "appId": "645a0fafc5f77d006a400bf1",
                 "workflowId": "android-workflow",
