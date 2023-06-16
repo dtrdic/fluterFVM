@@ -57,7 +57,7 @@ workflows:
               --data '{
 
               "appId": "61f12cd754bf268f7b80f432",
-              "workflowId": "android-workflow3",
+              "workflowId": "android-workflow",
               "branch": "main",
               "environment": {
                   "variables": {
@@ -83,10 +83,10 @@ workflows:
           java: 11
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-        triggering:
-          events:
-              #- pull_request 
-              - push
+        # triggering:
+        #   events:
+        #       #- pull_request 
+        #       - push
           # branch_patterns:
           # - pattern: "main"
           #   include: true
@@ -207,10 +207,10 @@ workflows:
           java: 11
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-        triggering:
-          events:
-              #- pull_request 
-              - push
+        # triggering:
+        #   events:
+        #       #- pull_request 
+        #       - push
           # branch_patterns:
           # - pattern: "main"
           #   include: true
