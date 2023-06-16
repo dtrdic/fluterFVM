@@ -67,6 +67,41 @@ workflows:
           #     && cd lib \
           #     && mv d8.jar dx.jar
 
+          - name: Update build tools with Android SDK manager
+            script: |
+              set -e
+              set -x
+
+              # Download and install new Android SDK Command-line Tools
+              ANDROID_HOME=$CM_BUILD_DIR
+              SDK_TOOLS_VERSION="6200805"
+              SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS_VERSION}_latest.zip"
+              SDK_TOOLS_DIR="${ANDROID_HOME}/command-line-tools"
+
+              mkdir -p "${SDK_TOOLS_DIR}"
+              curl -o sdk-tools.zip "${SDK_TOOLS_URL}"
+              unzip -q sdk-tools.zip -d "${SDK_TOOLS_DIR}"
+              rm sdk-tools.zip
+
+              # Set up environment variables
+              export ANDROID_SDK_ROOT="${SDK_TOOLS_DIR}"
+              export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+
+              # Install build tools
+              sdkmanager --install "build-tools;33.0.0"
+
+              # Navigate to the build tools directory
+              cd "${ANDROID_SDK_ROOT}/build-tools/33.0.0"
+
+              # Rename the d8 and dx binaries
+              mv d8 dx
+
+              # Navigate to the lib directory
+              cd lib
+
+              # Rename the d8.jar to dx.jar
+              mv d8.jar dx.jar
+
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
