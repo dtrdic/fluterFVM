@@ -1,4 +1,74 @@
 workflows:
+    trigger:
+      name: trigger builds for all clients
+      environment:
+        groups:
+          - firebase_credentials
+          - google_play_credentials2
+      scripts:
+        - name: Trigger multiple client builds
+          script: |
+            # CLIENTS=(${PACKAGES})
+            # for PACKAGE_NAME in ${PACKAGES[@]}; do
+            #     echo "PACKAGE: $PACKAGE_NAME"
+            #         curl -H "Content-Type: application/json" \
+            #               -H "x-auth-token: <API Token>" \
+            #               --data '{
+            #                 "appId": "<app_id>",
+            #                 "workflowId": "<workflow_id>",
+            #                 "branch": "<git_branch_name>"
+            #               }' \
+            #               https://api.codemagic.io/builds
+            #            curl --location 'https://api.codemagic.io/builds' --header "x-auth-token: ${CODEMAGIC_TOKEN}" --header 'Content-Type: application/json' --data  '{"appId": "645a0fafc5f77d006a400bf1", "workflowId": "android-workflow2", "environment": {"variables": {"PACKAGE_NAME": "'${PACKAGE_NAME}'"}}}'
+            # done
+            # Set your CodeMagic API key
+              # CM_API_KEY="YOUR_API_KEY"
+
+              # # Set the App ID for your project
+              # APP_ID="YOUR_APP_ID"
+
+              # # Array of client IDs
+              # CLIENTS=("001" "002" "003")
+
+              # # Loop through each client and trigger a build
+              # for CLIENT in "${CLIENTS[@]}"; do
+              #   echo "CLIENT: $CLIENT"
+              #   curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
+              #     --data '{
+              #       "appId": "'${APP_ID}'",
+              #       "workflowId": "ios-release",
+              #       "branch": "main",
+              #       "environment": {
+              #         "variables": {
+              #           "CLIENT_ID": "'${CLIENT}'"
+              #         }
+              #       }
+              #     }' \
+              #     https://api.codemagic.io/builds
+              # done
+
+            CLIENTS=("001" "002" "003")
+            for CLIENT in ${CLIENTS[@]}; do
+
+              echo "CLIENT: $CLIENT"
+
+              curl -H "Content-Type: application/json" -H "x-auth-token: ${CODEMAGIC_TOKEN}" \
+
+              --data '{
+
+              "appId": "61f12cd754bf268f7b80f432",
+              "workflowId": "ios-release",
+              "branch": "main",
+              "environment": {
+                  "variables": {
+                    "CLIENT_ID": "'${CLIENT}'"
+                  }
+                }
+              }' \
+
+              https://api.codemagic.io/builds
+
+              done
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
@@ -123,4 +193,126 @@ workflows:
           #   track: internal
           #   submit_as_draft: true
 
-  
+    android-workflow2:
+        name: Android Workflow
+        max_build_duration: 120
+        instance_type: linux_x2
+        environment:
+          flutter: fvm
+          android_signing:
+            - testKeystore
+          groups:
+            - firebase_credentials
+            - google_play_credentials2
+          java: 11
+          vars:
+            PACKAGE_NAME: "io.codemagic.dtrdic6"
+        triggering:
+          events:
+              #- pull_request 
+              - push
+          # branch_patterns:
+          # - pattern: "main"
+          #   include: true
+          #   source: false
+        scripts:
+          - name: Decode Google credentials 
+            script: |
+              echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+
+          # - name: Edit JAVA OPTS
+          #   script: |
+          #     export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
+          #     # or
+          #     # If the above code does not take effect, then export the java.xml.bind like below code.
+          #     #export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
+         
+          # - name: Install Android NDK
+          #   script: |
+          #       set -e
+          #       set -x
+          #       NDK_VERSION="android-ndk-r23c"
+          #       NDK_URL="https://dl.google.com/android/repository/${NDK_VERSION}-linux.zip"
+          #       NDK_DIR="android-ndk23"
+
+          #       # Create the target directory
+          #       mkdir -p ${NDK_DIR}
+
+          #       # Download NDK
+          #       curl -o ${NDK_VERSION}.zip ${NDK_URL}
+          #       unzip -q ${NDK_VERSION}.zip -d ${NDK_DIR}
+          #       rm ${NDK_VERSION}.zip
+
+          #       # Set NDK environment variable
+          #       export ANDROID_NDK_HOME=${NDK_DIR}/${NDK_VERSION}
+
+          #       # Add NDK to PATH
+          #       export PATH=${ANDROID_NDK_HOME}:$PATH
+
+          #       # Print NDK version
+          #       ndk-build --version
+
+          # - name: SUpdate build tools with Android SDK manager
+          #   script: |
+          #     set -e
+          #     set -x
+          #     $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
+          #     && mv d8 dx \
+          #     && cd lib \
+          #     && mv d8.jar dx.jar
+
+          - name: Update build tools with Android SDK manager
+            script: |
+              # Set the Android home directory
+              ANDROID_HOME="$HOME/android-sdk"
+
+              # Set the download URL and file name
+              SDK_TOOLS_VERSION="6200805"
+              SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS_VERSION}_latest.zip"
+              SDK_TOOLS_FILE="sdk-tools.zip"
+
+              # Create the command-line tools directory
+              CMDLINE_TOOLS_DIR="${ANDROID_HOME}/command-line-tools"
+              mkdir -p "${CMDLINE_TOOLS_DIR}"
+
+              # Download the SDK Command-line Tools
+              curl -o "${SDK_TOOLS_FILE}" "${SDK_TOOLS_URL}"
+
+              # Unpack the SDK Command-line Tools to the appropriate directory
+              unzip -q "${SDK_TOOLS_FILE}" -d "${CMDLINE_TOOLS_DIR}"
+
+              # Clean up the downloaded zip file
+              rm "${SDK_TOOLS_FILE}"
+
+              # Set the environment variables
+              export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
+              export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+
+
+          - name: Set up local.properties
+            script: |
+              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+          - name: Get Flutter packages
+            script: |
+              flutter packages pub get
+
+
+          - name: Build AAB with Flutter
+            script: |
+              BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
+              flutter build appbundle --release \
+                --build-name=1.0.$BUILD_NUMBER \
+                --build-number=$BUILD_NUMBER
+        artifacts:
+          - build/**/outputs/**/*.aab
+          - build/**/outputs/**/mapping.txt
+          - flutter_drive.log
+        publishing:
+          firebase:
+              firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+              android:
+                app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
+          # google_play:
+          #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
+          #   track: internal
+          #   submit_as_draft: true
