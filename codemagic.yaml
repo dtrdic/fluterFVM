@@ -82,6 +82,7 @@ workflows:
             - google_play_credentials2
           java: 11
           vars:
+            CLIENTS: "002"
             PACKAGE_NAME: "io.codemagic.dtrdic6"
         # triggering:
         #   events:
@@ -206,6 +207,7 @@ workflows:
             - google_play_credentials2
           java: 11
           vars:
+            CLIENTS: "001"
             PACKAGE_NAME: "io.codemagic.dtrdic6"
         # triggering:
         #   events:
