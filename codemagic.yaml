@@ -48,8 +48,8 @@ workflows:
               #     https://api.codemagic.io/builds
               # done
 
-            CLIENTS=("001" "002" "003")
-            for CLIENT in "${CLIENTS[@]}"; do
+            CLIENTS=(${PACKAGES})
+            for CLIENT in ${PACKAGES[@]}; do
               echo "CLIENT: $CLIENT"
               curl -H "Content-Type: application/json" -H "x-auth-token: ${CODEMAGIC_TOKEN}" \
                 --data '{
