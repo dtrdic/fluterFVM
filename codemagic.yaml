@@ -10,7 +10,7 @@ workflows:
           groups:
             - firebase_credentials
             - google_play_credentials2
-          java: 11
+          #java: 11
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
         triggering:
@@ -68,14 +68,14 @@ workflows:
           #       # Print NDK version
           #       ndk-build --version
 
-          - name: SUpdate build tools with Android SDK manager
-            script: |
-              set -e
-              set -x
-              $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
-              && mv d8 dx \
-              && cd lib \
-              && mv d8.jar dx.jar
+          # - name: SUpdate build tools with Android SDK manager
+          #   script: |
+          #     set -e
+          #     set -x
+          #     $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
+          #     && mv d8 dx \
+          #     && cd lib \
+          #     && mv d8.jar dx.jar
 
           - name: Set up local.properties
             script: |
