@@ -70,7 +70,7 @@ workflows:
           groups:
             - firebase_credentials
             - google_play_credentials2
-          node: 10
+          node: 10.24.1
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
         triggering:
