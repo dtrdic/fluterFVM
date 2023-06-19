@@ -73,10 +73,10 @@ workflows:
           node: 10
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-        # triggering:
-        #   events:
-        #       #- pull_request 
-        #       - push
+        triggering:
+          events:
+              #- pull_request 
+              - push
           # branch_patterns:
           # - pattern: "main"
           #   include: true
