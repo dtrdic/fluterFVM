@@ -72,7 +72,7 @@ workflows:
             - google_play_credentials2
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: production
+            GOOGLE_PLAY_TRACK: internal
         triggering:
           events:
               #- pull_request 
@@ -180,7 +180,7 @@ workflows:
           #       app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-            track: production
+            track: internal
             submit_as_draft: false
 
     # android-workflow2:
