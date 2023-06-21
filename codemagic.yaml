@@ -154,15 +154,12 @@ workflows:
           #     export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
           #     export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
 
-
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
           - name: Get Flutter packages
             script: |
               flutter packages pub get
-
-
           - name: Build AAB with Flutter
             script: |
               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
@@ -171,24 +168,11 @@ workflows:
               else
                 UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
               fi
-              flutter build appbundle --release \
-                --build-name=1.0.$UPDATED_BUILD_NUMBER \
-                --build-number=$UPDATED_BUILD_NUMBER
-
-              # LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME")
-              # if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
-              #   # fallback in case no build number was found from Google Play.
-              #   # Alternatively, you can `exit 1` to fail the build
-              #   # BUILD_NUMBER is a Codemagic built-in variable tracking the number
-              #   # of times this workflow has been built
-              #   UPDATED_BUILD_NUMBER=$BUILD_NUMBER
-              # else
-              #   UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
-              # fi
-              # cd android
-              # ./gradlew bundleRelease \
-              #   -PversionCode=$UPDATED_BUILD_NUMBER \
-              #   -PversionName=1.0.$UPDATED_BUILD_NUMBER
+              # flutter build appbundle --release \
+              #   --build-name=1.0.$UPDATED_BUILD_NUMBER \
+              #   --build-number=$UPDATED_BUILD_NUMBER
+              
+              flutter build appbundle --obfuscate --split-debug-info=debug-info/
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/mapping.txt
@@ -202,6 +186,60 @@ workflows:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
             track: internal
             submit_as_draft: true
+
+    # ios-workflow:
+    #   name: iOS Firebase Crashlytics
+    #   max_build_duration: 120
+    #   integrations:
+    #     app_store_connect: codemagic
+    #   environment:
+    #     ios_signing:
+    #       distribution_type: app_store
+    #       bundle_identifier: io.codemagic.firebaseCrash
+    #     vars:
+    #       XCODE_WORKSPACE: "ios/Runner.xcworkspace"
+    #       XCODE_SCHEME: "Runner"
+    #       APP_ID: 1555555551
+    #     flutter: stable
+    #     xcode: 13.2
+    #     cocoapods: default
+    #   scripts:
+    #     - name: Get Flutter Packages
+    #       script: |
+    #         flutter packages pub get
+    #     - name: Pod install
+    #       script: |
+    #         find . -name "Podfile" -execdir pod install \;
+    #     - name: Set up code signing settings on Xcode project
+    #       script: |
+    #         xcode-project use-profiles
+    #     - name: Flutter build ipa and automatic versioning
+    #       script: |
+    #         flutter build ipa --release \
+    #         --build-name=1.0.0 \
+    #         --build-number=$(($(app-store-connect get-latest-testflight-build-number "$APP_ID") + 1)) \
+    #         --export-options-plist=/Users/builder/export_options.plist
+    #   artifacts:
+    #     - build/ios/ipa/*.ipa
+    #     - /tmp/xcodebuild_logs/*.log
+    #     - flutter_drive.log
+    #     - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    #   publishing:
+    #     scripts:
+    #       - name: Crashlytics
+    #         script: |
+    #           echo "Find build artifacts"
+    #           dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "*.dSYM" | head -1)
+    #           if [[ -z ${dsymPath} ]]
+    #           then
+    #             echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
+    #           else
+    #             echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
+    #             ls -d -- ios/Pods/*
+    #             $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
+    #               -gsp ios/Runner/GoogleService-Info.plist \
+    #               -p ios $dsymPath
+    #           fi
 
     # android-workflow2:
     #     name: Android Workflow
