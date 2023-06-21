@@ -70,7 +70,6 @@ workflows:
           groups:
             - firebase_credentials
             - google_play_credentials2
-          node: 10.24.1
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
         triggering:
@@ -82,9 +81,9 @@ workflows:
           #   include: true
           #   source: false
         scripts:
-          - name: Decode Google credentials 
-            script: |
-              echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+          # - name: Decode Google credentials 
+          #   script: |
+          #     echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
 
           # - name: Edit JAVA OPTS
           #   script: |
@@ -127,32 +126,32 @@ workflows:
           #     && cd lib \
           #     && mv d8.jar dx.jar
 
-          - name: Update build tools with Android SDK manager
-            script: |
-              # Set the Android home directory
-              ANDROID_HOME="$HOME/android-sdk"
+          # - name: Update build tools with Android SDK manager
+          #   script: |
+          #     # Set the Android home directory
+          #     ANDROID_HOME="$HOME/android-sdk"
 
-              # Set the download URL and file name
-              SDK_TOOLS_VERSION="6200805"
-              SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS_VERSION}_latest.zip"
-              SDK_TOOLS_FILE="sdk-tools.zip"
+          #     # Set the download URL and file name
+          #     SDK_TOOLS_VERSION="6200805"
+          #     SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS_VERSION}_latest.zip"
+          #     SDK_TOOLS_FILE="sdk-tools.zip"
 
-              # Create the command-line tools directory
-              CMDLINE_TOOLS_DIR="${ANDROID_HOME}/command-line-tools"
-              mkdir -p "${CMDLINE_TOOLS_DIR}"
+          #     # Create the command-line tools directory
+          #     CMDLINE_TOOLS_DIR="${ANDROID_HOME}/command-line-tools"
+          #     mkdir -p "${CMDLINE_TOOLS_DIR}"
 
-              # Download the SDK Command-line Tools
-              curl -o "${SDK_TOOLS_FILE}" "${SDK_TOOLS_URL}"
+          #     # Download the SDK Command-line Tools
+          #     curl -o "${SDK_TOOLS_FILE}" "${SDK_TOOLS_URL}"
 
-              # Unpack the SDK Command-line Tools to the appropriate directory
-              unzip -q "${SDK_TOOLS_FILE}" -d "${CMDLINE_TOOLS_DIR}"
+          #     # Unpack the SDK Command-line Tools to the appropriate directory
+          #     unzip -q "${SDK_TOOLS_FILE}" -d "${CMDLINE_TOOLS_DIR}"
 
-              # Clean up the downloaded zip file
-              rm "${SDK_TOOLS_FILE}"
+          #     # Clean up the downloaded zip file
+          #     rm "${SDK_TOOLS_FILE}"
 
-              # Set the environment variables
-              export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
-              export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+          #     # Set the environment variables
+          #     export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
+          #     export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
 
 
           - name: Set up local.properties
@@ -174,14 +173,14 @@ workflows:
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
         publishing:
-          firebase:
-              firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-              android:
-                app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
-          # google_play:
-          #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-          #   track: internal
-          #   submit_as_draft: true
+          # firebase:
+          #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+          #     android:
+          #       app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
+          google_play:
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
+            track: internal
+            submit_as_draft: true
 
     # android-workflow2:
     #     name: Android Workflow
