@@ -201,7 +201,7 @@ workflows:
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
             track: internal
-            submit_as_draft: false
+            submit_as_draft: true
 
     # android-workflow2:
     #     name: Android Workflow
