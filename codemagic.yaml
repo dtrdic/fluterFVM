@@ -171,8 +171,27 @@ workflows:
               # flutter build appbundle --release \
               #   --build-name=1.0.$UPDATED_BUILD_NUMBER \
               #   --build-number=$UPDATED_BUILD_NUMBER
-              
+
               flutter build appbundle --obfuscate --split-debug-info=debug-info/
+          - name: Create Debug Symbols Zip
+            script: |
+              # Create a zip file containing debug symbols
+              zip -r debug-symbols.zip debug-info/
+
+          - name: Upload Debug Symbols to Google Play
+            script: |
+              # Upload the debug symbols zip file using the Google Play Developer API
+              GOOGLE_PLAY_API_KEY="YOUR_GOOGLE_PLAY_API_KEY"
+              PACKAGE_NAME="io.codemagic.dtrdic6"
+              TRACK="internal"
+              BUILD_NUMBER="12345"
+
+              curl -X POST \
+                -H "Authorization: Bearer $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2" \
+                -H "Content-Type: application/octet-stream" \
+                --data-binary "@debug-symbols.zip" \
+                "https://www.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$TRACK/bundles/$BUILD_NUMBER?uploadType=media"
+
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/mapping.txt
