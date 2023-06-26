@@ -65,7 +65,8 @@ workflows:
           - ${PACKAGE_NAME}
         environment:
           node: 18.12.1
-          flutter: fvm
+          xcode: 14.1
+          #flutter: fvm
           android_signing:
             - testKeystore
           groups:
