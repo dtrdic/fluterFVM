@@ -63,10 +63,6 @@ workflows:
         instance_type: mac_mini_m1
         labels:
           - ${PACKAGE_NAME}
-        triggering:
-          events:
-              #- pull_request 
-              - push
         environment:
           node: 18.12.1
           xcode: 14.1
@@ -80,6 +76,10 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal
+        triggering:
+          events:
+              #- pull_request 
+              - push
           # branch_patterns:
           # - pattern: "main"
           #   include: true
