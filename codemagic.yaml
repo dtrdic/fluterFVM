@@ -190,7 +190,7 @@ workflows:
           #       "https://www.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$TRACK/bundles/$BUILD_NUMBER?uploadType=media"
 
         artifacts:
-          - build/**/outputs/**/*.aab
+          - build/**/outputs/**/*.apk
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
