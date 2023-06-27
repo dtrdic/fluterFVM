@@ -64,10 +64,7 @@ workflows:
         labels:
           - ${PACKAGE_NAME}
         environment:
-          node: 18.12.1
-          xcode: 14.1
-          java: 11
-          #flutter: fvm
+          flutter: fvm
           android_signing:
             - testKeystore
           groups:
@@ -171,34 +168,30 @@ workflows:
               else
                 UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
               fi
-              # flutter build appbundle --release \
-              #   --build-name=1.0.$UPDATED_BUILD_NUMBER \
-              #   --build-number=$UPDATED_BUILD_NUMBER
+              flutter build appbundle --release \
+                --build-name=1.0.$UPDATED_BUILD_NUMBER \
+                --build-number=$UPDATED_BUILD_NUMBER
 
-              flutter build appbundle --obfuscate --split-debug-info=debug-info/
-          - name: Create Debug Symbols Zip
-            script: |
-              # Create a zip file containing debug symbols
-              zip -r debug-symbols.zip debug-info/
+              #flutter build appbundle --obfuscate --split-debug-info=debug-info/
 
-          - name: Upload Debug Symbols to Google Play
-            script: |
-              # Upload the debug symbols zip file using the Google Play Developer API
-              GOOGLE_PLAY_API_KEY="YOUR_GOOGLE_PLAY_API_KEY"
-              PACKAGE_NAME="io.codemagic.dtrdic6"
-              TRACK="internal"
-              BUILD_NUMBER="12345"
+          # - name: Upload Debug Symbols to Google Play
+          #   script: |
+          #     # Upload the debug symbols zip file using the Google Play Developer API
+          #     PACKAGE_NAME="io.codemagic.dtrdic6"
+          #     TRACK="internal"
+          #     BUILD_NUMBER="12345"
 
-              curl -X POST \
-                -H "Authorization: Bearer $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2" \
-                -H "Content-Type: application/octet-stream" \
-                --data-binary "@debug-symbols.zip" \
-                "https://www.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$TRACK/bundles/$BUILD_NUMBER?uploadType=media"
+          #     curl -X POST \
+          #       -H "Authorization: Bearer $FIREBASE_SERVICE_ACCOUNT" \
+          #       -H "Content-Type: application/octet-stream" \
+          #       --data-binary "@debug-symbols.zip" \
+          #       "https://www.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$TRACK/bundles/$BUILD_NUMBER?uploadType=media"
 
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
+          - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
         publishing:
           # firebase:
           #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
@@ -208,6 +201,20 @@ workflows:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
             track: internal
             submit_as_draft: true
+          scripts:
+            - name: Upload debug symbols to Firebase Crashlytics
+              script: | 
+                echo "Find build artifacts"
+                dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "*.dSYM" | head -1)
+                if [[ -z ${dsymPath} ]]
+                then
+                  echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
+                else
+                  echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
+                  ls -d -- ios/Pods/*
+                  $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
+                    -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
+                fi
 
     # ios-workflow:
     #   name: iOS Firebase Crashlytics
