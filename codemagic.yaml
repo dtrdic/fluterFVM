@@ -162,9 +162,9 @@ workflows:
           - name: Get Flutter packages
             script: |
               flutter packages pub get
-          - name: Build apk
+          - name: Build aab
             script: | 
-                flutter build apk --debug
+                flutter build appbundle
 
           # - name: Build AAB with Flutter
           #   script: |
