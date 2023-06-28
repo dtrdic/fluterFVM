@@ -65,6 +65,7 @@ workflows:
           - ${PACKAGE_NAME}
         environment:
           flutter: fvm
+          xcode: 14.2
           node: 16.16.0
           android_signing:
             - testKeystore
