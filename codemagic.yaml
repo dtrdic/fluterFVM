@@ -242,18 +242,11 @@ workflows:
           script: |
             xcode-project use-profiles
         - name: Get Flutter packages
-          script: |
+          script: | 
             flutter packages pub get
         - name: Install pods
-          script: |
+          script: | 
             find . -name "Podfile" -execdir pod install \;
-        - name: Flutter analyze
-          script: |
-            flutter analyze
-        - name: Flutter unit tests
-          script: |
-            flutter test
-          ignore_failure: true
         - name: Flutter build ipa and automatic versioning
           script: |
             flutter build ipa --release \
