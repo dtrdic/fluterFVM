@@ -221,16 +221,17 @@ workflows:
                   $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
                     -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
                 fi
+                
     ios-workflow:
       name: iOS Workflow
       instance_type: mac_mini_m1
       max_build_duration: 120
       integrations:
-        app_store_connect: DavidAPIkey
+        app_store_connect: DavidAPIkey 
       environment:
         ios_signing:
           distribution_type: development
-          bundle_identifier: io.codemagic.dtrdic9
+          bundle_identifier: io.codemagic.dtrdic6
         vars:
           APP_ID: 64915681451d0c4b9089af49 # <-- Put your APP ID here
         flutter: stable
