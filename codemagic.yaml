@@ -153,6 +153,12 @@ workflows:
           #     # Set the environment variables
           #     export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
           #     export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+          - name: Brew tap
+            script:
+               brew tap localazy/tools
+          - name: brew install
+            script:
+               brew install localazy
           - name: Install Firebase Crashlytics
             script: | 
               flutter pub add firebase_crashlytics
@@ -166,17 +172,17 @@ workflows:
             script: | 
                 flutter build appbundle
 
-          # - name: Build AAB with Flutter
-          #   script: |
-          #     LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
-          #     if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
-          #       UPDATED_BUILD_NUMBER=$BUILD_NUMBER
-          #     else
-          #       UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
-          #     fi
-          #     flutter build appbundle --release \
-          #       --build-name=1.0.$UPDATED_BUILD_NUMBER \
-          #       --build-number=$UPDATED_BUILD_NUMBER
+          - name: Build AAB with Flutter
+            script: |
+              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
+              if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
+                UPDATED_BUILD_NUMBER=$BUILD_NUMBER
+              else
+                UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
+              fi
+              flutter build appbundle --release \
+                --build-name=1.0.$UPDATED_BUILD_NUMBER \
+                --build-number=$UPDATED_BUILD_NUMBER
 
               #flutter build appbundle --obfuscate --split-debug-info=debug-info/
 
