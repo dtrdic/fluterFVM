@@ -159,6 +159,9 @@ workflows:
           - name: brew install
             script:
                brew install localazy
+          - name: localazy version check
+            script:
+               localazy --version
           - name: Install Firebase Crashlytics
             script: | 
               flutter pub add firebase_crashlytics
