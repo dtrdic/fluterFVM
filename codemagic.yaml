@@ -73,7 +73,7 @@ workflows:
             - google_play_credentials2
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: weartrack
+            GOOGLE_PLAY_TRACK: Closed testing - weartrack
         triggering:
           events:
               #- pull_request 
@@ -211,7 +211,7 @@ workflows:
           #       app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-            track: weartrack
+            track: Closed testing - weartrack
             changes_not_sent_for_review: true
             submit_as_draft: true
           # scripts:
