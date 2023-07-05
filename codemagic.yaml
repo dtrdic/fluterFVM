@@ -207,7 +207,7 @@ workflows:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
-          - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+          #- $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
         publishing:
           # firebase:
           #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
@@ -215,22 +215,22 @@ workflows:
           #       app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-            track: internal
+            track: production
             submit_as_draft: true
-          scripts:
-            - name: Upload debug symbols to Firebase Crashlytics
-              script: | 
-                echo "Find build artifacts"
-                dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "*.dSYM" | head -1)
-                if [[ -z ${dsymPath} ]]
-                then
-                  echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
-                else
-                  echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
-                  ls -d -- ios/Pods/*
-                  $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
-                    -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
-                fi
+          # scripts:
+          #   - name: Upload debug symbols to Firebase Crashlytics
+          #     script: | 
+          #       echo "Find build artifacts"
+          #       dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "*.dSYM" | head -1)
+          #       if [[ -z ${dsymPath} ]]
+          #       then
+          #         echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
+          #       else
+          #         echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
+          #         ls -d -- ios/Pods/*
+          #         $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
+          #           -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
+          #       fi
 
     ios-workflow:
       name: iOS Workflow
