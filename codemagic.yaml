@@ -73,7 +73,7 @@ workflows:
             - google_play_credentials2
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: Closed testing - weartrack
+            GOOGLE_PLAY_TRACK: weartrack
         triggering:
           events:
               #- pull_request 
@@ -171,7 +171,7 @@ workflows:
 
           - name: Build AAB with Flutter
             script: |
-              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
+              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK" --releaseType="wear") + 1))
               if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
                 UPDATED_BUILD_NUMBER=$BUILD_NUMBER
               else
@@ -211,7 +211,7 @@ workflows:
           #       app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-            track: Closed testing - weartrack
+            track: weartrack
             changes_not_sent_for_review: true
             submit_as_draft: true
           # scripts:
