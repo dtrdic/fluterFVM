@@ -154,18 +154,11 @@ workflows:
           #     # Set the environment variables
           #     export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
           #     export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
-          # - name: Brew tap
-          #   script:
-          #      brew tap localazy/tools
-          # - name: brew install
-          #   script:
-          #      brew install localazy
-          # - name: localazy version check
-          #   script:
-          #      localazy --version
-          - name: Install Firebase Crashlytics
-            script: | 
-              flutter pub add firebase_crashlytics
+
+          # - name: Install Firebase Crashlytics
+          #   script: | 
+          #     flutter pub add firebase_crashlytics
+
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
