@@ -73,7 +73,7 @@ workflows:
             - google_play_credentials2
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: internal
+            GOOGLE_PLAY_TRACK: weartrack
         triggering:
           events:
               #- pull_request 
@@ -211,8 +211,8 @@ workflows:
           #       app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-            track: internal
-            submit_as_draft: true
+            track: weartrack
+            submit_as_draft: false
           # scripts:
           #   - name: Upload debug symbols to Firebase Crashlytics
           #     script: | 
