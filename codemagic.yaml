@@ -209,6 +209,7 @@ workflows:
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
             track: production
+            submit_as_draft: false
           # scripts:
           #   - name: Upload debug symbols to Firebase Crashlytics
           #     script: | 
