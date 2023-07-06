@@ -165,6 +165,10 @@ workflows:
             script: |
               echo "BUILD_ANDROID - $BUILD_ANDROID"
               echo "BUILD_IOS - $BUILD_IOS"
+          - name: Log environment variables
+            script: |
+              echo "BUILD_IOS - $BUILD_IOS"
+              echo "BUILD_ANDROID - $BUILD_ANDROID"
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
