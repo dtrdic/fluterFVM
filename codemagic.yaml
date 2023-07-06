@@ -72,8 +72,8 @@ workflows:
             - firebase_credentials
             - google_play_credentials2
           vars:
-            BUILD_ANDROID: True
-            BUILD_IOS: False
+            BUILD_ANDROID: true
+            BUILD_IOS: false
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: wear
         triggering:
@@ -163,8 +163,8 @@ workflows:
 
           - name: Echo test variables
             script: |
-              echo "BUILD_ANDROID variable value is: $BUILD_ANDROID"
-              echo "BUILD_IOS variable value is: $BUILD_IOS"
+              echo "BUILD_ANDROID - $BUILD_ANDROID"
+              echo "BUILD_IOS - $BUILD_IOS"
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
