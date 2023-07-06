@@ -71,6 +71,7 @@ workflows:
           groups:
             - firebase_credentials
             - google_play_credentials2
+            - tesVariables
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: wear
@@ -159,6 +160,9 @@ workflows:
           #   script: | 
           #     flutter pub add firebase_crashlytics
 
+          - name: Echo test variables
+            script: |
+              echo "BUILD_ANDROID variable value is: $BUILD_ANDROID"
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
