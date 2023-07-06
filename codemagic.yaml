@@ -74,6 +74,9 @@ workflows:
           vars:
             BUILD_ANDROID: true
             BUILD_IOS: false
+            XCODE_SCHEME: true
+            CONFIG_ENV: true
+            BUILD_ANDROID_APK: true
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: wear
         triggering:
@@ -163,7 +166,10 @@ workflows:
 
           - name: Echo test variables
             script: |
+              echo "CONFIG_ENV - $CONFIG_ENV"
+              echo "XCODE_SCHEME - $XCODE_SCHEME"
               echo "BUILD_ANDROID - $BUILD_ANDROID"
+              echo "BUILD_ANDROID_APK - $BUILD_ANDROID_APK"
               echo "BUILD_IOS - $BUILD_IOS"
           - name: Log environment variables
             script: |
