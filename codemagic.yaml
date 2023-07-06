@@ -72,8 +72,8 @@ workflows:
             - firebase_credentials
             - google_play_credentials2
           vars:
-            BUILD_ANDROID:  true 
-            BUILD_IOS: false
+            BUILD_ANDROID: True
+            BUILD_IOS: False
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: wear
         triggering:
