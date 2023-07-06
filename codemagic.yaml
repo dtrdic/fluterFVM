@@ -71,10 +71,10 @@ workflows:
           groups:
             - firebase_credentials
             - google_play_credentials2
-            - tesVariables
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: wear
+            BUILD_ANDROID: true
         triggering:
           events:
               #- pull_request 
