@@ -65,7 +65,6 @@ workflows:
           - ${PACKAGE_NAME}
         environment:
           flutter: fvm
-          ndk: "25.2.9519653"
           android_signing:
             - testKeystore
           groups:
