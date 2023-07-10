@@ -78,7 +78,7 @@ workflows:
             CONFIG_ENV: true
             BUILD_ANDROID_APK: true
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK:  wear:weartrack
+            GOOGLE_PLAY_TRACK:  wear:internal
         triggering:
           events:
               #- pull_request 
@@ -227,7 +227,7 @@ workflows:
           #       app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-            track:  wear:weartrack
+            track:  wear:internal
             changes_not_sent_for_review: true
             submit_as_draft: true
           # scripts:
