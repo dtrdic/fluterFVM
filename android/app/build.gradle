@@ -57,11 +57,6 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode latestGooglePlayBuildNumber + 1
         versionName "1.0." + String.valueOf(latestGooglePlayBuildNumber + 1)
-        if (System.getenv()["CI"]) {
-            manifestPlaceholders = [bundleId: System.getenv()["BUNDLE_ID"]]
-        }else{
-            manifestPlaceholders = [bundleId: "io.codemagic.dtrdic6"]
-        }
     }
     signingConfigs {
           release {
