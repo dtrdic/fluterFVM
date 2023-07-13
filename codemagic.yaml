@@ -60,11 +60,12 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: mac_mini_m1
+        instance_type: mac_mini
         labels:
           - ${PACKAGE_NAME}
         environment:
           flutter: fvm
+          xcode: 14.2
           android_signing:
             - testKeystore
           groups:
