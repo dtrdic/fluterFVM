@@ -60,7 +60,7 @@ android {
         if (System.getenv()["CI"]) {
             manifestPlaceholders = [bundleId: System.getenv()["BUNDLE_ID"]]
         }else{
-            manifestPlaceholders = [bundleId: "com.thefinderapp.padelfinder"]
+            manifestPlaceholders = [bundleId: "io.codemagic.dtrdic6"]
         }
     }
     signingConfigs {
