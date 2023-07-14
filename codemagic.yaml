@@ -270,6 +270,9 @@ workflows:
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
+        - name: build an unsigned .app
+          script: | 
+            flutter build ios --debug --no-codesign
         - name: Flutter build ipa and automatic versioning
           script: |
             flutter build ipa --release \
@@ -277,6 +280,7 @@ workflows:
               --build-number=$(($(app-store-connect get-latest-app-store-build-number "$APP_ID") + 1)) \
               --export-options-plist=/Users/builder/export_options.plist
       artifacts:
+        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
         - build/ios/ipa/*.ipa
         - /tmp/xcodebuild_logs/*.log
         - flutter_drive.log
