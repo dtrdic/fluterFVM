@@ -86,9 +86,6 @@ workflows:
           # - pattern: "main"
           #   include: true
           #   source: false
-        cache:
-          cache_paths:
-            - $FLUTTER_ROOT/bin/cache/dart-sdk
         scripts:
           # - name: Decode Google credentials 
           #   script: |
