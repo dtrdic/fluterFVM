@@ -85,7 +85,6 @@ android {
             //         serviceCredentialsFile=System.getenv('GOOGLE_APPLICATION_CREDENTIALS')
             //     }
             signingConfig signingConfigs.release
-            signingConfig signingConfigs.debug
    
         }
     }
