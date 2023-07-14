@@ -283,8 +283,8 @@ workflows:
           script: | 
             # build using project
             xcodebuild build \
-               -project "flutter_fvm.xcodeproj" \
-               -scheme "flutter_fvm" \
+               -project "Runner.xcodeproj" \
+               -scheme "Runner" \
                CODE_SIGN_IDENTITY="" \
                CODE_SIGNING_REQUIRED=NO \
                CODE_SIGNING_ALLOWED=NO
