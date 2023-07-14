@@ -91,7 +91,7 @@ workflows:
             - $HOME/Library/Caches/CocoaPods
             - $HOME/.gradle/caches
             - $FLUTTER_ROOT/.pub-cache
-            - $CM_BUILD_DIR/node_modules
+            #- $CM_BUILD_DIR/node_modules
         scripts:
           # - name: Decode Google credentials 
           #   script: |
