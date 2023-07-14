@@ -80,7 +80,9 @@ workflows:
             GOOGLE_PLAY_TRACK:  wear:internal
         cache:
           cache_paths:
+            - $HOME/Library/Caches/CocoaPods
             - $HOME/.gradle/caches
+            - $FLUTTER_ROOT/.pub-cache
         triggering:
           events:
               #- pull_request 
