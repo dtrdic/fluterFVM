@@ -195,7 +195,7 @@ workflows:
 
           - name: Upload Debug Symbols to Google Play
             script: |
-              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME"))
+              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME")
 
               PACKAGE_NAME="$PACKAGE_NAME"
               EDIT_ID="4859831036556176463" #vjerojatno krivo
