@@ -194,8 +194,8 @@ workflows:
               fi
               flutter build appbundle --release\
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \
-                --build-number=$UPDATED_BUILD_NUMBER
-
+                --build-number=$UPDATED_BUILD_NUMBER \
+                --obfuscate --split-debug-info=debug-info
                 #flutter build appbundle --target-platform android-arm64
 
 
