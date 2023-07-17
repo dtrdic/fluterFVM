@@ -198,7 +198,7 @@ workflows:
               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME")
 
               PACKAGE_NAME="$PACKAGE_NAME"
-              EDIT_ID="4859831036556176463" #vjerojatno krivo
+              EDIT_ID="8478664491092592353" #vjerojatno krivo
               APK_VERSION_CODE="$LATEST_GOOGLE_PLAY_BUILD_NUMBER"
               DEOBFUSCATION_FILE_TYPE="nativeCode"
 
