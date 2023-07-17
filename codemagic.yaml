@@ -77,7 +77,7 @@ workflows:
             CONFIG_ENV: true
             BUILD_ANDROID_APK: true
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK:  wear:internal
+            GOOGLE_PLAY_TRACK:  internal
         triggering:
           events:
               #- pull_request 
@@ -163,17 +163,6 @@ workflows:
           #   script: | 
           #     flutter pub add firebase_crashlytics
 
-          - name: Echo test variables
-            script: |
-              echo "CONFIG_ENV - $CONFIG_ENV"
-              echo "XCODE_SCHEME - $XCODE_SCHEME"
-              echo "BUILD_ANDROID - $BUILD_ANDROID"
-              echo "BUILD_ANDROID_APK - $BUILD_ANDROID_APK"
-              echo "BUILD_IOS - $BUILD_IOS"
-          - name: Log environment variables
-            script: |
-              echo "BUILD_IOS - $BUILD_IOS"
-              echo "BUILD_ANDROID - $BUILD_ANDROID"
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -196,10 +185,7 @@ workflows:
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \
                 --build-number=$UPDATED_BUILD_NUMBER \
                 --obfuscate --split-debug-info=debug-info
-                #flutter build appbundle --target-platform android-arm64
-
-
-              #flutter build appbundle --obfuscate --split-debug-info=debug-info/
+                #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
 
           # - name: Upload Debug Symbols to Google Play
           #   script: |
@@ -227,7 +213,7 @@ workflows:
           #       app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-            track:  wear:internal
+            track: internal
             changes_not_sent_for_review: true
             submit_as_draft: true
           # scripts:
