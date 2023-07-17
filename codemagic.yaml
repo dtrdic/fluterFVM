@@ -201,13 +201,14 @@ workflows:
               EDIT_ID="4859831036556176463" #vjerojatno krivo
               APK_VERSION_CODE="$LATEST_GOOGLE_PLAY_BUILD_NUMBER"
               DEOBFUSCATION_FILE_TYPE="nativeCode"
+
+              UPLOAD_URL="https://androidpublisher.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$EDIT_ID/apks/$APK_VERSION_CODE/deobfuscationFiles/$DEOBFUSCATION_FILE_TYPE"
               
               # Make the HTTP POST request to upload the file
               curl -X POST -H "Authorization: Bearer $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2" \
                   -H "Content-Type: application/octet-stream" \
                   --upload-file debug-info.zip \
-                  "https://androidpublisher.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$EDIT_ID/apks/$APK_VERSION_CODE/deobfuscationFiles/$DEOBFUSCATION_FILE_TYPE"
-
+                  "$UPLOAD_URL"
 
         artifacts:
           - build/**/outputs/**/*.aab
