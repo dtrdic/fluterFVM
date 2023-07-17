@@ -190,8 +190,8 @@ workflows:
 
           - name: zip file
             script: | 
-                 cd $CM_BUILD_DIR/debug-info \
-                 zip -r debug-info.zip debug-info -i debug-info
+                cd $CM_BUILD_DIR/debug-info/..
+                zip -r debug-info.zip debug-info
 
           # - name: Upload Debug Symbols to Google Play
           #   script: |
