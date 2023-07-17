@@ -186,9 +186,8 @@ workflows:
                 --build-number=$UPDATED_BUILD_NUMBER \
                 --obfuscate --split-debug-info=debug-info \
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
-                
-              cd $CM_BUILD_DIR/debug-info  # Change to the directory containing the split debug info
-              zip -r debug-info.zip debug-info 
+                && cd $CM_BUILD_DIR/debug-info/.. \
+                && zip -r debug-info.zip debug-info -i debug-info
 
           - name: zip file
             script: | 
