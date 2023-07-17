@@ -184,7 +184,8 @@ workflows:
               flutter build appbundle --release\
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \
                 --build-number=$UPDATED_BUILD_NUMBER \
-                --obfuscate --split-debug-info=debug-info
+                --obfuscate --split-debug-info=debug-info \
+                --obfuscation-map=obfuscation_mapping_file.zip
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
 
           # - name: Upload Debug Symbols to Google Play
