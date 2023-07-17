@@ -190,26 +190,30 @@ workflows:
 
           - name: zip file
             script: | 
-                cd $CM_BUILD_DIR/debug-info/..
-                zip -r debug-info.zip debug-info
+              cd $CM_BUILD_DIR/debug-info/..
+              zip -r debug-info.zip debug-info
 
-          # - name: Upload Debug Symbols to Google Play
-          #   script: |
-          #     # Upload the debug symbols zip file using the Google Play Developer API
-          #     PACKAGE_NAME="io.codemagic.dtrdic6"
-          #     TRACK="internal"
-          #     BUILD_NUMBER="12345"
+          - name: Upload Debug Symbols to Google Play
+            script: |
+              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME"))
 
-          #     curl -X POST \
-          #       -H "Authorization: Bearer $FIREBASE_SERVICE_ACCOUNT" \
-          #       -H "Content-Type: application/octet-stream" \
-          #       --data-binary "@debug-symbols.zip" \
-          #       "https://www.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$TRACK/bundles/$BUILD_NUMBER?uploadType=media"
+              PACKAGE_NAME="$PACKAGE_NAME"
+              EDIT_ID="4859831036556176463" #vjerojatno krivo
+              APK_VERSION_CODE="$LATEST_GOOGLE_PLAY_BUILD_NUMBER"
+              DEOBFUSCATION_FILE_TYPE="nativeCode"
+              
+              # Make the HTTP POST request to upload the file
+              curl -X POST -H "Authorization: Bearer $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2" \
+                  -H "Content-Type: application/octet-stream" \
+                  --upload-file debug-info.zip \
+                  "https://androidpublisher.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$EDIT_ID/apks/$APK_VERSION_CODE/deobfuscationFiles/$DEOBFUSCATION_FILE_TYPE"
+
 
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
+          - debug-info.zip
           #- $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
         publishing:
           # firebase:
