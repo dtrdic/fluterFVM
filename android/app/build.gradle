@@ -1,5 +1,3 @@
-android.defaultConfig.ndk.debugSymbolLevel = 'FULL'
-
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -80,7 +78,7 @@ android {
     buildTypes {
         release {
              ndk {
-                //debugSymbolLevel 'FULL'
+                debugSymbolLevel 'FULL'
                 //debugSymbolLevel 'SYMBOL_TABLE'
             }
             minifyEnabled true
