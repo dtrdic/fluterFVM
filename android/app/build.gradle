@@ -85,6 +85,10 @@ android {
             //         serviceCredentialsFile=System.getenv('GOOGLE_APPLICATION_CREDENTIALS')
             //     }
             signingConfig signingConfigs.release
+             ndk {
+                debugSymbolLevel 'FULL'
+                //debugSymbolLevel 'SYMBOL_TABLE '
+            }
    
         }
     }
