@@ -76,11 +76,13 @@ android {
       }
 
     buildTypes {
-        release {
              ndk {
-                 //debugSymbolLevel 'FULL'
-                debugSymbolLevel = 'SYMBOL_TABLE'
+                debugSymbolLevel = 'FULL'
+                //debugSymbolLevel 'SYMBOL_TABLE'
             }
+        release {
+            signingConfig signingConfigs.release
+
             minifyEnabled true
 
             // TODO: Add your own signing config for the release build.
@@ -88,7 +90,6 @@ android {
             // firebaseAppDistribution {
             //         serviceCredentialsFile=System.getenv('GOOGLE_APPLICATION_CREDENTIALS')
             //     }
-            signingConfig signingConfigs.release
    
         }
     }
