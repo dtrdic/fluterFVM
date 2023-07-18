@@ -181,7 +181,7 @@ workflows:
               else
                 UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
               fi
-              flutter build appbundle --release\
+              flutter build appbundle --release \
                 --obfuscate \
                 --split-debug-info \
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \

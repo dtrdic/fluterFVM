@@ -79,7 +79,7 @@ android {
         release {
              ndk {
                 //debugSymbolLevel 'FULL'
-                debugSymbolLevel 'SYMBOL_TABLE '
+                debugSymbolLevel 'SYMBOL_TABLE'
             }
             minifyEnabled true
 
