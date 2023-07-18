@@ -190,7 +190,7 @@ workflows:
           - name: zip file
             script: | 
               cd $CM_BUILD_DIR/debug-info/..
-              zip -r debug-info.zip debug-info
+              zip -r debug-info.zip debug-info -x "*/__MACOSX/*"
 
           - name: Upload Debug Symbols to Google Play
             script: |
@@ -203,7 +203,7 @@ workflows:
 
               UPLOAD_URL="https://androidpublisher.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$EDIT_ID/apks/$APK_VERSION_CODE/deobfuscationFiles/$DEOBFUSCATION_FILE_TYPE"
               
-              # Make the HTTP POST request to upload the file
+              # HTTP POST request to upload the file
               curl -X POST -H "Authorization: Bearer $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2" \
                   -H "Content-Type: application/octet-stream" \
                   --upload-file debug-info.zip \
