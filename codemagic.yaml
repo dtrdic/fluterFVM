@@ -187,27 +187,27 @@ workflows:
                 --obfuscate  --split-debug-info=debug-info \
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
 
-          # - name: zip file
-          #   script: | 
-          #     cd $CM_BUILD_DIR/debug-info/..
-          #     zip -r debug-info.zip debug-info
+          - name: zip file
+            script: | 
+              cd $CM_BUILD_DIR/debug-info/..
+              zip -r debug-info.zip debug-info
 
-          # - name: Upload Debug Symbols to Google Play
-          #   script: |
-          #     LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME")
+          - name: Upload Debug Symbols to Google Play
+            script: |
+              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME")
 
-          #     PACKAGE_NAME="$PACKAGE_NAME"
-          #     EDIT_ID="1.0.324" #vjerojatno krivo
-          #     APK_VERSION_CODE="$LATEST_GOOGLE_PLAY_BUILD_NUMBER"
-          #     DEOBFUSCATION_FILE_TYPE="nativeCode"
+              PACKAGE_NAME="$PACKAGE_NAME"
+              EDIT_ID="1.0.324" #vjerojatno krivo
+              APK_VERSION_CODE="$LATEST_GOOGLE_PLAY_BUILD_NUMBER"
+              DEOBFUSCATION_FILE_TYPE="nativeCode"
 
-          #     UPLOAD_URL="https://androidpublisher.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$EDIT_ID/apks/$APK_VERSION_CODE/deobfuscationFiles/$DEOBFUSCATION_FILE_TYPE"
+              UPLOAD_URL="https://androidpublisher.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$EDIT_ID/apks/$APK_VERSION_CODE/deobfuscationFiles/$DEOBFUSCATION_FILE_TYPE"
               
-          #     # Make the HTTP POST request to upload the file
-          #     curl -X POST -H "Authorization: Bearer $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2" \
-          #         -H "Content-Type: application/octet-stream" \
-          #         --upload-file debug-info.zip \
-          #         "$UPLOAD_URL"
+              # Make the HTTP POST request to upload the file
+              curl -X POST -H "Authorization: Bearer $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2" \
+                  -H "Content-Type: application/octet-stream" \
+                  --upload-file debug-info.zip \
+                  "$UPLOAD_URL"
 
         artifacts:
           - build/**/outputs/**/*.aab
