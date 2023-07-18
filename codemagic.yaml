@@ -222,6 +222,9 @@ workflows:
           #     #firebase_service_account: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
           #     android:
           #       app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
+          email:
+            recipients:
+              - david@nevercode.io
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
             track: internal
