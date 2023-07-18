@@ -173,29 +173,19 @@ workflows:
             script: | 
                 flutter build appbundle
 
-          - name: Build universal apk
-            script: | 
-              android-app-bundle build-universal-apk \
-                --bundle 'project_directory/build/**/outputs/**/*.aab' \
-                --ks /tmp/keystore.keystore \
-                --ks-pass $CM_KEYSTORE_PASSWORD \
-                --ks-key-alias $CM_KEY_ALIAS \
-                --key-pass $CM_KEY_PASSWORD
-
-          # - name: Build AAB with Flutter
-          #   script: |
-          #     LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
-          #     if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
-          #       UPDATED_BUILD_NUMBER=$BUILD_NUMBER
-          #     else
-          #       UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
-          #     fi
-          #     flutter build appbundle --release\
-          #       --build-name=1.0.$UPDATED_BUILD_NUMBER \
-          #       --build-number=$UPDATED_BUILD_NUMBER
-
-          #       #--obfuscate  --split-debug-info=debug-info \
-          #       #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
+          - name: Build AAB with Flutter
+            script: |
+              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
+              if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
+                UPDATED_BUILD_NUMBER=$BUILD_NUMBER
+              else
+                UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
+              fi
+              flutter build appbundle --release\
+                --build-name=1.0.$UPDATED_BUILD_NUMBER \
+                --build-number=$UPDATED_BUILD_NUMBER \
+                --obfuscate  --split-debug-info=debug-info \
+                #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
 
           # - name: zip file
           #   script: | 
@@ -220,7 +210,7 @@ workflows:
           #         "$UPLOAD_URL"
 
         artifacts:
-          - build/**/outputs/**/*.apk
+          - build/**/outputs/**/*.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - debug-info.zip
