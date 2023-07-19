@@ -163,6 +163,11 @@ workflows:
           #   script: | 
           #     flutter pub add firebase_crashlytics
 
+          - name: Create local .env file
+            script: |
+              echo "MY_VAR=$MY_VAR" > .env
+              echo "SOMETHING1=$MY_ANOTHER_VAR" >> .env
+              echo "SOMETHING2=$AND_ANOTHER_VAR" >> .env
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
