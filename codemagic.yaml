@@ -71,11 +71,7 @@ workflows:
             - firebase_credentials
             - google_play_credentials2
           vars:
-            BUILD_ANDROID: true
-            BUILD_IOS: false
-            XCODE_SCHEME: true
-            CONFIG_ENV: true
-            BUILD_ANDROID_APK: true
+            GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK:  internal
         triggering:
@@ -163,11 +159,11 @@ workflows:
           #   script: | 
           #     flutter pub add firebase_crashlytics
 
-          - name: Create local .env file
-            script: |
-              echo "MY_VAR=$MY_VAR" > .env
-              echo "SOMETHING1=$MY_ANOTHER_VAR" >> .env
-              echo "SOMETHING2=$AND_ANOTHER_VAR" >> .env
+          - name: Set value from settings.env
+            script: | 
+              source settings.env
+
+              echo "$GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3" >> $CM_ENV
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -231,7 +227,7 @@ workflows:
             recipients:
               - david@nevercode.io
           google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER
             track: internal
             changes_not_sent_for_review: true
             submit_as_draft: true
