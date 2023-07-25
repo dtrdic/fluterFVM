@@ -45,24 +45,24 @@ workflows:
             #       https://api.codemagic.io/builds
             #   done
 
-            WORKFLOW="android-workflow"  # Replace with your workflow ID
-            APP_ID="645a0fafc5f77d006a400bf1"  # Replace with your App ID
+            # WORKFLOW="android-workflow"  # Replace with your workflow ID
+            # APP_ID="645a0fafc5f77d006a400bf1"  # Replace with your App ID
 
-            # Define an array of branch names
-            BRANCHES=("main" "master" "dev")
+            # # Define an array of branch names
+            # BRANCHES=("main" "master" "dev")
 
-            for BRANCH in ${BRANCHES[@]}; do
-              echo "Triggering workflow $WORKFLOW for branch $BRANCH"
+            # for BRANCH in ${BRANCHES[@]}; do
+            #   echo "Triggering workflow $WORKFLOW for branch $BRANCH"
 
-              # Make the POST request to trigger the build for the current branch
-              curl -H "Content-Type: application/json" -H "x-auth-token: $CM_API_KEY" \
-                --data '{
-                  "appId": "645a0fafc5f77d006a400bf1",
-                  "workflowId": "android-workflow",
-                  "branch": "'${BRANCH}'"
-                }' \
-                https://api.codemagic.io/builds
-            done
+            #   # Make the POST request to trigger the build for the current branch
+            #   curl -H "Content-Type: application/json" -H "x-auth-token: $CM_API_KEY" \
+            #     --data '{
+            #       "appId": "645a0fafc5f77d006a400bf1",
+            #       "workflowId": "android-workflow",
+            #       "branch": "'${BRANCH}'"
+            #     }' \
+            #     https://api.codemagic.io/builds
+            # done
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
