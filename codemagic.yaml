@@ -1,6 +1,6 @@
 workflows:
     trigger:
-      name: trigger builds for all clients
+      name: trigger builds for different branches
       environment:
         groups:
           - firebase_credentials
