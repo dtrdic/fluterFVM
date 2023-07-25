@@ -9,42 +9,6 @@ workflows:
       scripts:
         - name: Trigger multiple client builds
           script: |
-            # CLIENTS=(${PACKAGES})
-            # for PACKAGE_NAME in ${PACKAGES[@]}; do
-            #     echo "PACKAGE: $PACKAGE_NAME"
-            #         curl -H "Content-Type: application/json" \
-            #               -H "x-auth-token: <API Token>" \
-            #               --data '{
-            #                 "appId": "<app_id>",
-            #                 "workflowId": "<workflow_id>",
-            #                 "branch": "<git_branch_name>"
-            #               }' \
-            #               https://api.codemagic.io/builds
-            #            curl --location 'https://api.codemagic.io/builds' --header "x-auth-token: ${CODEMAGIC_TOKEN}" --header 'Content-Type: application/json' --data  '{"appId": "645a0fafc5f77d006a400bf1", "workflowId": "android-workflow2", "environment": {"variables": {"PACKAGE_NAME": "'${PACKAGE_NAME}'"}}}'
-            # done
-            # Set your CodeMagic API key
-            #   CM_API_KEY="YOUR_API_KEY"
-
-            #   # Set the App ID for your project
-            #   APP_ID="YOUR_APP_ID"
-
-            #   Loop through each client and trigger a build
-            #   for CLIENT in "${CLIENTS[@]}"; do
-            #     echo "CLIENT: $CLIENT"
-            #     curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
-            #       --data '{
-            #         "appId": "'${APP_ID}'",
-            #         "workflowId": "ios-release",
-            #         "branch": "main",
-            #         "environment": {
-            #           "variables": {
-            #             "CLIENT_ID": "'${CLIENT}'"
-            #           }
-            #         }
-            #       }' \
-            #       https://api.codemagic.io/builds
-            #   done
-
             # WORKFLOWS=("android-workflow" "android-workflow2")
             # for WORKFLOW in ${WORKFLOWS[@]}; do
             #   echo "WORKFLOW: $WORKFLOW"
@@ -246,7 +210,7 @@ workflows:
             recipients:
               - david@nevercode.io
           google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
             track: internal
             changes_not_sent_for_review: true
             submit_as_draft: true
