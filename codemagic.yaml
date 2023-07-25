@@ -149,13 +149,13 @@ workflows:
               echo "$GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3" >> $CM_ENV
           - name: Set up local.properties
             script: |
-              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties" --verbose
           - name: Get Flutter packages
             script: |
               flutter packages pub get
           - name: Build aab
             script: | 
-                flutter build appbundle
+                flutter build appbundle 
 
           - name: Build AAB with Flutter
             script: |
