@@ -54,7 +54,7 @@ workflows:
             #       "workflowId":  "'${WORKFLOW}'",
             #       "branch": "main"
             #     }' \
-            #     https://api.codemagic.io/builds
+            #     https://api.codemagic.io/builds 
             #   done
 
             WORKFLOW="android-workflow"  # Replace with your workflow ID
