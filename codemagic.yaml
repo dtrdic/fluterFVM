@@ -57,10 +57,10 @@ workflows:
             GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK:  internal
-        # triggering:
-        #   events:
+        triggering:
+          events:
               #- pull_request 
-              #- push
+              - push
           # branch_patterns:
           # - pattern: "main"
           #   include: true
