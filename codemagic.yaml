@@ -69,8 +69,8 @@ workflows:
               # Make the POST request to trigger the build for the current branch
               curl -H "Content-Type: application/json" -H "x-auth-token: $CM_API_KEY" \
                 --data '{
-                  "appId": "'${APP_ID}'",
-                  "workflowId": "'${WORKFLOW}'",
+                  "appId": "645a0fafc5f77d006a400bf1",
+                  "workflowId": "android-workflow",
                   "branch": "'${BRANCH}'"
                 }' \
                 https://api.codemagic.io/builds
