@@ -242,7 +242,7 @@ workflows:
         groups:
             - bundleVersion
         vars:
-          APP_ID: 64915681451d0c4b9089af49 # <-- Put your APP ID here
+          APP_ID: 6450783332 # <-- Put your APP ID here
         flutter: stable
         xcode: latest
         cocoapods: default
