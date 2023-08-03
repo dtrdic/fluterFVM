@@ -152,9 +152,17 @@ workflows:
           - name: Get Flutter packages
             script: |
               flutter packages pub get
-          - name: Build aab
+          # - name: Build aab
+          #   script: | 
+          #       flutter build appbundle 
+          - name: Build APK
             script: | 
-                flutter build appbundle 
+              android-app-bundle build-universal-apk \
+              --bundle 'project_directory/build/**/outputs/**/*.aab' \
+              --ks /tmp/keystore.keystore \
+              --ks-pass $CM_KEYSTORE_PASSWORD \
+              --ks-key-alias $CM_KEY_ALIAS \
+              --key-pass $CM_KEY_PASSWORD
 
           - name: Build AAB with Flutter
             script: |
@@ -173,6 +181,7 @@ workflows:
 
         artifacts:
           - build/**/outputs/**/*.aab
+          - build/**/outputs/**/*.apk
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - debug-info.zip
