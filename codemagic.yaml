@@ -138,9 +138,9 @@ workflows:
           #     export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
           #     export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
 
-          # - name: Install Firebase Crashlytics
-          #   script: | 
-          #     flutter pub add firebase_crashlytics
+          - name: Install Firebase Crashlytics
+            script: | 
+              flutter pub add firebase_crashlytics
 
           - name: Set value from settings.env
             script: | 
@@ -172,34 +172,12 @@ workflows:
                 # --split-debug-info \
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
 
-          # - name: zip file
-          #   script: | 
-          #     cd $CM_BUILD_DIR/debug-info/..
-          #     zip -r debug-info.zip debug-info -x "*/__MACOSX/*"
-
-          # - name: Upload Debug Symbols to Google Play
-          #   script: |
-          #     LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME")
-
-          #     PACKAGE_NAME="$PACKAGE_NAME"
-          #     EDIT_ID="1.0.324" #vjerojatno krivo
-          #     APK_VERSION_CODE="$LATEST_GOOGLE_PLAY_BUILD_NUMBER"
-          #     DEOBFUSCATION_FILE_TYPE="nativeCode"
-
-          #     UPLOAD_URL="https://androidpublisher.googleapis.com/upload/androidpublisher/v3/applications/$PACKAGE_NAME/edits/$EDIT_ID/apks/$APK_VERSION_CODE/deobfuscationFiles/$DEOBFUSCATION_FILE_TYPE"
-              
-          #     # HTTP POST request to upload the file
-          #     curl -X POST -H "Authorization: Bearer $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2" \
-          #         -H "Content-Type: application/octet-stream" \
-          #         --upload-file debug-info.zip \
-          #         "$UPLOAD_URL"
-
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - debug-info.zip
-          #- $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+          - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
         publishing:
           # firebase:
           #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT2
@@ -214,20 +192,20 @@ workflows:
             track: internal
             changes_not_sent_for_review: true
             submit_as_draft: true
-          # scripts:
-          #   - name: Upload debug symbols to Firebase Crashlytics
-          #     script: | 
-          #       echo "Find build artifacts"
-          #       dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "*.dSYM" | head -1)
-          #       if [[ -z ${dsymPath} ]]
-          #       then
-          #         echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
-          #       else
-          #         echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
-          #         ls -d -- ios/Pods/*
-          #         $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
-          #           -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
-          #       fi
+          scripts:
+            - name: Upload debug symbols to Firebase Crashlytics
+              script: | 
+                echo "Find build artifacts"
+                dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "*.dSYM" | head -1)
+                if [[ -z ${dsymPath} ]]
+                then
+                  echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
+                else
+                  echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
+                  ls -d -- ios/Pods/*
+                  $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
+                    -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
+                fi
 
     ios-workflow:
       name: iOS Workflow
