@@ -157,7 +157,12 @@ workflows:
           #       flutter build appbundle 
           - name: Build APK
             script: | 
-               flutter build apk --debug
+              android-app-bundle build-universal-apk \
+              --bundle 'project_directory/build/**/outputs/**/*.aab' \
+              --ks /Users/david/Desktop/keystore/david.keystore \
+              --ks-pass $CM_KEYSTORE_PASSWORD \
+              --ks-key-alias $CM_KEY_ALIAS \
+              --key-pass $CM_KEY_PASSWORD
 
           - name: Build AAB with Flutter
             script: |
