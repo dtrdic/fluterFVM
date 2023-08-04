@@ -140,12 +140,6 @@ workflows:
           - name: Install Firebase Crashlytics
             script: | 
               flutter pub add firebase_crashlytics
-
-          - name: Set value from settings.env
-            script: | 
-              source settings.env
-
-              echo "$GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3" >> $CM_ENV
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties" --verbose
@@ -188,7 +182,7 @@ workflows:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
             track: internal
             changes_not_sent_for_review: true
-            submit_as_draft: false
+            submit_as_draft: true
           scripts:
             - name: Upload debug symbols to Firebase Crashlytics
               script: | 
