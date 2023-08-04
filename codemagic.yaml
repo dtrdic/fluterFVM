@@ -177,10 +177,10 @@ workflows:
           - debug-info.zip
           - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
         publishing:
-          firebase:
-              firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-              android:
-                app_id: 1:701760780130:android:78886c544e828688f09e3b
+          # firebase:
+          #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+          #     android:
+          #       app_id: 1:701760780130:android:78886c544e828688f09e3b
           email:
             recipients:
               - david@nevercode.io
