@@ -137,9 +137,6 @@ workflows:
           #     export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
           #     export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
 
-          - name: Install Firebase Crashlytics
-            script: | 
-              flutter pub add firebase_crashlytics
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -163,40 +160,25 @@ workflows:
                 # --obfuscate \
                 # --split-debug-info \
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
-
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - debug-info.zip
-          - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
         publishing:
-          firebase:
-              firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-              android:
-                app_id: 1:701760780130:android:78886c544e828688f09e3b
+          # firebase:
+          #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+          #     android:
+          #       app_id: 1:701760780130:android:78886c544e828688f09e3b
           email:
             recipients:
               - david@nevercode.io
-          # google_play:
-          #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
-          #   track: internal
-          #   changes_not_sent_for_review: true
-          #   submit_as_draft: true
-          scripts:
-            - name: Upload debug symbols to Firebase Crashlytics
-              script: | 
-                echo "Find build artifacts"
-                dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "*.dSYM" | head -1)
-                if [[ -z ${dsymPath} ]]
-                then
-                  echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
-                else
-                  echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
-                  ls -d -- ios/Pods/*
-                  $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
-                    -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
-                fi
+          google_play:
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
+            track: internal
+            changes_not_sent_for_review: true
+            submit_as_draft: true
+
 
     ios-workflow:
       name: iOS Workflow
@@ -216,6 +198,9 @@ workflows:
         xcode: latest
         cocoapods: default
       scripts:
+        - name: Install Firebase Crashlytics
+          script: | 
+              flutter pub add firebase_crashlytics
         - name: Set up code signing settings on Xcode project
           script: |
             xcode-project use-profiles
@@ -251,6 +236,7 @@ workflows:
         - build/ios/ipa/*.ipa
         - /tmp/xcodebuild_logs/*.log
         - flutter_drive.log
+        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
       publishing:
         # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
         email:
@@ -262,6 +248,24 @@ workflows:
         app_store_connect:
           auth: integration
           submit_to_app_store: true
+        firebase:
+            firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+            android:
+              app_id: 1:701760780130:android:78886c544e828688f09e3b
+        scripts:
+            - name: Upload debug symbols to Firebase Crashlytics
+              script: | 
+                echo "Find build artifacts"
+                dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "*.dSYM" | head -1)
+                if [[ -z ${dsymPath} ]]
+                then
+                  echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
+                else
+                  echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
+                  ls -d -- ios/Pods/*
+                  $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols \
+                    -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
+                fi
           
           # # Configuration related to TestFlight (optional)
           # # Note: This action is performed during post-processing.
