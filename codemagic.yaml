@@ -209,8 +209,7 @@ workflows:
             flutter packages pub get
         - name: Install CocoaPods dependencies
           script: | 
-            find . -name "Podfile"
-            pod install --repo-update
+            find . -name "Podfile" -execdir pod install --repo-update \;
             pod update Firebase/CoreOnly
         - name: Install pods
           script: | 
