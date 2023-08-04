@@ -181,7 +181,7 @@ workflows:
           firebase:
               firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
               android:
-                app_id: 1:904035439120:android:6b987f5e2e4b38a7dfb095
+                app_id: 1:701760780130:android:78886c544e828688f09e3b
           email:
             recipients:
               - david@nevercode.io
