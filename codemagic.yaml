@@ -207,10 +207,9 @@ workflows:
         - name: Get Flutter packages
           script: | 
             flutter packages pub get
-        # - name: Install CocoaPods dependencies
-        #   script: | 
-        #     pod repo update
-        #     pod install
+        - name: Install CocoaPods dependencies
+          script: | 
+            pod install --repo-update
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
