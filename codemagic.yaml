@@ -210,6 +210,7 @@ workflows:
         - name: Install CocoaPods dependencies
           script: | 
             pod install --repo-update
+            pod update Firebase/CoreOnly
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
