@@ -172,7 +172,6 @@ workflows:
 
         artifacts:
           - build/**/outputs/**/*.aab
-          - build/**/outputs/**/*.apk
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - debug-info.zip
