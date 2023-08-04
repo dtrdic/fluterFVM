@@ -52,7 +52,7 @@ workflows:
             - testKeystore
           groups:
             - firebase_credentials
-            - google_play_credentials2
+            - google_credentials3
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal
@@ -185,7 +185,7 @@ workflows:
             recipients:
               - david@nevercode.io
           google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
             track: internal
             changes_not_sent_for_review: true
             submit_as_draft: false
