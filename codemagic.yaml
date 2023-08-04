@@ -181,15 +181,15 @@ workflows:
           firebase:
               firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
               android:
-                app_id: 1:1037460898728:android:d0779b82fdcb0f3e95539d
+                app_id: 1:904035439120:android:6b987f5e2e4b38a7dfb095
           email:
             recipients:
               - david@nevercode.io
-          # google_play:
-          #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
-          #   track: internal
-          #   changes_not_sent_for_review: true
-          #   submit_as_draft: true
+          google_play:
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS2
+            track: internal
+            changes_not_sent_for_review: true
+            submit_as_draft: true
           scripts:
             - name: Upload debug symbols to Firebase Crashlytics
               script: | 
