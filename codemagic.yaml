@@ -191,7 +191,7 @@ workflows:
           distribution_type: app_store
           bundle_identifier: io.codemagic.dtrdic6
         groups:
-            - bundleVersion
+            - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
         flutter: stable
