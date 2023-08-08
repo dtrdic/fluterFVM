@@ -257,9 +257,9 @@ workflows:
             firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
             ios:
               app_id: 1:701760780130:ios:d06fc5333b7c4ed3f09e3b
-        google_play:
-            credentials: $GOOGLE_APPLICATION_CREDENTIALS
-            track: internal
+        # google_play:
+        #     credentials: $GOOGLE_APPLICATION_CREDENTIALS
+        #     track: internal
         scripts:
             - name: Upload debug symbols to Firebase Crashlytics
               script: | 
