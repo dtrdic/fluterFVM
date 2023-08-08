@@ -255,7 +255,7 @@ workflows:
           #submit_to_app_store: true
         firebase:
             firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-            android:
+            ios:
               app_id: 1:701760780130:ios:d06fc5333b7c4ed3f09e3b
         scripts:
             - name: Upload debug symbols to Firebase Crashlytics
