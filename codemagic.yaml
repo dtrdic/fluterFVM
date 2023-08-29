@@ -187,6 +187,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
+        node: 18.17.1
         ios_signing:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
@@ -237,9 +238,9 @@ workflows:
         #        CODE_SIGNING_ALLOWED=NO
       
       artifacts:
+        - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
         - build/ios/ipa/*.ipa
-        - /tmp/xcodebuild_logs/*.log
         - flutter_drive.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
       publishing:
