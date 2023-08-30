@@ -59,7 +59,7 @@ workflows:
         triggering:
           events:
               #- pull_request 
-              - push
+              #- push
               - tag
           tag_patterns:                 # Include or exclude watched tag labels
             - pattern: '*'
@@ -280,6 +280,7 @@ workflows:
                     -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
                 fi
 
+#find /Users/david/Desktop/my-projects/flutterWithFVM/flutter_fvm/build/ios/archive/Runner.xcarchive -name "*.dSYM" | xargs -I {} firebase crashlytics symbols {} --include
 
     # ios-workflow:
     #   name: iOS Firebase Crashlytics
