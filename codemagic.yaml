@@ -62,7 +62,7 @@ workflows:
               #- push
               - tag
           tag_patterns:                 
-            - pattern: '[0-999].[0-999].[0-999]'
+            - pattern: '([0-999]).([0-999]).([0-999])'
               include: true
           # branch_patterns:
           # - pattern: "main"
