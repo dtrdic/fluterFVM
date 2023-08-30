@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
-          childrenw: <Widget>[
+          children: <Widget>[
             const Text(
               'You have pushed the button this many times:',
             ),
