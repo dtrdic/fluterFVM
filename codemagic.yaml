@@ -60,6 +60,10 @@ workflows:
           events:
               #- pull_request 
               - push
+              - tag
+          tag_patterns:                 # Include or exclude watched tag labels
+            - pattern: '*'
+              include: true
           # branch_patterns:
           # - pattern: "main"
           #   include: true
