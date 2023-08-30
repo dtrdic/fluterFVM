@@ -62,7 +62,7 @@ workflows:
               #- push
               - tag
           tag_patterns:                 
-            - pattern: '^(\d+\.\d+\.\d+)$'
+            - pattern: '[0-9].[0-9].[0-9]'
               include: true
           # branch_patterns:
           # - pattern: "main"
