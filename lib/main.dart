@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 // import 'firebase_options.dart';
 
 void main() {
-  // Intentionally throw an exception
-  throw Exception("Intentional exception on app start");
   runApp(const MyApp());
 }
 
