@@ -11,7 +11,7 @@ void main() {
 
 void fatalErrorOnStartup() {
   // This function will trigger a fatal error and crash the app
-  final errorMessage = "This is an intentional fatal error on startup!";
+  const errorMessage = "This is an intentional fatal error on startup!";
   final stackTrace = StackTrace.current;
   FlutterError.reportError(FlutterErrorDetails(
     exception: FlutterError(errorMessage),
