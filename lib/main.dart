@@ -1,23 +1,15 @@
-// import 'dart:ui';
 
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-// import 'package:firebase_core/firebase_core.dart';
 
-Future<void> main() async {
-  //  WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
 
-  //   WidgetsFlutterBinding.ensureInitialized();
-  //   await Firebase.initializeApp();
-  //   FlutterError.onError = (errorDetails) {
-  //     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  //   };
-  //   // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  //   PlatformDispatcher.instance.onError = (error, stack) {
-  //     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-  //     return true;
-  //   };
+  // await Firebase.initializeApp();
+
+  // // Pass all uncaught "fatal" errors from the framework to Crashlytics
+  // FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
   runApp(const MyApp());
 }
@@ -30,7 +22,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Intentionally throw an exception on startup
-    throw Exception("Intentional exception on startup");
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
