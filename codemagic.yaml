@@ -228,7 +228,7 @@ workflows:
               --export-options-plist=/Users/builder/export_options.plist
         - name: flutter run
           script: | 
-            flutter run
+            flutter run -d all
         # - name: build an unsigned .app
         #   script: | 
         #     # build using project
