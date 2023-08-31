@@ -186,7 +186,7 @@ workflows:
 
     ios-workflow:
       name: iOS Workflow
-      instance_type: mac_pro
+      instance_type: mac_mini_m2
       max_build_duration: 120
       integrations:
         app_store_connect: DavidAPIkey 
@@ -200,7 +200,6 @@ workflows:
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
         flutter: stable
-        xcode: latest
         cocoapods: default
       scripts:
         - name: Install Firebase Crashlytics
