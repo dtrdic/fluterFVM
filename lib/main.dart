@@ -3,23 +3,9 @@ import 'package:flutter/material.dart';
 // import 'firebase_options.dart';
 
 void main() {
-  // Intentionally crashing the app on startup
-  fatalErrorOnStartup();
-
   runApp(const MyApp());
 }
 
-void fatalErrorOnStartup() {
-  // This function will trigger a fatal error and crash the app
-  const errorMessage = "This is an intentional fatal error on startup!";
-  final stackTrace = StackTrace.current;
-  FlutterError.reportError(FlutterErrorDetails(
-    exception: FlutterError(errorMessage),
-    stack: stackTrace,
-    library: "main.dart",
-    context: ErrorDescription("App startup"),
-  ));
-}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,8 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-        throw Exception("Intentional exception on startup");
-
+    
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
