@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    
+    // Intentionally throw an exception on startup
+    throw Exception("Intentional exception on startup");
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -111,6 +112,12 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            TextButton(
+      onPressed: () {
+        throw Exception("Test Exception"); // This will throw an exception when the button is pressed
+      },
+      child: const Text("Throw Test Exception"),
+    ),
           ],
         ),
       ),

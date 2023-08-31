@@ -227,9 +227,9 @@ workflows:
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist
 
-        - name: flutter emulators
+        - name: flutter run
           script: | 
-            flutter emulators --launch ios
+            flutter run
         # - name: build an unsigned .app
         #   script: | 
         #     # build using project
