@@ -205,7 +205,7 @@ workflows:
         - name: Install Firebase Crashlytics
           script: | 
               flutter pub add firebase_crashlytics
-              flutterfire configure
+              #flutterfire configure
         - name: Set up code signing settings on Xcode project
           script: |
             xcode-project use-profiles
