@@ -38,7 +38,7 @@ dependencies:
   flutter_driver:
     sdk: flutter
   test: ^1.22.0
-  firebase_core: ^2.13.1
+  firebase_core: ^2.15.1
   firebase_crashlytics: ^3.3.5
 
 dev_dependencies:
