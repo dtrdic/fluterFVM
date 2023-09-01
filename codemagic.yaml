@@ -192,6 +192,7 @@ workflows:
         app_store_connect: DavidAPIkey 
       environment:
         node: 18.17.1
+        npm: latest
         ios_signing:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6

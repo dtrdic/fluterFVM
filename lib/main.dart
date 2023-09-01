@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Intentionally throw an exception on startup
-    throw Exception('Namjerni exception');
+    //throw Exception('Namjerni exception');
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
