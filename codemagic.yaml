@@ -65,8 +65,8 @@ workflows:
           #   - pattern: '+([0-9]).+([0-9]).+([0-9])' #123.32.111
           #     include: true
           
-          # branch_patterns:
-          # - pattern: "main"
+          branch_patterns:
+          - pattern: "main"
           #   include: true
           #   source: false
         scripts:
