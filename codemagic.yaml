@@ -43,7 +43,7 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: mac_mini_m1
+        instance_type: linux_x2
         labels:
           - ${PACKAGE_NAME}
         environment:
@@ -71,9 +71,11 @@ workflows:
           #   include: true
           #   source: false
         scripts:
-          # - name: Decode Google credentials 
-          #   script: |
+          - name: pack install core22
+            script: |
+                pack install core22
           #     echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
+
 
           # - name: Edit JAVA OPTS
           #   script: |
