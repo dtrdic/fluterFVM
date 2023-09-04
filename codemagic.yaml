@@ -73,7 +73,7 @@ workflows:
         scripts:
           - name: pack install core22
             script: |
-                sudo snap install core22
+                snap install core22
           #     echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
 
 
