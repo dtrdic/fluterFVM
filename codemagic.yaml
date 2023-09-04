@@ -47,6 +47,7 @@ workflows:
         labels:
           - ${PACKAGE_NAME}
         environment:
+          xcode: 15
           flutter: fvm
           android_signing:
             - testKeystore
