@@ -64,7 +64,7 @@ workflows:
           # tag_patterns:                 
           #   - pattern: '+([0-9]).+([0-9]).+([0-9])' #123.32.111
           #     include: true
-          #test1
+
           branch_patterns:
           - pattern: "main"
           #   include: true
