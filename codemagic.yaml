@@ -59,11 +59,12 @@ workflows:
         triggering:
           events:
               #- pull_request 
-              #- push
-              - tag
-          tag_patterns:                 
-            - pattern: '+([0-9]).+([0-9]).+([0-9])' #123.32.111
-              include: true
+              - push
+          #     - tag
+          # tag_patterns:                 
+          #   - pattern: '+([0-9]).+([0-9]).+([0-9])' #123.32.111
+          #     include: true
+          
           # branch_patterns:
           # - pattern: "main"
           #   include: true
@@ -192,7 +193,6 @@ workflows:
         app_store_connect: DavidAPIkey 
       environment:
         node: 18.17.1
-        npm: latest
         ios_signing:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
