@@ -202,10 +202,6 @@ workflows:
         flutter: stable
         cocoapods: default
       scripts:
-        - name: Install Firebase Crashlytics
-          script: | 
-              flutter pub add firebase_crashlytics
-              #flutterfire configure
         - name: Set up code signing settings on Xcode project
           script: |
             xcode-project use-profiles
