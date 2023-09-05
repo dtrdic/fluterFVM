@@ -227,9 +227,9 @@ workflows:
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist
-        - name: flutter run
-          script: | 
-            flutter run -d all
+        # - name: flutter run
+        #   script: | 
+        #     flutter run -d all
         # - name: build an unsigned .app
         #   script: | 
         #     # build using project
