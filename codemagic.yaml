@@ -47,7 +47,6 @@ workflows:
         labels:
           - ${PACKAGE_NAME}
         environment:
-          xcode: 15
           flutter: fvm
           android_signing:
             - testKeystore
@@ -191,7 +190,6 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        node: 18.17.1
         ios_signing:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
