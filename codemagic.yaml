@@ -139,10 +139,6 @@ workflows:
           #     # Set the environment variables
           #     export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
           #     export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
-          - name: This can be deleted
-            script: |
-              npm install
-              npm run build
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -209,33 +205,15 @@ workflows:
         - name: Get Flutter packages
           script: | 
             flutter packages pub get
-        # - name: Install CocoaPods dependencies
-        #   script: | 
-        #     cd ios
-        #     pod update
-        #     pod install
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
         - name: Flutter build ipa and automatic versioning
           script: |
             flutter build ipa --release \
-              --build-name=3.0.0 \
+              --build-name=4.0.0 \
               --build-number=$(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID") + 1)) \
               --export-options-plist=/Users/builder/export_options.plist
-        # - name: flutter run
-        #   script: | 
-        #     flutter run -d all
-        # - name: build an unsigned .app
-        #   script: | 
-        #     # build using project
-        #     xcodebuild build \
-        #        -project "Runner.xcodeproj" \
-        #        -scheme "Runner" \
-        #        CODE_SIGN_IDENTITY="" \
-        #        CODE_SIGNING_REQUIRED=NO \
-        #        CODE_SIGNING_ALLOWED=NO
-      
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
