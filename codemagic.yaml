@@ -191,7 +191,7 @@ workflows:
       environment:
         ios_signing:
           distribution_type: ad_hoc
-          bundle_identifier: DTRDIC6
+          bundle_identifier: $DTRDIC6
         groups:
             - firebase_credentials
             - test_variable
