@@ -49,7 +49,7 @@ workflows:
         environment:
           flutter: fvm
           android_signing:
-            - testKeystore
+            - lubenica
           groups:
             - firebase_credentials
             - google_credentials3
