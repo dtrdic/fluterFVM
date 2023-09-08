@@ -191,9 +191,10 @@ workflows:
       environment:
         ios_signing:
           distribution_type: ad_hoc
-          bundle_identifier: io.codemagic.dtrdic6
+          bundle_identifier: DTRDIC6
         groups:
             - firebase_credentials
+            - test_variable
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
         flutter: stable
