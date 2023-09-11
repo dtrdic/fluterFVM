@@ -204,7 +204,7 @@ workflows:
           script: |
             xcode-project use-profiles
         - name: GOGGLESETVICE PLIST base 64
-          script: echo $GOOGLESERVICE_INFO_PLIST | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist 
+          script: echo $GOOGLESERVICE_INFO_PLIST > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist 
                   # echo "\nListing iOS Directory to confirm the GoogleService-Info.plist is there! "
                   # ls ios/Runner/
         - name: Get Flutter packages
