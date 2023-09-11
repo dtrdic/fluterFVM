@@ -203,14 +203,16 @@ workflows:
         - name: Set up code signing settings on Xcode project
           script: |
             xcode-project use-profiles
+        - name: GOGGLESETVICE PLIST base 64
+          script: echo $GOOGLESERVICE_INFO_PLIST | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist 
+                  echo "\nListing iOS Directory to confirm the GoogleService-Info.plist is there! "
+                  ls ios/Runner/
         - name: Get Flutter packages
           script: | 
             flutter packages pub get
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
-        - name: GOGGLESETVICE PLIST base 64
-          script: echo $GOOGLESERVICE_INFO_PLIST | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist 
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
