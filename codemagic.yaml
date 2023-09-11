@@ -194,6 +194,7 @@ workflows:
           bundle_identifier: io.codemagic.dtrdic6
         groups:
             - firebase_credentials
+            - GOOLGESERVICE_PLIST
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
         flutter: stable
@@ -208,6 +209,8 @@ workflows:
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
+        - name: GOGGLESETVICE PLIST base 64
+          script: echo $GOOGLESERVICE_INFO_PLIST | base64 --decode > $FCI_BUILD_DIR/ios/Runner/GoogleService-Info.plist 
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
