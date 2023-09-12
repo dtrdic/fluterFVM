@@ -199,7 +199,7 @@ workflows:
         flutter: stable
         cocoapods: default
       scripts:
-        - name: Set up code signing settings on Xcode project
+        - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
         - name: Get Flutter packages
