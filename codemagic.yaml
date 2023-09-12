@@ -194,7 +194,6 @@ workflows:
           bundle_identifier: io.codemagic.dtrdic6
         groups:
             - firebase_credentials
-            - GOOGLESERVICE_PLIST
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
         flutter: stable
@@ -203,10 +202,6 @@ workflows:
         - name: Set up code signing settings on Xcode project
           script: |
             xcode-project use-profiles
-        # - name: GOGGLESETVICE PLIST base 64
-        #   script: echo $GOOGLESERVICE_INFO_PLIST | base64 --decode > $CM_BUILD_DIR/ios/Runner/GoogleService-Info.plist 
-                  # echo "\nListing iOS Directory to confirm the GoogleService-Info.plist is there! "
-                  # ls ios/Runner/
         - name: Get Flutter packages
           script: | 
             flutter packages pub get
@@ -216,7 +211,7 @@ workflows:
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
-            flutter build ipa --release \
+            flutter build ipa --release --flavor free \
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist
@@ -227,7 +222,6 @@ workflows:
         - flutter_drive.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
       publishing:
-        # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
         email:
           recipients:
             - david@nevercode.io
@@ -258,7 +252,6 @@ workflows:
                   $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
                 fi
 
-#find /Users/david/Desktop/my-projects/flutterWithFVM/flutter_fvm/build/ios/archive/Runner.xcarchive -name "*.dSYM" | xargs -I {} firebase crashlytics symbols {} --include
 
   # ios-workflow:
   #   name: iOS Firebase Crashlytics
