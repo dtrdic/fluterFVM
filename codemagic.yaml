@@ -47,9 +47,10 @@ workflows:
         labels:
           - ${PACKAGE_NAME}
         environment:
-          flutter: fvm
+          #flutter: fvm
           android_signing:
-            - testKeystore
+            #- testKeystore
+            - lebenica
           groups:
             - firebase_credentials
             - google_credentials3
@@ -198,8 +199,11 @@ workflows:
           APP_ID: 6450783332 # <-- Put your APP ID here
         flutter: stable
         cocoapods: default
+      triggering:
+          events:
+              - pull_request
       scripts:
-        - name: Set up code signing settings on Xcode project
+        - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
         - name: Get Flutter packages
