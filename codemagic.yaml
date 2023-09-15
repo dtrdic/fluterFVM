@@ -47,10 +47,10 @@ workflows:
         labels:
           - ${PACKAGE_NAME}
         environment:
+          npm: latest
           #flutter: fvm
           android_signing:
-            #- testKeystore
-            - lebenica
+            - testKeystore
           groups:
             - firebase_credentials
             - google_credentials3
