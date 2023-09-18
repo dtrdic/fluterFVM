@@ -48,7 +48,7 @@ workflows:
           - ${PACKAGE_NAME}
         environment:
           npm: latest
-          #flutter: fvm
+          flutter: 3.13.3
           android_signing:
             - testKeystore
           groups:
