@@ -145,9 +145,9 @@ workflows:
           - name: Get Flutter packages
             script: |
               flutter packages pub get
-          # - name: Build aab
-          #   script: | 
-          #       flutter build appbundle 
+          - name: Build aab
+            script: | 
+                flutter build appbundle 
           - name: Build AAB with Flutter
             script: |
               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
