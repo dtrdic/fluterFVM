@@ -2,6 +2,7 @@
     package="io.codemagic.dtrdic6">
     <uses-feature
     android:name="android.hardware.type.watch"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="flutter_fvm"
         android:name="${applicationName}"
