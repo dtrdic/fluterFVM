@@ -47,7 +47,6 @@ workflows:
         labels:
           - ${PACKAGE_NAME}
         environment:
-          npm: latest
           flutter: 3.13.3
           android_signing:
             - testKeystore
