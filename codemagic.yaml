@@ -140,6 +140,9 @@ workflows:
           #     # Set the environment variables
           #     export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
           #     export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
+          - name: Build aab
+            script: | 
+                flutter build appbundle 
           - name: 🐦 Setup Shorebird
             script: |
               # Install Shorebird
