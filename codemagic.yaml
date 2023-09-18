@@ -47,7 +47,7 @@ workflows:
         labels:
           - ${PACKAGE_NAME}
         environment:
-          flutter: latest
+          #flutter: fvm
           android_signing:
             - testKeystore
           groups:
