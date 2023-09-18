@@ -147,6 +147,8 @@ workflows:
 
               # Add Shorebird to PATH
               echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
+          - name: 🚀 Shorebird INIT
+            script:  shorebird init
           - name: 🚀 Shorebird Patch
             script:  shorebird patch android --force
           - name: Set up local.properties
