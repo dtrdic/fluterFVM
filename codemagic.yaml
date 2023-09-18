@@ -51,6 +51,7 @@ workflows:
           android_signing:
             - testKeystore
           groups:
+            - shorebird_token
             - firebase_credentials
             - google_credentials3
           vars:
