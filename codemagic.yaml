@@ -160,7 +160,8 @@ workflows:
             find . -name "Podfile" -execdir pod install \;
         - name: check version number JSON
           script: | 
-            app-store-connect get-latest-testflight-build-number "$APP_STORE_ID" --json
+            latest_build_number=$(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID" --json)
+            echo "$latest_build_number"
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
