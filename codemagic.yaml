@@ -158,11 +158,14 @@ workflows:
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
+        - name: check version number JSON
+          script: | 
+            echo $(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_ID" --json)))
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
             flutter build ipa --release --flavor free \
-              --build-name=1.0.$BUILD_NUMBER-beta.2 \
+              --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist
       artifacts:
