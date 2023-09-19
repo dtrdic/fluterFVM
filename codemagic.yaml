@@ -139,6 +139,7 @@ workflows:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
         groups:
+            - google_play_credentials
             - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
