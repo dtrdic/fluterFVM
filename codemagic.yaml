@@ -161,9 +161,8 @@ workflows:
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
-            agvtool new-marketing-version "$(echo "-beta.2")"
             flutter build ipa --release --flavor free \
-              --build-name=1.0.$BUILD_NUMBER \
+              --build-name=1.0.$BUILD_NUMBER-beta.2 \
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist
       artifacts:
@@ -220,11 +219,6 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal
-        triggering:
-          events:
-              - push
-          branch_patterns:
-          - pattern: "main"
         scripts:
           - name: Build aab
             script: | 
