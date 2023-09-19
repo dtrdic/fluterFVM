@@ -70,76 +70,6 @@ workflows:
           #     include: true
           
         scripts:
-          #     echo $FIREBASE_SERVICE_ACCOUNT > $GOOGLE_APPLICATION_CREDENTIALS
-
-
-          # - name: Edit JAVA OPTS
-          #   script: |
-          #     export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.se.ee'
-          #     # or
-          #     # If the above code does not take effect, then export the java.xml.bind like below code.
-          #     #export JAVA_OPTS='-XX:+IgnoreUnrecognizedVMOptions --add-modules java.xml.bind'
-         
-          # - name: Install Android NDK
-          #   script: |
-          #       set -e
-          #       set -x
-          #       NDK_VERSION="android-ndk-r23c"
-          #       NDK_URL="https://dl.google.com/android/repository/${NDK_VERSION}-linux.zip"
-          #       NDK_DIR="android-ndk23"
-
-          #       # Create the target directory
-          #       mkdir -p ${NDK_DIR}
-
-          #       # Download NDK
-          #       curl -o ${NDK_VERSION}.zip ${NDK_URL}
-          #       unzip -q ${NDK_VERSION}.zip -d ${NDK_DIR}
-          #       rm ${NDK_VERSION}.zip
-
-          #       # Set NDK environment variable
-          #       export ANDROID_NDK_HOME=${NDK_DIR}/${NDK_VERSION}
-
-          #       # Add NDK to PATH
-          #       export PATH=${ANDROID_NDK_HOME}:$PATH
-
-          #       # Print NDK version
-          #       ndk-build --version
-
-          # - name: SUpdate build tools with Android SDK manager
-          #   script: |
-          #     set -e
-          #     set -x
-          #     $ANDROID_SDK_ROOT/tools/bin/sdkmanager --install "build-tools;33.0.0" && cd /usr/local/share/android-sdk/build-tools/33.0.0 \
-          #     && mv d8 dx \
-          #     && cd lib \
-          #     && mv d8.jar dx.jar
-
-          # - name: Update build tools with Android SDK manager
-          #   script: |
-          #     # Set the Android home directory
-          #     ANDROID_HOME="$HOME/android-sdk"
-
-          #     # Set the download URL and file name
-          #     SDK_TOOLS_VERSION="6200805"
-          #     SDK_TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-${SDK_TOOLS_VERSION}_latest.zip"
-          #     SDK_TOOLS_FILE="sdk-tools.zip"
-
-          #     # Create the command-line tools directory
-          #     CMDLINE_TOOLS_DIR="${ANDROID_HOME}/command-line-tools"
-          #     mkdir -p "${CMDLINE_TOOLS_DIR}"
-
-          #     # Download the SDK Command-line Tools
-          #     curl -o "${SDK_TOOLS_FILE}" "${SDK_TOOLS_URL}"
-
-          #     # Unpack the SDK Command-line Tools to the appropriate directory
-          #     unzip -q "${SDK_TOOLS_FILE}" -d "${CMDLINE_TOOLS_DIR}"
-
-          #     # Clean up the downloaded zip file
-          #     rm "${SDK_TOOLS_FILE}"
-
-          #     # Set the environment variables
-          #     export ANDROID_SDK_ROOT="${CMDLINE_TOOLS_DIR}"
-          #     export PATH="${ANDROID_SDK_ROOT}/bin:${ANDROID_SDK_ROOT}/platform-tools:${PATH}"
           - name: Build aab
             script: | 
                 flutter build appbundle 
@@ -149,7 +79,7 @@ workflows:
               curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
 
               # Add Shorebird to PATH
-              export PATH="/home/builder/.shorebird/bin:$PATH" >> $CM_ENV
+              echo PATH="/home/builder/.shorebird/bin:$PATH" >> $CM_ENV
               #echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
           # - name: 🚀 Shorebird INIT
           #   script:  shorebird init
