@@ -52,7 +52,7 @@ workflows:
             - testKeystore
           groups:
             - shorebird_token
-            - firebase_credentials_android
+            - firebase_credentials
             - google_credentials3
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
@@ -145,15 +145,11 @@ workflows:
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
-        - name: check version number JSON
-          script: | 
-            latest_build_number=$(app-store-connect get-latest-testflight-build-number "$APP_ID" --json)
-            echo "$latest_build_number"
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
             flutter build ipa --release --flavor free \
-              --build-name=1.0.$BUILD_NUMBER \
+              --build-name=1.0.$BUILD_NUMBER.beta.2 \
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist
       artifacts:
