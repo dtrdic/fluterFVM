@@ -117,6 +117,9 @@ workflows:
 
 
     ios-workflow:
+      triggering:
+          events:
+              - pull_request
       name: iOS Workflow
       instance_type: mac_mini_m1
       max_build_duration: 120
@@ -133,9 +136,6 @@ workflows:
           APP_ID: 6450783332 # <-- Put your APP ID here
         flutter: stable
         cocoapods: default
-      triggering:
-          events:
-              - pull_request
       scripts:
         - name: Set up code signing settings on Xcode project 
           script: |
