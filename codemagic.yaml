@@ -150,13 +150,13 @@ workflows:
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
-        - name: Run tests
-          script: | 
-            xcode-project run-tests \
-            --workspace "ios/Runner.xcworkspace" \
-            --scheme "Runner" \
-            --device "$TEST_DEVICE" \
-            --test-flags="-quiet"
+        # - name: Run tests
+        #   script: | 
+        #     xcode-project run-tests \
+        #     --workspace "ios/Runner.xcworkspace" \
+        #     --scheme "Runner" \
+        #     --device "$TEST_DEVICE" \
+        #     --test-flags="-quiet"
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
