@@ -123,6 +123,9 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
+        xcode: 15
+        cocoapods: 1.13.0
+        flutter: stable
         ios_signing:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
@@ -131,9 +134,6 @@ workflows:
             - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
-        flutter: stable
-        xcode: 15
-        # cocoapods: 1.13.0
       triggering:
           events:
               - push
