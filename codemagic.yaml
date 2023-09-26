@@ -123,7 +123,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        xcode: 15
+        #xcode: 15
         ios_signing:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
