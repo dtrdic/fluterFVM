@@ -128,6 +128,7 @@ workflows:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
         groups:
+            - test_device
             - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
@@ -149,6 +150,13 @@ workflows:
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
+        - name: Run tests
+          script: | 
+            xcode-project run-tests \
+            --workspace "Runner.xcworkspace" \
+            --scheme "Runner" \
+            --device "$TEST_DEVICE" \
+            --test-flags="-quiet"
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
