@@ -124,8 +124,7 @@ workflows:
         app_store_connect: DavidAPIkey 
       environment:
         xcode: 15
-        node: 16.14.2
-        #cocoapods: 1.13.0
+        cocoapods: 1.13.0
         flutter: stable
         ios_signing:
           distribution_type: ad_hoc
@@ -153,7 +152,7 @@ workflows:
             find . -name "Podfile" -execdir pod install \;
         - name: Run tests
           script: | 
-            xcode-project run-flutter_fvmTests \
+            xcode-project run-tests \
             --workspace "ios/Runner.xcworkspace" \
             --scheme "Runner" \
             --device "$TEST_DEVICE" \
