@@ -21,6 +21,13 @@ final class flutter_fvmTests: XCTestCase {
         XCTAssertEqual(1 + 1, 2)
     }
 
+    func testCalculateSum() {
+        let controller = CalculatorController()
+        controller.firstNumber = "2"
+        controller.secondNumber = "3"
+        controller.calculateSum()
+        XCTAssertEqual(controller.result, 5)
+    }
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
