@@ -126,7 +126,7 @@ workflows:
         xcode: 15
         node: 16.20.0
         cocoapods: 1.13.0
-        flutter: stable
+        flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
@@ -142,12 +142,12 @@ workflows:
             - pattern: main
           cancel_previous_builds: true
       scripts:
-        - name: brew install 16
-          script: |
-            brew install node@16
-            brew unlink node
-            brew link --force --overwrite node@16
-            node --version
+        # - name: brew install 16
+        #   script: |
+        #     brew install node@16
+        #     brew unlink node
+        #     brew link --force --overwrite node@16
+        #     node --version
         - name: node version
           script: |
              node -v
