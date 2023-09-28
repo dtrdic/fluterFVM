@@ -142,6 +142,9 @@ workflows:
             - pattern: main
           cancel_previous_builds: true
       scripts:
+        - name: yarn isntal
+          script: |
+            yarn install
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
