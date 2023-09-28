@@ -145,6 +145,9 @@ workflows:
         - name: alias
           script: |
              alias node='/usr/local/bin/node'
+        - name: node version
+          script: |
+             node -v
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
