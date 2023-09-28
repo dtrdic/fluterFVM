@@ -153,7 +153,7 @@ workflows:
         - name: Run tests
           script: | 
             xcode-project run-tests \
-            --workspace "ios/flutter_fvmTests" \
+            --workspace "ios/Runner.xcworkspace" \
             --scheme "Runner" \
             --device "$TEST_DEVICE" \
             --test-flags="-quiet"
