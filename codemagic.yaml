@@ -124,7 +124,7 @@ workflows:
         app_store_connect: DavidAPIkey 
       environment:
         xcode: 15
-        node: 18.17.1
+        node: 18.17.1 alias node='/usr/local/bin/node'
         #cocoapods: 1.13.0
         flutter: stable
         ios_signing:
@@ -142,10 +142,9 @@ workflows:
             - pattern: main
           cancel_previous_builds: true
       scripts:
-        - name: isntal nvm
+        - name: alias
           script: |
-             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-             nvm use 18.17.1
+             alias node='/usr/local/bin/node'
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
