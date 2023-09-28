@@ -142,9 +142,9 @@ workflows:
             - pattern: main
           cancel_previous_builds: true
       scripts:
-        - name: yarn isntal
+        - name: isntal nvm
           script: |
-            yarn install
+             curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
