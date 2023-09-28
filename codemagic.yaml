@@ -123,9 +123,9 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        xcode: 15
-        node: 16.14.2
+        xcode: 14.3
         cocoapods: 1.13.0
+        node: 16.14.2
         flutter: stable
         ios_signing:
           distribution_type: ad_hoc
