@@ -126,7 +126,7 @@ workflows:
         xcode: 15
         #node: 18.17.1
         
-        #cocoapods: 1.13.0
+        cocoapods: 1.13.0
         flutter: stable
         ios_signing:
           distribution_type: ad_hoc
@@ -143,7 +143,7 @@ workflows:
             - pattern: main
           cancel_previous_builds: true
       scripts:
-        - name: alias
+        - name: brew install 16
           script: |
             brew install node@16
             brew unlink node
