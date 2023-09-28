@@ -124,7 +124,7 @@ workflows:
         app_store_connect: DavidAPIkey 
       environment:
         xcode: 15
-        node: 18.18
+        node: 18.18.0
         #cocoapods: 1.13.0
         flutter: stable
         ios_signing:
