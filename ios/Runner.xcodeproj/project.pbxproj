@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
+		630C02622AC6C12A0000ED55 /* testClass2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C02612AC6C12A0000ED55 /* testClass2.swift */; };
+		630C02632AC6C12A0000ED55 /* testClass2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630C02612AC6C12A0000ED55 /* testClass2.swift */; };
 		634173DA2AC5AFC50094B652 /* RandomTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634173D92AC5AFC50094B652 /* RandomTest.swift */; };
 		634173DB2AC5AFC50094B652 /* RandomTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634173D92AC5AFC50094B652 /* RandomTest.swift */; };
 		638AE8A82AC5A12300E28271 /* flutter_fvmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638AE8A72AC5A12300E28271 /* flutter_fvmTests.swift */; };
@@ -50,6 +52,7 @@
 		31C1EE636BFD54D5A8FB8492 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		5E5E5A688445B1162F9ACE1A /* GoogleService-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Runner/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		630C02612AC6C12A0000ED55 /* testClass2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testClass2.swift; sourceTree = "<group>"; };
 		6330FA172AA72FDF0002BE79 /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		634173D92AC5AFC50094B652 /* RandomTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTest.swift; sourceTree = "<group>"; };
 		638AE8A52AC5A12200E28271 /* flutter_fvmTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = flutter_fvmTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +144,7 @@
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 				634173D92AC5AFC50094B652 /* RandomTest.swift */,
+				630C02612AC6C12A0000ED55 /* testClass2.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -371,6 +375,7 @@
 			files = (
 				634173DB2AC5AFC50094B652 /* RandomTest.swift in Sources */,
 				638AE8A82AC5A12300E28271 /* flutter_fvmTests.swift in Sources */,
+				630C02632AC6C12A0000ED55 /* testClass2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -381,6 +386,7 @@
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				634173DA2AC5AFC50094B652 /* RandomTest.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				630C02622AC6C12A0000ED55 /* testClass2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
