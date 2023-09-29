@@ -123,8 +123,8 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        xcode: 15
-        cocoapods: 1.13.0
+        # xcode: 15
+        # cocoapods: 1.13.0
         flutter: stable
         ios_signing:
           distribution_type: ad_hoc
