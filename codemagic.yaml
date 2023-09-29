@@ -133,7 +133,7 @@ workflows:
             - test_device
             - firebase_credentials
         vars:
-          APP_ID: 6450783332 # <-- Put your APP ID here
+          APP_ID: 64507833320 # <-- Put your APP ID here
       triggering:
           events:
               - push
