@@ -123,8 +123,9 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
+        node: 16.20.0
+        npm: 10.0.0
         # xcode: 15
-        # node: 16.20.0
         # cocoapods: 1.13.0
         flutter: fvm
         ios_signing:
