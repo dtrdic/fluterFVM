@@ -123,8 +123,8 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        node: 16.20.0
-        npm: 10.0.0
+        node: 20.8.0
+        npm: 10.1.0
         # xcode: 15
         # cocoapods: 1.13.0
         flutter: fvm
