@@ -43,7 +43,7 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: linux
+        instance_type: mac_mini_m1
         labels:
           - ${PACKAGE_NAME}
         environment:
@@ -125,7 +125,7 @@ workflows:
       environment:
         # node: 20.8.0
         # npm: 10.1.0
-        # xcode: 15
+        xcode: 15.1
         # cocoapods: 1.13.0
         flutter: fvm
         ios_signing:
