@@ -184,7 +184,7 @@ workflows:
       publishing:
         email:
           recipients:
-            - david@nevercode.io
+            - david@nevercode.io 
           notify:
             success: true # To receive a notification when a build succeeds
             failure: false # To not receive a notification when a build fails
