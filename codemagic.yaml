@@ -170,7 +170,7 @@ workflows:
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
-            flutter build ipa --release --flavor free \
+            flutter build ipa --release \
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist
