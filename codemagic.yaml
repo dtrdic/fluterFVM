@@ -147,7 +147,7 @@ workflows:
             brew search cordova
         - name: brew install 16
           script: |
-            npm install cordova@12.0.1
+            npm install -g cordova@12.0.1
 
         - name: cordova --version
           script: |
