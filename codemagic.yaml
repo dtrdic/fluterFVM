@@ -142,16 +142,13 @@ workflows:
             - pattern: main
           cancel_previous_builds: true
       scripts:
-        - name: brew search cordova
-          script: |
-            brew search cordova
-        - name: brew install 16
-          script: |
-            npm install -g cordova@12.0.1
-
-        - name: cordova --version
-          script: |
-             cordova --version
+        - name: Install npm dependencies and update Cordova version
+          script: | 
+            npm install
+            npm ci # equivalent of npm install for CI systems.
+                  # Requires package-lock.json or npm-shrinkwrap.json to be present
+            cvm install 12.0.1
+            cvm use 12.0.1 
 
         - name: Set up code signing settings on Xcode project 
           script: |
