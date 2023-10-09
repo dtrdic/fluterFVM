@@ -146,9 +146,11 @@ workflows:
           script: | 
             npm install
             npm ci # equivalent of npm install for CI systems.
-                  # Requires package-lock.json or npm-shrinkwrap.json to be present
+              # Requires package-lock.json or npm-shrinkwrap.json to be present
             cvm install 9.0.0
-            cvm use 9.0.0 
+            cvm use 9.0.0
+            npm install -g ionic
+            ionic info   
 
         - name: Set up code signing settings on Xcode project 
           script: |
