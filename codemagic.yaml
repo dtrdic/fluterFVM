@@ -142,15 +142,17 @@ workflows:
             - pattern: main
           cancel_previous_builds: true
       scripts:
-        # - name: brew install 16
-        #   script: |
-        #     brew install node@16
-        #     brew unlink node
-        #     brew link --force --overwrite node@16
-        #     node --version
-        - name: node version
+        - name: brew search cordova
           script: |
-             node -v
+            brew search cordova
+        - name: brew install 16
+          script: |
+            npm install cordova@12.0.1
+
+        - name: cordova --version
+          script: |
+             cordova --version
+
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
