@@ -270,17 +270,12 @@ workflows:
         name: Windows publish Android Workflow
         max_build_duration: 120
         instance_type: windows_x2
-        labels:
-          - ${PACKAGE_NAME}
         environment:
           android_signing:
             - testKeystore
           groups:
             - windows_credentials
             - google_credentials3
-          vars:
-            PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: internal
         triggering:
           events:
               - push
@@ -309,8 +304,4 @@ workflows:
           email:
             recipients:
               - david@nevercode.io
-          # google_play:
-          #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
-          #   track: internal
-          #   changes_not_sent_for_review: true
-          #   submit_as_draft: true
+
