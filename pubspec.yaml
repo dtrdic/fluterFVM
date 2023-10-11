@@ -51,6 +51,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  msix: ^2.6.5
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -62,6 +63,14 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+msix_config:
+  display_name: flutterFVM
+  publisher_display_name: flutterFVM
+  identity_name: <flutterFVM.flutterFVM>
+  publisher: e36ba48f-72d6-4b89-bb17-1ab2b04fde4c #stavio objectID sigurno krivo
+  msix_version: 1.0.0.0
+  store: true
 
   # To add assets to your application, add an assets section, like this:
   # assets:
