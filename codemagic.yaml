@@ -136,12 +136,12 @@ workflows:
             - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
-      triggering:
-          events:
-              - push
-          branch_patterns:
-            - pattern: main
-          cancel_previous_builds: true
+      # triggering:
+      #     events:
+      #         - push
+      #     branch_patterns:
+      #       - pattern: main
+      #     cancel_previous_builds: true
       scripts:
         # - name: brew install 16
         #   script: |
@@ -276,7 +276,7 @@ workflows:
           android_signing:
             - testKeystore
           groups:
-            - windows_credential
+            - windows_credentials
             - google_credentials3
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
