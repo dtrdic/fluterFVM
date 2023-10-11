@@ -293,11 +293,16 @@ workflows:
             script: flutter build windows
           - name: Package Windows
             script: flutter pub run msix:create
+          # - name: Package Windows
+          #   script: |
+          #     flutter pub add msix
+          #     flutter pub run msix:create --display-name='FlutterFvm' --publisher-display-name='FlutterFvm' --publisher='<PublisherID>' --identity-name='<gizard.FlutterFVM>' --version=1.0.0.0 --store=true
+        
         artifacts:
           - build/windows/**/*.msix
         publishing:
           partner_center:
-            store_id: $STORE_ID # <-- You can find the `store_id` inside your Partner Center app by going to [Product management > Product Identity].
+            store_id: $APP_ID # <-- You can find the `store_id` inside your Partner Center app by going to [Product management > Product Identity].
             tenant_id: $TENANT_ID # <-- You will get `tenant_id` from the Azure AD Overview page.
             client_id: $CLIENT_ID # <-- You will also get `client_id` from the Azure AD Overview page.
             client_secret: $CLIENT_SECRET # <-- `client_secret` is retrieved from the application environment variable
