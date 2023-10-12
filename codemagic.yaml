@@ -293,10 +293,10 @@ workflows:
             script: flutter build windows
           - name: Package Windows
             script: flutter pub run msix:create
-          # - name: Package Windows
-          #   script: |
-          #     flutter pub add msix
-          #     flutter pub run msix:create --display-name='FlutterFvm' --publisher-display-name='FlutterFvm' --publisher='<PublisherID>' --identity-name='<gizard.FlutterFVM>' --version=1.0.0.0 --store=true
+          - name: Package Windows
+            script: |
+              flutter pub add msix
+              flutter pub run msix:create --display-name='FlutterFvm' --publisher-display-name='FlutterFvm' --publisher='PublisherID' --identity-name='gizard.FlutterFVM' --version=1.0.0.0 --store=true
         
         artifacts:
           - build/windows/**/*.msix
