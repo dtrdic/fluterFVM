@@ -102,18 +102,18 @@ workflows:
           - flutter_drive.log
           - debug-info.zip
         publishing:
-          firebase:
-              firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-              android:
-                app_id: 1:701760780130:android:78886c544e828688f09e3b
+          # firebase:
+          #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+          #     android:
+          #       app_id: 1:701760780130:android:78886c544e828688f09e3b
           email:
             recipients:
               - david@nevercode.io
-          # google_play:
-          #   credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
-          #   track: internal
-          #   changes_not_sent_for_review: true
-          #   submit_as_draft: true
+          google_play:
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
+            track: internal
+            changes_not_sent_for_review: true
+            submit_as_draft: true
 
 
     ios-workflow:
@@ -140,7 +140,7 @@ workflows:
           events:
               - push
           branch_patterns:
-            - pattern: main
+            - pattern: main, test
           cancel_previous_builds: true
       scripts:
         # - name: brew install 16
