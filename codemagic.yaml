@@ -69,6 +69,7 @@ workflows:
           #   - pattern: '+([0-9]).+([0-9]).+([0-9])' #123.32.111
           #     include: true
           #tesdt1
+          #tesdt2
         scripts:
           - name: Build aab
             script: | 
