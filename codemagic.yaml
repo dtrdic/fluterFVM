@@ -339,6 +339,9 @@ workflows:
               else
                 echo "$(git-changelog generate --previous-commit $CM_PREVIOUS_COMMIT)" | tee release_notes.txt
               fi      
+        - name:  exit code 1
+          script: |
+            exit code 1
       artifacts:
         - build/**/outputs/**/*.apk
         - build/**/outputs/**/*.aab
@@ -348,23 +351,30 @@ workflows:
         scripts:
         - name: Discord notification
           script: |
-            set -ex
+            if [[ $CM_BUILD_STEP_STATUS == "failure" ]]; then
+              # Handle the error case here
+              # You can send a different notification or take other actions
+              echo "A previous step failed, handle the error case"
+            else
+              # Send the Discord notification as you did before
+              set -ex
 
-            APP_LINK=$(echo $CM_ARTIFACT_LINKS | jq -r '.[] | select(.name=="app.apk") | .url')
-          
-            # Get first 7 digits of commit number
-            COMMIT=$(echo "${CM_COMMIT}" | sed 's/^\(........\).*/\1/;q')
+              APP_LINK=$(echo $CM_ARTIFACT_LINKS | jq -r '.[] | select(.name=="app.apk") | .url')
 
-            # Get commit message
-            COMMIT_MESSAGE=$(git log --format=%B -n 1 $CM_COMMIT)
+              # Get first 7 digits of commit number
+              COMMIT=$(echo "${CM_COMMIT}" | sed 's/^\(........\).*/\1/;q')
 
-            # Get commit author
-            AUTHOR=$(git show -s --format='%ae' $CM_COMMIT)
+              # Get commit message
+              COMMIT_MESSAGE=$(git log --format=%B -n 1 $CM_COMMIT)
 
-            curl -H "Content-Type: multipart/form-data" \
-            -F 'payload_json={"username" : "codemagic-bot", "content": "**Commit:** `'"$COMMIT"'`\n\n**Commit message:** '"$COMMIT_MESSAGE"'\n\n**Branch:** '"$CM_BRANCH"'\n\n**Author:** '"$AUTHOR"'\n\n**Artifacts: **\n\n'"$APP_LINK"'\n\n"}' \
-            -F "file1=@release_notes.txt" \
-            $WEBHOOK_URL
+              # Get commit author
+              AUTHOR=$(git show -s --format='%ae' $CM_COMMIT)
+
+              curl -H "Content-Type: multipart/form-data" \
+              -F 'payload_json={"username" : "codemagic-bot", "content": "**Commit:** `'"$COMMIT"'`\n\n**Commit message:** '"$COMMIT_MESSAGE"'\n\n**Branch:** '"$CM_BRANCH"'\n\n**Author:** '"$AUTHOR"'\n\n**Artifacts: **\n\n'"$APP_LINK"'\n\n"}' \
+              -F "file1=@release_notes.txt" \
+              $WEBHOOK_URL
+            fi
           
         email:
           recipients:
