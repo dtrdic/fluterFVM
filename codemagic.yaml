@@ -199,6 +199,14 @@ workflows:
         #     credentials: $GOOGLE_APPLICATION_CREDENTIALS
         #     track: internal
         scripts:
+            - name: Generating release notes with git commits
+              script: |
+                git fetch --all --tags
+
+                prev_tag=$(git for-each-ref --sort=-creatordate  --format '%(objectname)' refs/tags | sed -n 2p )
+                notes=$(git log --pretty=format:"\n- %s" "$prev_tag"..HEAD)
+
+                echo "$notes" | tee release_notes_en.txt
             - name: Upload debug symbols to Firebase Crashlytics
               script: | 
                 echo "Find build artifacts"
