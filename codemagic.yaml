@@ -134,7 +134,7 @@ workflows:
             - firebase_credentials
             - clone_depth
         vars:
-          APP_ID: 6450783332 # <-- Put your APP ID here
+          APP_ID: 6450783332 # <-- Put your APP ID here 
       triggering:
           events:
               #- push
