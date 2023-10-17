@@ -138,7 +138,8 @@ workflows:
           APP_ID: 6450783332 # <-- Put your APP ID here
       triggering:
           events:
-              - push
+              #- push
+              - tag
           branch_patterns:
             - pattern: main, test
           cancel_previous_builds: true
