@@ -207,7 +207,7 @@ workflows:
                 prev_tag=$(git for-each-ref --sort=-creatordate  --format '%(objectname)' refs/tags | sed -n 2p )
                 notes=$(git log --pretty=format:"\n- %s" "$prev_tag"..HEAD)
 
-                echo "$notes" | tee release_notes.txt
+                echo "$notes" | tee release_notes.txt 
             - name: Upload debug symbols to Firebase Crashlytics
               script: | 
                 echo "Find build artifacts"
