@@ -189,8 +189,8 @@ workflows:
             success: true # To receive a notification when a build succeeds
             failure: false # To not receive a notification when a build fails
         app_store_connect:
-          auth: integration
-          #submit_to_app_store: true
+          auth: integration 
+          #submit_to_app_store: true #test
         # firebase:
         #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
         #     ios:
