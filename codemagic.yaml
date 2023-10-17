@@ -175,6 +175,14 @@ workflows:
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist
+        - name: Generating release notes with git commits
+          script: |
+            git fetch --all --tags
+
+            prev_tag=$(git for-each-ref --sort=-creatordate  --format '%(objectname)' refs/tags | sed -n 2p )
+            notes=$(git log --pretty=format:"\n- %s" "$prev_tag"..HEAD)
+
+            echo "$notes" | tee release_notes.txt 
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
@@ -199,14 +207,14 @@ workflows:
         #     credentials: $GOOGLE_APPLICATION_CREDENTIALS
         #     track: internal
         scripts:
-            - name: Generating release notes with git commits
-              script: |
-                git fetch --all --tags
+            # - name: Generating release notes with git commits
+            #   script: |
+            #     git fetch --all --tags
 
-                prev_tag=$(git for-each-ref --sort=-creatordate  --format '%(objectname)' refs/tags | sed -n 2p )
-                notes=$(git log --pretty=format:"\n- %s" "$prev_tag"..HEAD)
+            #     prev_tag=$(git for-each-ref --sort=-creatordate  --format '%(objectname)' refs/tags | sed -n 2p )
+            #     notes=$(git log --pretty=format:"\n- %s" "$prev_tag"..HEAD)
 
-                echo "$notes" | tee release_notes.txt 
+            #     echo "$notes" | tee release_notes.txt 
             - name: Upload debug symbols to Firebase Crashlytics
               script: | 
                 echo "Find build artifacts"
