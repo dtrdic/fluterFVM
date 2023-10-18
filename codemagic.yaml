@@ -135,7 +135,7 @@ workflows:
             - clone_depth
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
-          #CM_CLONE_DEPTH: 5 
+          CM_CLONE_DEPTH: 5 
       triggering:
           events:
               #- push
@@ -174,7 +174,7 @@ workflows:
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist
-        - name: Generating release notes with git commits 
+        - name: Generating release notes with git commits  
           script: | 
             git fetch --all --tags
 
