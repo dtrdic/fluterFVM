@@ -319,9 +319,9 @@ workflows:
           - discord_credentials 
         flutter: stable
         cocoapods: default
-      triggering:
-        events:
-          - push
+      # triggering:
+      #   events:
+      #     - push
       scripts:        
         - name: set up local properties
           script: |
