@@ -144,7 +144,7 @@ workflows:
             - pattern: main, test
           cancel_previous_builds: true
       scripts:
-        - name: Generating release notes with git commits
+        - name: Generating release notes with git commits 
           script: | 
               git fetch --all --tags
 
