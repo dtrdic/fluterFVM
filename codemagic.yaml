@@ -125,6 +125,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
+        
         flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
@@ -135,7 +136,6 @@ workflows:
             - clone_depth
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
-          CM_CLONE_DEPTH: 5
       triggering:
           events:
               #- push
