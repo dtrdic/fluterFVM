@@ -135,6 +135,7 @@ workflows:
             #- clone_depth
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
+          CM_CLONE_DEPTH: 5
       triggering:
           events:
               #- push
@@ -143,9 +144,6 @@ workflows:
             - pattern: main, test
           cancel_previous_builds: true
       scripts:
-        - name: Set up clone depth value
-          script: |
-            CM_CLONE_DEPTH=5
         # - name: brew install 16
         #   script: |
         #     brew install node@16
