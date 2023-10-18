@@ -132,7 +132,7 @@ workflows:
         groups:
             - test_device
             - firebase_credentials
-            #- clone_depth
+            - clone_depth
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here
           CM_CLONE_DEPTH: 5
