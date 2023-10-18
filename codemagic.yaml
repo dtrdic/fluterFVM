@@ -129,7 +129,7 @@ workflows:
         flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
-          bundle_identifier: io.codemagic.dtrdic6 
+          bundle_identifier: io.codemagic.dtrdic6
         groups:
             - test_device
             - firebase_credentials
