@@ -135,6 +135,7 @@ workflows:
             - clone_depth
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
+          CM_CLONE_DEPTH: 5
       triggering:
           events:
               #- push
@@ -149,9 +150,6 @@ workflows:
         #     brew unlink node
         #     brew link --force --overwrite node@16
         #     node --version
-        - name: node version
-          script: |
-             node -v
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
@@ -353,8 +351,7 @@ workflows:
           script: |
             if [[ $CM_BUILD_STEP_STATUS == "failure" ]]; then
               # Handle the error case here
-              # You can send a different notification or take other actions
-              echo "A previous step failed, handle the error case"
+              echo "Here is the message for the failing step"
             else
               # Send the Discord notification as you did before
               set -ex
