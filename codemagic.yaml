@@ -144,6 +144,14 @@ workflows:
             - pattern: main, test
           cancel_previous_builds: true
       scripts:
+        - name: Generating release notes with git commits
+          script: | 
+              git fetch --all --tags
+
+              rev_tag=$(git for-each-ref --sort=-creatordate  --format '%(objectname)' refs/tags | sed -n 2p )
+              notes=$(git log --pretty=format:"\n- %s" "$prev_tag"..HEAD)
+
+              echo "$notes" | tee release_notes.txt
         # - name: brew install 16
         #   script: |
         #     brew install node@16
