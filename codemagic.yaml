@@ -176,12 +176,12 @@ workflows:
               --export-options-plist=/Users/builder/export_options.plist
         - name: Generating release notes with git commits 
           script: | 
-              git fetch --all --tags
+            git fetch --all --tags
 
-              rev_tag=$(git for-each-ref --sort=-creatordate  --format '%(objectname)' refs/tags | sed -n 2p )
-              notes=$(git log --pretty=format:"\n- %s" "$prev_tag"..HEAD)
+            prev_tag=$(git for-each-ref --sort=-creatordate  --format '%(objectname)' refs/tags | sed -n 2p )
+            notes=$(git log --pretty=format:"\n- %s" "$prev_tag"..HEAD)
 
-              echo "$notes" | tee release_notes.txt 
+            echo "$notes" | tee release_notes.txt
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
