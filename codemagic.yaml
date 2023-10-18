@@ -125,7 +125,6 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        
         flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
