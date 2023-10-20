@@ -125,7 +125,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        xcode: 15.0.1
+        xcode: 15
         #flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
