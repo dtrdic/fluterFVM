@@ -125,7 +125,8 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        flutter: fvm
+        xcode: 15.0.1
+        #flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
