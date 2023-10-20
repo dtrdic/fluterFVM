@@ -142,10 +142,6 @@ workflows:
             - pattern: main, test
           cancel_previous_builds: true
       scripts:
-        - name: flutter run
-          script: |
-            flutter run
-
         # - name: brew install 16
         #   script: |
         #     brew install node@16
@@ -157,7 +153,7 @@ workflows:
             xcode-project use-profiles
         - name: Get Flutter packages
           script: | 
-            flutter packages pub get
+            flutter pub get
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
