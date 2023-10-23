@@ -151,8 +151,11 @@ workflows:
             java -version
         - name: java detect
           script: |
-            export JAVA_HOME="/usr/local/opt/openjdk@17"
-            ./gradlew detekt
+            echo 'export PATH="/usr/local/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
+            #./gradlew detekt
+        - name: java version
+          script: |
+            java -version
         # - name: brew install 16
         #   script: |
         #     brew install node@16
