@@ -120,7 +120,7 @@ workflows:
 
     ios-workflow:
       name: iOS Workflow
-      instance_type: mac_mini_m1
+      instance_type: mac_pro
       max_build_duration: 120
       integrations:
         app_store_connect: DavidAPIkey 
@@ -143,6 +143,16 @@ workflows:
             - pattern: main, test
           cancel_previous_builds: true
       scripts:
+        - name: java 17 install
+          script: |
+            brew update
+            brew install openjdk@17
+            #export JAVA_HOME="/usr/local/opt/openjdk@17"
+            java -version
+        - name: java detect
+          script: |
+            export JAVA_HOME="/usr/local/opt/openjdk@17"
+            ./gradlew detekt
         # - name: brew install 16
         #   script: |
         #     brew install node@16
@@ -154,7 +164,7 @@ workflows:
             xcode-project use-profiles
         - name: Get Flutter packages
           script: | 
-            flutter pub get
+            flutter package pub get
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
