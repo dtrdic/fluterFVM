@@ -145,16 +145,14 @@ workflows:
       scripts:
         - name: java 17 install
           script: |
-            #brew update
             brew install openjdk@17
-            #export JAVA_HOME="/usr/local/opt/openjdk@17"
-            java -version
-        - name: java detect
+        - name: set Java 17 as default
           script: |
-            echo 'export JAVA_HOME="/usr/local/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
-            #./gradlew detekt
+              echo 'export JAVA_HOME="/usr/local/opt/openjdk@17"' >> ~/.zshrc
+              echo 'export PATH="/usr/local/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
         - name: java version
           script: |
+            source ~/.zshrc
             java -version
         # - name: brew install 16
         #   script: |
