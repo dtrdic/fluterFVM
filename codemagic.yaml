@@ -167,7 +167,7 @@ workflows:
             xcode-project use-profiles
         - name: Get Flutter packages
           script: | 
-            flutter package pub get
+            flutter packages pub get
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
