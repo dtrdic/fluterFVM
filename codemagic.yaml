@@ -35,7 +35,8 @@ workflows:
                 --data '{
                   "appId": "645a0fafc5f77d006a400bf1",
                   "workflowId": "android-workflow",
-                  "branch": "'${BRANCH}'"
+                  "branch": "'${BRANCH}',
+                  "bundleid": "io.codemagic.dtrdic6"
                 }' \
                 https://api.codemagic.io/builds
             done
