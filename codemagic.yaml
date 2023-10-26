@@ -38,7 +38,7 @@ workflows:
                   "branch": "'${BRANCH}',
                   "environment": {
                       "variables": {
-                          "PACKAGE_NAME": "io.codemagic.dtrdic6"
+                          "PACKAGE_NAME": "io.codemagic.dtrdic69"
                       }
                   }
                 }' \
