@@ -27,8 +27,8 @@ workflows:
             # Define an array of branch names
             BRANCHES=("main" "master" "dev")
 
-            for BRANCH in ${BRANCHES[@]}; do
-              echo "Triggering workflow $WORKFLOW for branch $BRANCH"
+            # for BRANCH in ${BRANCHES[@]}; do
+            #   echo "Triggering workflow $WORKFLOW for branch $BRANCH"
 
               # Make the POST request to trigger the build for the current branch
               curl -H "Content-Type: application/json" -H "x-auth-token: $CM_API_KEY" \
@@ -43,7 +43,7 @@ workflows:
                   }
                 }' \
                 https://api.codemagic.io/builds
-            done
+            #done
 
     android-workflow:
         name: Android Workflow
