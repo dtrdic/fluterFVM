@@ -36,7 +36,11 @@ workflows:
                   "appId": "645a0fafc5f77d006a400bf1",
                   "workflowId": "android-workflow",
                   "branch": "'${BRANCH}',
-                  "bundleId": "io.codemagic.dtrdic6"
+                  "environment": {
+                      "variables": {
+                          "PACKAGE_NAME": "io.codemagic.dtrdic6"
+                      }
+                  }
                 }' \
                 https://api.codemagic.io/builds
             done
@@ -45,8 +49,8 @@ workflows:
         name: Android Workflow
         max_build_duration: 120
         instance_type: mac_mini_m1
-        labels:
-          - ${PACKAGE_NAME}
+        # labels:
+        #   - ${PACKAGE_NAME}
         environment:
           #flutter: fvm
           android_signing:
