@@ -118,8 +118,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        node: 18.17.0
-        xcode: 14.3.1
+        xcode: 15.0
         #flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
@@ -178,7 +177,9 @@ workflows:
             flutter build ipa --release --flavor free \
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
-              --export-options-plist=/Users/builder/export_options.plist
+              --archive-flags "-clonedSourcePackagesDirPath SourcePackages -destination 'generic/platform=iOS'"
+
+              #--export-options-plist=/Users/builder/export_options.plist
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
