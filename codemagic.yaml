@@ -41,7 +41,7 @@ workflows:
         #   - ${PACKAGE_NAME}
         environment:
           #flutter: fvm
-          android_signing:
+          android_signing: 
             - testKeystore
           groups:
             - shorebird_token
