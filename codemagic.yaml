@@ -49,7 +49,7 @@ workflows:
             - google_credentials3
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: internal
+            GOOGLE_PLAY_TRACK: internal 
         # triggering:
         #   events:
         #       - pull_request
