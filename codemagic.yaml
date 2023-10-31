@@ -177,9 +177,7 @@ workflows:
             flutter build ipa --release --flavor free \
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
-              --archive-flags "-clonedSourcePackagesDirPath SourcePackages -destination 'generic/platform=iOS'"
-
-              #--export-options-plist=/Users/builder/export_options.plist
+              --export-options-plist=/Users/builder/export_options.plist
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
