@@ -9,18 +9,6 @@ workflows:
       scripts:
         - name: Trigger multiple client builds
           script: |
-            # WORKFLOWS=("android-workflow" "android-workflow2")
-            # for WORKFLOW in ${WORKFLOWS[@]}; do
-            #   echo "WORKFLOW: $WORKFLOW"
-            #   curl -H "Content-Type: application/json" -H "x-auth-token: ${CM_API_KEY}" \
-            #     --data '{
-            #       "appId": "645a0fafc5f77d006a400bf1",
-            #       "workflowId":  "'${WORKFLOW}'",
-            #       "branch": "main"
-            #     }' \
-            #     https://api.codemagic.io/builds 
-            #   done
-
             WORKFLOW="android-workflow"  # Replace with your workflow ID
             APP_ID="645a0fafc5f77d006a400bf1"  # Replace with your App ID
 
@@ -38,7 +26,7 @@ workflows:
                   "branch": "'${BRANCH}'",
                   "environment": {
                       "variables": {
-                          "PACKAGE_NAME": "io.codemagic.dtrdic6789"
+                          "PACKAGE_NAME": "io.codemagic.dtrdic6"
                       }
                   }
                 }' \
@@ -130,7 +118,8 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        xcode: 15.0
+        node: 18.17.0
+        xcode: 14.3.1
         #flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
