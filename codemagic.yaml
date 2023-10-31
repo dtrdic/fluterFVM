@@ -45,7 +45,7 @@ workflows:
             - testKeystore
           groups:
             - shorebird_token
-            - firebase_credentials
+            - firebase_credentials 
             - google_credentials3
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
