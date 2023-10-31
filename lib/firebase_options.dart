@@ -78,6 +78,6 @@ class DefaultFirebaseOptions {
     projectId: 'pc-api-8478664491092592353-718',
     storageBucket: 'pc-api-8478664491092592353-718.appspot.com',
     iosClientId: '701760780130-70nu0r7ersc6n3nmk6d7sr9vle50lfgo.apps.googleusercontent.com',
-    iosBundleId: 'com.example.flutterFvm',
+    iosBundleId: 'io.codemagic.dtrdic6',
   );
 }
