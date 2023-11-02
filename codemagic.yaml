@@ -90,7 +90,7 @@ workflows:
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
           - name: Rename the apk file
             script: | 
-              mv build/**/outputs/**/app-release.aab \
+              mv build/**/outputs/**/*.aab \
                 build/**/outputs/**/app-release-renamed.aab
         artifacts:
           - build/**/outputs/**/*.aab
