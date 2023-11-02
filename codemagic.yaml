@@ -65,9 +65,6 @@ workflows:
           #tesdt2
           #test3
         scripts:
-          - name: Build aab
-            script: | 
-                flutter build appbundle 
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -123,6 +120,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
+        xcode: 14.3.1
         #flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
