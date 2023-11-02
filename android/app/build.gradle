@@ -62,7 +62,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode latestGooglePlayBuildNumber + 1
         versionName "1.0." + String.valueOf(latestGooglePlayBuildNumber + 1)
-        setProperty("archivesBaseName", "app-release-renamed")
+        //setProperty("archivesBaseName", "app-release-renamed")
     }
     signingConfigs {
           release {
