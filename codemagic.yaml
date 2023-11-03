@@ -112,7 +112,7 @@ workflows:
       environment:
         #flutter: fvm
         ios_signing:
-          distribution_type: ad_hoc
+          distribution_type: app_store
           bundle_identifier: io.codemagic.dtrdic6
         groups:
             - test_device
