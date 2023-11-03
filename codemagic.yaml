@@ -50,20 +50,13 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal 
-        # triggering:
-        #   events:
-        #       - pull_request
-        #   branch_patterns:
-        #   - pattern: "main"
-        #     include: true
-        #     source: false
-          #     - tag
-          # tag_patterns:                 
-          #   - pattern: '+([0-9]).+([0-9]).+([0-9])' #123.32.111
-          #     include: true
-          #tesdt1
-          #tesdt2
-          #test3
+        triggering:
+          events:
+              - pull_request
+          branch_patterns:
+          - pattern: "main"
+            include: true
+            source: false
         scripts:
           - name: Set up local.properties
             script: |
@@ -71,9 +64,6 @@ workflows:
           - name: Get Flutter packages
             script: |
               flutter packages pub get
-          # - name: Build aab
-          #   script: | 
-          #       flutter build appbundle 
           - name: Build AAB with Flutter
             script: |
               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
@@ -88,10 +78,10 @@ workflows:
                 # --obfuscate \
                 # --split-debug-info \
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
-          - name: Rename the apk file
-            script: | 
-              mv build/**/outputs/**/*.aab \
-                build/**/outputs/**/app-release-renamed.aab
+          # - name: Rename the apk file
+          #   script: | 
+          #     mv build/**/outputs/**/*.aab \
+          #       build/**/outputs/**/app-release-renamed.aab
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/app-release-renamed.aab
@@ -120,7 +110,6 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        xcode: 14.3.1
         #flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
