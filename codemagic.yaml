@@ -110,6 +110,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
+        xcode: 15.0
         #flutter: fvm
         ios_signing:
           distribution_type: app_store
