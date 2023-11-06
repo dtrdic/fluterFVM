@@ -48,8 +48,11 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9848118649411A13EF121338 /* Pods-Runner.release-free.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-free.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-free.xcconfig"; sourceTree = "<group>"; };
 		9A63AE93C769C8E98570663C /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C1FC20B1C0737DEE428FA56 /* Pods-Runner.profile-free.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-free.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-free.xcconfig"; sourceTree = "<group>"; };
 		9CA58193A2699B62ECC2C03B /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		A4E7DB3B3E3991D31A78A9A2 /* Pods-Runner.debug-free.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-free.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-free.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +120,9 @@
 				28BD711C42F9EC486A52AF80 /* Pods-Runner.debug.xcconfig */,
 				9CA58193A2699B62ECC2C03B /* Pods-Runner.release.xcconfig */,
 				31C1EE636BFD54D5A8FB8492 /* Pods-Runner.profile.xcconfig */,
+				A4E7DB3B3E3991D31A78A9A2 /* Pods-Runner.debug-free.xcconfig */,
+				9848118649411A13EF121338 /* Pods-Runner.release-free.xcconfig */,
+				9C1FC20B1C0737DEE428FA56 /* Pods-Runner.profile-free.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
