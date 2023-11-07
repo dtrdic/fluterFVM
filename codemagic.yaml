@@ -111,7 +111,7 @@ workflows:
         xcode: 14.3.1
         #flutter: fvm
         ios_signing:
-          distribution_type: app_store
+          distribution_type: ad_hoc
           bundle_identifier: io.codemagic.dtrdic6
         groups:
             - test_device
@@ -186,10 +186,10 @@ workflows:
           submit_to_testflight: false
           submit_to_app_store: true
           #submit_to_app_store: true #test2
-        # firebase:
-        #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT 
-        #     ios:
-        #       app_id: 1:701760780130:ios:d06fc5333b7c4ed3f09e3b
+        firebase:
+            firebase_service_account: $FIREBASE_SERVICE_ACCOUNT 
+            ios:
+              app_id: 1:701760780130:ios:d06fc5333b7c4ed3f09e3b
         # google_play:
         #     credentials: $GOOGLE_APPLICATION_CREDENTIALS
         #     track: internal
