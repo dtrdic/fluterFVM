@@ -50,7 +50,7 @@ workflows:
             GOOGLE_PLAY_TRACK: internal 
         triggering:
           events:
-              - pull_request
+              - pull_request 
           branch_patterns:
           - pattern: "main"
             include: true
