@@ -53,7 +53,7 @@ workflows:
               - pull_request 
           branch_patterns:
           - pattern: "main"
-            include: true
+            #include: true
             source: false
         scripts:
           - name: Set up local.properties
