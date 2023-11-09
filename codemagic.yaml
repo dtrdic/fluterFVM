@@ -51,12 +51,12 @@ workflows:
         triggering:
           events:
               - pull_request 
-          branch_patterns: 
-          - pattern: "main"
-            include: true 
-            source: false
+          # branch_patterns: 
+          # - pattern: "main"
+          #   include: true 
+          #   source: false
         when:
-          condition: ! pull_request.draft
+          condition: not pull_request.draft
 
         scripts:
           - name: Set up local.properties
