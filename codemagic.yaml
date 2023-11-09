@@ -56,7 +56,7 @@ workflows:
             include: true 
             source: false
         when:
-          condition: not event.pull_request.draft
+          condition: (not event.pull_request.head.ref == "TestPR3") and (not event.pull_request.draft)
 
         scripts:
           - name: Set up local.properties
