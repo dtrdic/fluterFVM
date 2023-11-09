@@ -51,10 +51,10 @@ workflows:
         triggering:
           events:
               - pull_request 
-          branch_patterns:
-          - pattern: "main"
-            include: true 
-            source: false
+          # branch_patterns:
+          # - pattern: "main"
+          #   include: true 
+          #   source: false
         when:
           condition: not event.pull_request.draft 
         scripts:
