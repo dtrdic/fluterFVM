@@ -56,7 +56,8 @@ workflows:
             include: true 
             source: false
         when:
-          condition: event.pull_request.draft 
+          condition: not event.pull_request.draft 
+
         scripts:
           - name: Set up local.properties
             script: |
