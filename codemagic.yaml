@@ -56,7 +56,7 @@ workflows:
             include: true 
             source: false
         when:
-          condition: not pull_request.draft
+          condition: pull_request.draft
 
         scripts:
           - name: Set up local.properties
