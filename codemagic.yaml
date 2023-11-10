@@ -38,6 +38,7 @@ workflows:
         max_build_duration: 120
         instance_type: mac_pro
         environment:
+          xcode: 14.2 
           #flutter: fvm
           android_signing: 
             - testKeystore
