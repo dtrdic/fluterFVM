@@ -49,13 +49,13 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal 
-        triggering:
-          events:
-              - pull_request 
-          branch_patterns: 
-          - pattern: "main"
-            include: true 
-            source: false
+        # triggering:
+        #   events:
+        #       - pull_request 
+        #   branch_patterns: 
+        #   - pattern: "main"
+        #     include: true 
+        #     source: false
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
@@ -86,9 +86,6 @@ workflows:
                 echo y | sdkmanager "system-images;android-33;google_apis;x86_64"
                 echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --force
                 
-                echo "Creating AVD with installed image"
-                echo "no" | /usr/local/share/android-sdk/cmdline-tools/latest/bin/avdmanager --verbose create avd --force --name "EWEGO_EMUL_API_33" -n Android33 --package "system-images;android-33;google_apis;x86_64" --tag "google_apis" --device "Galaxy Nexus"
-
                 echo "Updating the emulator"
                 cd /usr/local/share/android-sdk
                 rm -r emulator
@@ -101,7 +98,7 @@ workflows:
                 sed -i'' -e 's/hw.cpu.ncore = auto/hw.gpu.mode = host/g' config.ini
                 cd /home/builder/clone
 
-                emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
+                emulator -memory 2048 -avd Android33 -gpu swiftshader_indirect -debug-init -wipe-data &   
                 adb wait-for-device
           # - name: Rename the apk file
           #   script: | 
