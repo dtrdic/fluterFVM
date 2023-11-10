@@ -84,21 +84,9 @@ workflows:
             script: | 
                 export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
                 echo y | sdkmanager "system-images;android-33;google_apis;x86_64"
-                echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --force
-                
-                echo "Updating the emulator"
-                cd /usr/local/share/android-sdk
-                rm -r emulator
-                /usr/local/share/android-sdk/cmdline-tools/latest/bin/sdkmanager "emulator" --channel=3
-                /usr/local/share/android-sdk/platform-tools/adb kill-server
-                /usr/local/share/android-sdk/platform-tools/adb start-server
-                /usr/local/share/android-sdk/platform-tools/adb reconnect offline
-                cd /home/builder/.config/.android/avd/Android33.avd/
-                sed -i'' -e 's/hw.gpu.mode = auto/hw.gpu.mode = host/g' config.ini
-                sed -i'' -e 's/hw.cpu.ncore = auto/hw.gpu.mode = host/g' config.ini
-                cd /home/builder/clone
+                echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --name "EWEGO_EMUL_API_33" -n Android33 --package "system-images;android-33;google_apis;x86_64" --tag "google_apis" --device "Galaxy Nexus"
 
-                emulator -memory 2048 -avd Android33 -gpu swiftshader_indirect -debug-init -wipe-data &   
+                emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
                 adb wait-for-device
           # - name: Rename the apk file
           #   script: | 
