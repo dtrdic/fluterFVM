@@ -86,7 +86,7 @@ workflows:
                 echo y | sdkmanager "system-images;android-33;google_apis;x86_64"
                 echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --name "EWEGO_EMUL_API_33" -n Android33 --package "system-images;android-33;google_apis;x86_64" --tag "google_apis" --device "Galaxy Nexus"
 
-                emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
+                emulator -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
                 adb wait-for-device
           # - name: Rename the apk file
           #   script: | 
