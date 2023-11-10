@@ -86,7 +86,7 @@ workflows:
                 echo y | sdkmanager "system-images;android-33;google_apis;x86_64"
                 echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --force
                 
-                emulator -memory 2048 -avd emulator &   
+                emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
                 adb wait-for-device
           # - name: Rename the apk file
           #   script: | 
