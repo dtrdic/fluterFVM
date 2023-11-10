@@ -59,14 +59,6 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
-          - name: Launch Custom Android Emulator
-            script: | 
-                export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
-                echo y | sdkmanager "system-images;android-33;google_apis;x86_64"
-                echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --force
-                
-                emulator -avd emulator &   
-                adb wait-for-device
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -87,6 +79,14 @@ workflows:
                 # --obfuscate \
                 # --split-debug-info \
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
+          - name: Launch Custom Android Emulator
+            script: | 
+                export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
+                echo y | sdkmanager "system-images;android-33;google_apis;x86_64"
+                echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --force
+                
+                emulator -avd emulator &   
+                adb wait-for-device
           # - name: Rename the apk file
           #   script: | 
           #     mv build/**/outputs/**/*.aab \
