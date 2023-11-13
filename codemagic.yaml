@@ -36,7 +36,7 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: linux_x2
+        instance_type: mac_pro
         environment:
           xcode: 14.2 
           #flutter: fvm
@@ -49,6 +49,9 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal 
+        cache:
+            cache_paths:
+                - ~/Library/Caches/CocoaPods
         # triggering:
         #   events:
         #       - pull_request 
