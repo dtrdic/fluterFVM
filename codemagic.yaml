@@ -36,11 +36,9 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: mac_pro
+        instance_type: mac_mini_m1
         environment:
-          node: 18.17.1
-          xcode: 14.2
-          npm: 9.6.7
+          java: 7
           #flutter: fvm
           android_signing: 
             - testKeystore
@@ -51,9 +49,6 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal 
-        cache:
-            cache_paths:
-                - $CM_BUILD_DIR/node_modules
         # triggering:
         #   events:
         #       - pull_request 
@@ -65,9 +60,6 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
-          - name: NPM install
-            script: |
-              npm install
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
