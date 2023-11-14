@@ -36,7 +36,7 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: linux_x2
+        instance_type: mac_mini_m1
         environment:
           #flutter: fvm
           android_signing: 
@@ -48,15 +48,15 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal 
-        # triggering:
-        #   events:
-        #       - pull_request 
-        #   branch_patterns: 
-        #   - pattern: "main"
-        #     include: true 
-        #     source: false
-        # when:
-        #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
+        triggering:
+          events:
+              - pull_request 
+          branch_patterns: 
+          - pattern: "main"
+            include: true 
+            source: false
+        when:
+          condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
           - name: Set up local.properties
