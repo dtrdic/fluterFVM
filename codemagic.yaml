@@ -52,11 +52,11 @@ workflows:
           events:
               - pull_request 
           branch_patterns: 
-          - pattern: "main"
+          - pattern: "TestPR3"
             include: true 
             source: false
-        when:
-          condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
+        # when:
+        #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
           - name: Set up local.properties
