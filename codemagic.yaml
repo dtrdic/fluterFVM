@@ -285,6 +285,7 @@ workflows:
           groups:
             - windows_credentials
             - google_credentials3
+            - aws_credentials
         # triggering:
         #   events:
         #       - push
@@ -300,6 +301,11 @@ workflows:
             script: flutter config --enable-windows-desktop
           - name: Build Windows
             script: flutter build windows
+          - name: Create a random file
+            script: dd if=/dev/urandom of=sample.txt bs=8M count=1
+          - name: upload to aws bucket
+            script: aws cp file S3://dtrdic-bucket
+          
           - name: Package Windows
             script: flutter pub run msix:create
           - name: Package Windows
