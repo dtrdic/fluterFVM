@@ -300,8 +300,8 @@ workflows:
           - name: Configure for Windows
             script: flutter config --enable-windows-desktop
 
-          - name: download aws cli
-            script: sudo pip3 install awscli --upgrade
+          - name: install aws cli
+            script: pip3 install awscli --upgrade
 
           - name: Aws version
             script: aws --version
