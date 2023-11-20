@@ -305,7 +305,7 @@ workflows:
           - name: Install aws cli
             script: |
               unzip awscliv2.zip
-              sudo ./aws/install
+              ./aws/install
 
           - name: Aws version
             script: aws --version
