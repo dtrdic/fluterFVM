@@ -300,6 +300,8 @@ workflows:
           - name: Configure for Windows
             script: flutter config --enable-windows-desktop
 
+          - name: download aws cli
+            script:  curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
           - name: Install aws cli
             script:  msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
           - name: Aws version
