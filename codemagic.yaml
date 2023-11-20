@@ -38,7 +38,7 @@ workflows:
         max_build_duration: 120
         instance_type: mac_mini_m1
         environment:
-          #flutter: fvm
+          flutter: 3.16.0-beta
           android_signing: 
             - testKeystore
           groups:
@@ -50,12 +50,18 @@ workflows:
             GOOGLE_PLAY_TRACK: internal 
         triggering:
           events:
-              - pull_request
-          branch_patterns:
-          - pattern: "main"
-            include: true
+              - pull_request 
+          branch_patterns: 
+          - pattern: "TestPR3" #test
+            include: true 
             source: false
+        # when:
+        #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
+
         scripts:
+          - name: flutter version
+            script: |
+              flutter --version
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -76,6 +82,14 @@ workflows:
                 # --obfuscate \
                 # --split-debug-info \
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
+          - name: Launch Custom Android Emulator
+            script: | 
+                export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
+                echo y | sdkmanager "system-images;android-33;google_apis;x86_64"
+                echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --name "EWEGO_EMUL_API_33" -n Android33 --package "system-images;android-33;google_apis;x86_64" --tag "google_apis" --device "Galaxy Nexus"
+
+                emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
+                adb wait-for-device
           # - name: Rename the apk file
           #   script: | 
           #     mv build/**/outputs/**/*.aab \
@@ -108,7 +122,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        xcode: 14.3.1
+        xcode: 15
         #flutter: fvm
         ios_signing:
           distribution_type: app_store
@@ -118,13 +132,13 @@ workflows:
             - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
-      triggering:
-          events:
-              - push
-              - tag
-          # branch_patterns:
-          #   - pattern: main, test
-          cancel_previous_builds: true
+      # triggering:
+      #     events:
+      #         - push
+      #         - tag
+      #     branch_patterns:
+      #       - pattern: main, test
+      #     cancel_previous_builds: true
       scripts:
         # - name: java 17 install
         #   script: |
