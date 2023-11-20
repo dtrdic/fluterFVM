@@ -301,11 +301,7 @@ workflows:
             script: flutter config --enable-windows-desktop
 
           - name: download aws cli
-            script:  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-          - name: Install aws cli
-            script: |
-              unzip awscliv2.zip
-              ./aws/install
+            script: sudo pip3 install awscli --upgrade
 
           - name: Aws version
             script: aws --version
