@@ -299,6 +299,8 @@ workflows:
                 flutter packages pub get
           - name: Configure for Windows
             script: flutter config --enable-windows-desktop
+          - name: Install aws cli
+            script:  msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
           - name: Create a random file
             script: dd if=/dev/urandom of=sample2.txt bs=8M count=1
           - name: upload to aws bucket
