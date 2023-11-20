@@ -304,7 +304,7 @@ workflows:
           - name: Create a random file
             script: dd if=/dev/urandom of=sample.txt bs=8M count=1
           - name: upload to aws bucket
-            script: aws cp file S3://dtrdic-bucket
+            script: aws s3 sync S3://dtrdic-bucket
           
           - name: Package Windows
             script: flutter pub run msix:create
