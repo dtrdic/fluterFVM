@@ -302,7 +302,7 @@ workflows:
           - name: Create a random file
             script: dd if=/dev/urandom of=sample2.txt bs=8M count=1
           - name: upload to aws bucket
-            script: aws s3 cp sample2.txt https://dtrdic-bucket.s3.amazonaws.com/test2/
+            script: aws s3 cp sample2.txt https://dtrdic-bucket.s3.amazonaws.com/
           
           - name: Build Windows
             script: flutter build windows
