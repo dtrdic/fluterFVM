@@ -84,9 +84,9 @@ workflows:
           - name: Launch Custom Android Emulator
             script: | 
                 export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
-                echo y | sdkmanager "system-images;android-33;google_apis;x86_64"
-                echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --name "EWEGO_EMUL_API_33" -n Android33 --package "system-images;android-33;google_apis;x86_64" --tag "google_apis" --device "Galaxy Nexus"
-
+                echo y | sdkmanager "system-images;android-33;google_apis;arm64-v8a
+                echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;arm64-v8a --name "EWEGO_EMUL_API_33" -n Android33 --package "system-images;android-33;google_apis;arm64-v8a --tag "google_apis" --device "Galaxy Nexus"
+                #zamjenio x86_64 sa-> arm64-v8a
                 emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
                 adb wait-for-device
           # - name: Rename the apk file
