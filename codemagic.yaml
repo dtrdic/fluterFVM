@@ -401,7 +401,7 @@ workflows:
             - david@nevercode.io
 
     watchOS-workflow:
-      name: iOS Workflow
+      name: watchOS Workflow
       instance_type: mac_mini_m1
       max_build_duration: 120
       integrations:
@@ -420,7 +420,6 @@ workflows:
       triggering:
           events:
               - push
-              - tag
           branch_patterns:
             - pattern: watchOS_branch
       scripts:
@@ -439,8 +438,7 @@ workflows:
             flutter build ipa --release \
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
-              --export-options-plist=/Users/builder/export_options.plist \
-              --destination generic/platform=watchOS
+              --export-options-plist=/Users/builder/export_options.plist
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
