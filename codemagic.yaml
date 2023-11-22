@@ -436,10 +436,11 @@ workflows:
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
-            flutter build ipa --release --flavor free \
+            flutter build ipa --release \
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
-              --export-options-plist=/Users/builder/export_options.plist
+              --export-options-plist=/Users/builder/export_options.plist \
+              --destination generic/platform=watchOS
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
@@ -465,16 +466,4 @@ workflows:
         # google_play:
         #     credentials: $GOOGLE_APPLICATION_CREDENTIALS
         #     track: internal
-        scripts:
-            - name: Upload debug symbols to Firebase Crashlytics
-              script: | 
-                echo "Find build artifacts"
-                dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "Runner.app.dSYM")
-                if [[ -z ${dsymPath} ]]
-                then
-                  echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
-                else
-                  echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
-                  ls -d -- ios/Pods/*
-                  $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
-                fi
+  
