@@ -60,6 +60,7 @@ workflows:
         scripts:
           - name: flutter version
             script: |
+              echo "$ANDROID_SDK_ROOT"
               flutter --version
           - name: Set up local.properties
             script: |
@@ -416,33 +417,13 @@ workflows:
             - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
-      # triggering:
-      #     events:
-      #         - push
-      #         - tag
-      #     branch_patterns:
-      #       - pattern: main, test
-      #     cancel_previous_builds: true
+      triggering:
+          events:
+              - push
+              - tag
+          branch_patterns:
+            - pattern: watchOS_branch
       scripts:
-        # - name: java 17 install
-        #   script: |
-        #     brew update
-        #     brew install openjdk@17
-        #     java --version
-        # - name: set Java 17 as default
-        #   script: |
-        #     echo 'export JAVA_HOME="/usr/local/opt/openjdk@17"' >> ~/.zshrc
-        #     echo 'export PATH="/usr/local/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
-        # - name: java version
-        #   script: |
-        #     source ~/.zshrc
-        #     java --version
-        # - name: brew install 16
-        #   script: |
-        #     brew install node@16
-        #     brew unlink node
-        #     brew link --force --overwrite node@16
-        #     node --version
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
@@ -452,13 +433,6 @@ workflows:
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
-        # - name: Run tests
-        #   script: | 
-        #     xcode-project run-tests \
-        #     --workspace "ios/Runner.xcworkspace" \
-        #     --scheme "Runner" \
-        #     --device "$TEST_DEVICE" \
-        #     --test-flags="-quiet"
         - name: Flutter build ipa and automatic versioning
           script: |
             agvtool new-version -all $(($BUILD_NUMBER + 1))
