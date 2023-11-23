@@ -58,13 +58,6 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
-          - name: flutter version
-            script: |
-              echo "$ANDROID_SDK_ROOT"
-              flutter --version
-          # - name: Set up local.properties
-          #   script: |
-          #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
           - name: Set Android SDK location
             script: | 
               echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
@@ -72,6 +65,13 @@ workflows:
               NDK_VER=$(ls $ANDROID_SDK_ROOT/ndk | head -1)
 
               echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/$NDK_VER" >> "$CM_BUILD_DIR/android/local.properties"
+          - name: flutter version
+            script: |
+              echo "$ANDROID_SDK_ROOT"
+              flutter --version
+          # - name: Set up local.properties
+          #   script: |
+          #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
           - name: Get Flutter packages
             script: |
               flutter packages pub get
