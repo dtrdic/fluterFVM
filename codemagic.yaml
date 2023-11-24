@@ -428,7 +428,7 @@ workflows:
           events:
               - push
           branch_patterns:
-            - pattern: watchOS_branch
+            - pattern: 'watchOS_branch'
               include: true
               source: true
       scripts:
