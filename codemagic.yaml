@@ -429,6 +429,8 @@ workflows:
               - push
           branch_patterns:
             - pattern: watchOS_branch
+              include: true
+              source: true
       scripts:
         - name: Set up code signing settings on Xcode project 
           script: |
