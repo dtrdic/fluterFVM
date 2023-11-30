@@ -424,6 +424,7 @@ workflows:
             - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
+          XCODE_PROJECT: "ios/Runner.xcodeproj"
           XCODE_WORKSPACE: "ios/Runner.xcworkspace"
           XCODE_SCHEME: "WatchLandmarks Watch App"
       triggering:
@@ -446,7 +447,7 @@ workflows:
         - name: Flutter build ipa and automatic versioning
           script: |
             xcode-project build-ipa \
-              --workspace "$XCODE_WORKSPACE" \
+              --project "$XCODE_PROJECT" \
               --scheme "$XCODE_SCHEME" \
               --archive-flags "-destination 'generic/platform=watchOS'"
       artifacts:
