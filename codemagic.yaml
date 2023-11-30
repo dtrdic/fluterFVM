@@ -445,7 +445,6 @@ workflows:
             find . -name "Podfile" -execdir pod install \;
         - name: Flutter build ipa and automatic versioning
           script: |
-            agvtool new-version -all $(($BUILD_NUMBER + 1))
             xcode-project build-ipa \
               --workspace "$XCODE_WORKSPACE" \
               --scheme "$XCODE_SCHEME" \
