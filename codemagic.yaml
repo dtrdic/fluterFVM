@@ -444,6 +444,9 @@ workflows:
         - name: Install pods
           script: | 
             find . -name "Podfile" -execdir pod install \;
+        - name: Permision stuf
+          script: | 
+            chown -R $(whoami) /Users/builder/Library/Developer/Xcode/DerivedData/Runner-gonkkpwvnaacjncwmiuxanhsmouo
         - name: Flutter build ipa and automatic versioning
           script: |
             xcode-project build-ipa \
