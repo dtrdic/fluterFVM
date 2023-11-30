@@ -425,7 +425,7 @@ workflows:
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
           XCODE_WORKSPACE: "ios/Runner.xcworkspace"
-          XCODE_SCHEME: "ios/WatchLandmarks Watch App"
+          XCODE_SCHEME: "WatchLandmarks Watch App"
       triggering:
           events:
               - push
