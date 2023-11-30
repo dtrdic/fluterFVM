@@ -450,7 +450,7 @@ workflows:
         - name: Flutter build ipa and automatic versioning
           script: |
             xcode-project build-ipa \
-              --project "$XCODE_PROJECT" \
+              --project "$XCODE_WORKSPACE" \
               --scheme "$XCODE_SCHEME" \
               --archive-flags "-destination 'generic/platform=watchOS'"
       artifacts:
