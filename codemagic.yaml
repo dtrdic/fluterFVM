@@ -414,6 +414,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
+        cocoapods: 1.14.3
         xcode: 15
         #flutter: fvm
         ios_signing:
