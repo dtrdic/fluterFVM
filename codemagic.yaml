@@ -424,7 +424,7 @@ workflows:
             - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
-          XCODE_PROJECT: "Runner.xcodeproj"
+          XCODE_PROJECT: "ios/Runner.xcodeproj"
           XCODE_SCHEME: "ios/WatchLandmarks Watch App"
       triggering:
           events:
