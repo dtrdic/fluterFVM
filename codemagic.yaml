@@ -97,10 +97,10 @@ workflows:
 
           #       emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
           #       adb wait-for-device
-          - name: Rename the apk file
-            script: | 
-              cp build/**/outputs/**/*.aab \
-                build/**/outputs/**/app-release-renamed.aab
+          # - name: Rename the apk file
+          #   script: | 
+          #     cp build/**/outputs/**/*.aab \
+          #       build/**/outputs/**/app-release-renamed.aab
         artifacts:
           - build/**/outputs/**/*.aab
           - $CM_EXPORT_DIR/app-release-renamed.aab
@@ -120,6 +120,11 @@ workflows:
             track: internal
             changes_not_sent_for_review: true
             submit_as_draft: true
+          scripts:
+          - name: Upload debug symbols to Firebase Crashlytics
+            script: | 
+                cp build/**/outputs/**/*.aab \
+                build/**/outputs/**/app-release-renamed.aab
 
 
     ios-workflow:
