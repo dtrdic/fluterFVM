@@ -454,7 +454,7 @@ workflows:
             xcode-project build-ipa \
               --workspace "$XCODE_WORKSPACE" \
               --scheme "$XCODE_SCHEME" \
-              --archive-flags "-destination 'generic/platform=watchOS'"
+              --archive-flags "-destination 'generic/platform=iOS'"
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
