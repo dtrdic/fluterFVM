@@ -46,7 +46,7 @@ workflows:
             - google_credentials3
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: internal 
+            GOOGLE_PLAY_TRACK: internaltrtr 
         triggering:
           events:
               - pull_request 
@@ -434,13 +434,13 @@ workflows:
           XCODE_PROJECT: "ios/Runner.xcodeproj"
           XCODE_WORKSPACE: "ios/Runner.xcworkspace"
           XCODE_SCHEME: "WatchLandmarks Watch App"
-      triggering:
-          events:
-              - push
-          branch_patterns:
-            - pattern: 'watchOS_branch'
-              include: true
-              source: true
+      # triggering:
+      #     events:
+      #         - push
+      #     branch_patterns:
+      #       - pattern: 'watchOS_branch'
+      #         include: true
+      #         source: true
       scripts:
         - name: Set up code signing settings on Xcode project 
           script: |
