@@ -99,8 +99,8 @@ workflows:
           #       adb wait-for-device
           - name: Rename the apk file
             script: | 
-              mv build/**/outputs/**/*.aab \
-                "$CM_EXPORT_DIR"/app-release-renamed.aab
+              cp build/**/outputs/**/*.aab \
+                build/**/outputs/**/app-release-renamed.aab
         artifacts:
           - build/**/outputs/**/*.aab
           - $CM_EXPORT_DIR/app-release-renamed.aab
