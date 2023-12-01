@@ -102,10 +102,10 @@ workflows:
               echo "$CM_EXPORT_DIR"
               echo "$CM_BUILD_OUTPUT_DIR"
               mv build/**/outputs/**/*.aab \
-                "$CM_BUILD_OUTPUT_DIR"/app-release-renamed.aab
+                build/**/outputs/**/app-release-renamed.aab
         artifacts:
           - build/**/outputs/**/*.aab
-          - $CM_EXPORT_DIR/app-release-renamed.aab
+          - build/**/outputs/**/app-release-renamed.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - debug-info.zip
