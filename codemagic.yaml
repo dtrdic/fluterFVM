@@ -101,12 +101,6 @@ workflows:
             script: | 
               cp build/app/outputs/bundle/release/app-release.aab \
                 build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
-          # - name: Rename the apk file
-          #   script: | 
-          #     echo "$CM_EXPORT_DIR"
-          #     echo "$CM_BUILD_OUTPUT_DIR"
-          #     mv "$CM_BUILD_OUTPUT_DIR"/app-release.aab \
-          #       "$CM_BUILD_OUTPUT_DIR"/app-release-renamed.aab
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/app-release-renamed.aab
@@ -124,7 +118,7 @@ workflows:
               - david@nevercode.io
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
-            track: internal
+            track: internalz
             changes_not_sent_for_review: true
             submit_as_draft: true
           # scripts:
