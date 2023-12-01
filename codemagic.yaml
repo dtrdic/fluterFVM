@@ -101,8 +101,8 @@ workflows:
             script: | 
               echo "$CM_EXPORT_DIR"
               echo "$CM_BUILD_OUTPUT_DIR"
-              cp Users/builder/build_outputs/*.aab \
-                Users/builder/build_outputs/app-release-renamed.aab
+              cp "$CM_BUILD_OUTPUT_DIR"/*.aab \
+                "$CM_BUILD_OUTPUT_DIR"/app-release-renamed.aab
         artifacts:
           - build/**/outputs/**/*.aab
           - $CM_EXPORT_DIR/app-release-renamed.aab
