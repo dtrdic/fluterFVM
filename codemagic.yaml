@@ -101,12 +101,12 @@ workflows:
             script: | 
               mv build/app/outputs/flutter-aab/app-release.aab \
                 build/app/outputs/flutter-aab/my_renamed_binary_name-release.aab
-          - name: Rename the apk file
-            script: | 
-              echo "$CM_EXPORT_DIR"
-              echo "$CM_BUILD_OUTPUT_DIR"
-              mv "$CM_BUILD_OUTPUT_DIR"/app-release.aab \
-                "$CM_BUILD_OUTPUT_DIR"/app-release-renamed.aab
+          # - name: Rename the apk file
+          #   script: | 
+          #     echo "$CM_EXPORT_DIR"
+          #     echo "$CM_BUILD_OUTPUT_DIR"
+          #     mv "$CM_BUILD_OUTPUT_DIR"/app-release.aab \
+          #       "$CM_BUILD_OUTPUT_DIR"/app-release-renamed.aab
         artifacts:
           - build/**/outputs/**/*.aab
           - build/**/outputs/**/app-release-renamed.aab
