@@ -102,7 +102,7 @@ workflows:
               cp build/app/outputs/bundle/release/app-release.aab \
                 build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
         artifacts:
-          #- build/**/outputs/**/*.aab
+          - build/**/outputs/**/*.aab
           - build/**/outputs/**/app-release-renamed.aab
           - build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
           - build/**/outputs/**/mapping.txt
