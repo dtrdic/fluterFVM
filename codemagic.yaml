@@ -46,7 +46,7 @@ workflows:
             - google_credentials3
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: internaltrtr 
+            GOOGLE_PLAY_TRACK: internal
         triggering:
           events:
               - pull_request 
@@ -102,7 +102,7 @@ workflows:
               cp build/app/outputs/bundle/release/app-release.aab \
                 build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
         artifacts:
-          - build/**/outputs/**/*.aab
+          #- build/**/outputs/**/*.aab
           - build/**/outputs/**/app-release-renamed.aab
           - build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
           - build/**/outputs/**/mapping.txt
