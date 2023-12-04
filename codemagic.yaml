@@ -433,14 +433,15 @@ workflows:
           APP_ID: 6450783332 # <-- Put your APP ID here 
           XCODE_PROJECT: "ios/Runner.xcodeproj"
           XCODE_WORKSPACE: "ios/Runner.xcworkspace"
-          XCODE_SCHEME: "WatchLandmarks Watch App"
-      # triggering:
-      #     events:
-      #         - push
-      #     branch_patterns:
-      #       - pattern: 'watchOS_branch'
-      #         include: true
-      #         source: true
+          XCODE_WATCH_SCHEME: "WatchLandmarks Watch App"
+          XCODE_IOS_SCHEME: "Runner"
+      triggering:
+          events:
+              - push
+          branch_patterns:
+            - pattern: 'watchOS_branch'
+              include: true
+              source: true
       scripts:
         - name: Set up code signing settings on Xcode project 
           script: |
@@ -459,7 +460,7 @@ workflows:
           script: |
             xcode-project build-ipa \
               --workspace "$XCODE_WORKSPACE" \
-              --scheme "$XCODE_SCHEME" \
+              --scheme "$XCODE_IOS_SCHEME" \
               --archive-flags "-destination 'generic/platform=iOS'"
       artifacts:
         - /tmp/xcodebuild_logs/*.log
