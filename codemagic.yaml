@@ -176,6 +176,8 @@ workflows:
         #     node --version
         - name: Set up code signing settings on Xcode project 
           script: |
+            FIRE=$(firebase-app-distribution get-latest-build-version -p $PROJECT_NUMBER -a $FIREBASE_APP_ID)
+            echo "zadnji broj je: $FIRE"
             xcode-project use-profiles
         - name: Get Flutter packages
           script: | 
@@ -192,8 +194,6 @@ workflows:
         #     --test-flags="-quiet"
         - name: Flutter build ipa and automatic versioning
           script: |
-            echo "(firebase-app-distribution get-latest-build-version -p $PROJECT_NUMBER -a $FIREBASE_APP_ID)">"$FIRE"
-            echo "zadnji broj je: $FIRE"
             agvtool new-version -all $(($BUILD_NUMBER + 1))
             flutter build ipa --release --flavor free \
               --build-name=1.0.$BUILD_NUMBER \
