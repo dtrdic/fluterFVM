@@ -147,13 +147,13 @@ workflows:
           APP_ID: 6450783332 # <-- Put your APP ID here 
           FIREBASE_APP_ID: 1:701760780130:ios:d06fc5333b7c4ed3f09e3b
           PROJECT_NUMBER: 6450783332
-      triggering:
-          events:
-              - push
-              - tag
-          branch_patterns:
-            - pattern: main, watchOS_branch
-          cancel_previous_builds: true
+      # triggering:
+      #     events:
+      #         - push
+      #         - tag
+      #     branch_patterns:
+      #       - pattern: main, watchOS_branch
+      #     cancel_previous_builds: true
       scripts:
         # - name: java 17 install
         #   script: |
@@ -176,8 +176,6 @@ workflows:
         #     node --version
         - name: Set up code signing settings on Xcode project 
           script: |
-            FIRE=$(firebase-app-distribution get-latest-build-version -p $PROJECT_NUMBER -a $FIREBASE_APP_ID)
-            echo "zadnji broj je: $FIRE"
             xcode-project use-profiles
         - name: Get Flutter packages
           script: | 
@@ -194,6 +192,8 @@ workflows:
         #     --test-flags="-quiet"
         - name: Flutter build ipa and automatic versioning
           script: |
+            FIRE=$(firebase-app-distribution get-latest-build-version -p $PROJECT_NUMBER -a $FIREBASE_APP_ID)
+            echo "zadnji broj je: $FIRE"
             agvtool new-version -all $(($BUILD_NUMBER + 1))
             flutter build ipa --release --flavor free \
               --build-name=1.0.$BUILD_NUMBER \
