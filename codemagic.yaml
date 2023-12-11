@@ -38,7 +38,7 @@ workflows:
         max_build_duration: 120
         instance_type: mac_mini_m1
         environment:
-          flutter: stable
+          flutter: 3.16.0
           android_signing: 
             - testKeystore
           groups:
@@ -63,9 +63,9 @@ workflows:
             script: | 
               echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
 
-              NDK_VER=$(ls $ANDROID_SDK_ROOT/ndk | head -1)
+              # NDK_VER=$(ls $ANDROID_SDK_ROOT/ndk | head -1)
 
-              echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/$NDK_VER" >> "$CM_BUILD_DIR/android/local.properties"
+              # echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/$NDK_VER" >> "$CM_BUILD_DIR/android/local.properties"
           - name: flutter version
             script: |
               echo "$ANDROID_SDK_ROOT"
