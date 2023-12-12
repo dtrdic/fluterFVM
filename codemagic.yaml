@@ -66,9 +66,9 @@ workflows:
           #     # NDK_VER=$(ls $ANDROID_SDK_ROOT/ndk | head -1)
 
           #     # echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/$NDK_VER" >> "$CM_BUILD_DIR/android/local.properties"
-          - name: bundle install
-            script: |
-              bundle install
+          # - name: bundle install
+          #   script: |
+          #     bundle install
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -97,9 +97,7 @@ workflows:
               else
                 UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
               fi
-              flutter build apk --release \
-                --build-name=1.0.$UPDATED_BUILD_NUMBER \
-                --build-number=$UPDATED_BUILD_NUMBER
+              flutter build apk --release --build-name=1.1.1 --build-number=1
           # - name: Launch Custom Android Emulator
           #   script: | 
           #       export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
