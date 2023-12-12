@@ -59,24 +59,38 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
-          - name: Set Android SDK location
-            script: | 
-              echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
+          # - name: Set Android SDK location
+          #   script: | 
+          #     echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
 
-              # NDK_VER=$(ls $ANDROID_SDK_ROOT/ndk | head -1)
+          #     # NDK_VER=$(ls $ANDROID_SDK_ROOT/ndk | head -1)
 
-              # echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/$NDK_VER" >> "$CM_BUILD_DIR/android/local.properties"
+          #     # echo "ndk.dir=$ANDROID_SDK_ROOT/ndk/$NDK_VER" >> "$CM_BUILD_DIR/android/local.properties"
           - name: flutter version
             script: |
               echo "$ANDROID_SDK_ROOT"
               flutter --version
-          # - name: Set up local.properties
-          #   script: |
-          #     echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
+          - name: Set up local.properties
+            script: |
+              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
           - name: Get Flutter packages
             script: |
               flutter packages pub get
-          - name: Build AAB with Flutter
+          # - name: Build AAB with Flutter
+          #   script: |
+          #     LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
+          #     if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
+          #       UPDATED_BUILD_NUMBER=$BUILD_NUMBER
+          #     else
+          #       UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
+          #     fi
+          #     flutter build appbundle --release \
+          #       --build-name=1.0.$UPDATED_BUILD_NUMBER \
+          #       --build-number=$UPDATED_BUILD_NUMBER
+          #       # --obfuscate \
+          #       # --split-debug-info \
+          #       #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
+          - name: Build APK
             script: |
               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
               if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
@@ -84,12 +98,9 @@ workflows:
               else
                 UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
               fi
-              flutter build appbundle --release \
+              flutter build apk --release \
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \
                 --build-number=$UPDATED_BUILD_NUMBER
-                # --obfuscate \
-                # --split-debug-info \
-                #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
           # - name: Launch Custom Android Emulator
           #   script: | 
           #       export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
@@ -98,12 +109,13 @@ workflows:
 
           #       emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
           #       adb wait-for-device
-          - name: Rename the aab file
-            script: | 
-              cp build/app/outputs/bundle/release/app-release.aab \
-                build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
+          # - name: Rename the aab file
+          #   script: | 
+          #     cp build/app/outputs/bundle/release/app-release.aab \
+          #       build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
         artifacts:
           - build/**/outputs/**/*.aab
+          - build/**/outputs/**/*.apk
           - build/**/outputs/**/app-release-renamed.aab
           - build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
           - build/**/outputs/**/mapping.txt
