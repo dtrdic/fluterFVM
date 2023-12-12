@@ -118,6 +118,7 @@ workflows:
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - debug-info.zip
+          
         publishing:
           # firebase:
           #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
