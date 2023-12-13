@@ -52,9 +52,9 @@ workflows:
           events:
               - pull_request 
           branch_patterns: 
-          - pattern: "TestPR3" #test
+          - pattern: "test3" #test3 
             include: true 
-            source: false
+            source: true
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
