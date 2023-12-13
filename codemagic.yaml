@@ -52,7 +52,7 @@ workflows:
           events:
               - pull_request 
           branch_patterns: 
-          - pattern: "main" #test57 rdfsfs
+          - pattern: "main" #test57 rdfsfs ddsdfsdf
             include: true 
             source: true
         # when:
