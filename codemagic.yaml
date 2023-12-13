@@ -52,7 +52,7 @@ workflows:
           events:
               - pull_request 
           branch_patterns: 
-          - pattern: "main" #test3 
+          - pattern: "main" #test5
             include: true 
             source: false
         # when:
