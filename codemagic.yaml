@@ -59,6 +59,9 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
+          - name: CLI tools
+            script: |
+                pip3 install --upgrade codemagic-cli-tools==0.48.0
           # - name: Set Android SDK location
           #   script: | 
           #     echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
