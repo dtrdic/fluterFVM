@@ -149,6 +149,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
+        java: 17
         xcode: 15
         #flutter: fvm
         ios_signing:
@@ -188,6 +189,9 @@ workflows:
         #     brew unlink node
         #     brew link --force --overwrite node@16
         #     node --version
+        - name: CLI tools
+          script: |
+            python -m pip install --upgrade https://github.com/codemagic-ci-cd/cli-tools/archive/refs/heads/improvement/asc-latest-build-version.tar.gz
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
