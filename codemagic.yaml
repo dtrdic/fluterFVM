@@ -94,9 +94,7 @@ workflows:
           #       #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
           - name: Build APK
             script: |
-              GOOGLE_VERZION=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK")
               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
-              echo "ZAdnji latest broj od googlea je: $GOOGLE_VERZION"
               if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
                 UPDATED_BUILD_NUMBER=$BUILD_NUMBER
               else
@@ -105,6 +103,8 @@ workflows:
               flutter build appbundle --release \
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \
                 --build-number=$UPDATED_BUILD_NUMBER
+
+              echo "ZAdnji latest broj od googlea je: $LATEST_GOOGLE_PLAY_BUILD_NUMBER"
 
           # - name: Launch Custom Android Emulator
           #   script: | 
