@@ -95,6 +95,7 @@ workflows:
           - name: Build APK
             script: |
               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
+              echo "ZAdnji latest broj od googlea je: $LATEST_GOOGLE_PLAY_BUILD_NUMBER"
               if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
                 UPDATED_BUILD_NUMBER=$BUILD_NUMBER
               else
@@ -121,7 +122,7 @@ workflows:
           - build/app/outputs/apk/release/*.apk
           - build/**/outputs/**/app-release-renamed.aab
           - build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
-          - app/build/**/outputs/**/mapping.txt
+          - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - debug-info.zip
 
