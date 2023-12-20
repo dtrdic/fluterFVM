@@ -48,8 +48,7 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal
-            BROJ: $(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
-
+            BROJ: $LATEST_GOOGLE_PLAY_BUILD_NUMBER
         triggering:
           events:
               - pull_request 
@@ -61,9 +60,11 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
-          - name: CLI tools
+          - name: LATEST
             script: |
-                pip3 install --upgrade codemagic-cli-tools==0.48.0
+               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
+          - name: echo
+            script: |
                 echo "$BROJ"
           # - name: Set Android SDK location
           #   script: | 
