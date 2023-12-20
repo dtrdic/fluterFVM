@@ -102,11 +102,9 @@ workflows:
               flutter build appbundle --release \
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \
                 --build-number=$UPDATED_BUILD_NUMBER
-
-              echo "ZAdnji latest broj od googlea je: $LATEST_GOOGLE_PLAY_BUILD_NUMBER"
           - name: echo
             script: |
-                echo "$BROJ"
+                echo "$LATEST_GOOGLE_PLAY_BUILD_NUMBER"
           # - name: Launch Custom Android Emulator
           #   script: | 
           #       export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
