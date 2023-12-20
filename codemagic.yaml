@@ -100,7 +100,10 @@ workflows:
               else
                 UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
               fi
-              flutter build apk --release --build-name=1.1.1 --build-number=1
+              flutter build appbundle --release 
+                --build-name=1.0.$UPDATED_BUILD_NUMBER \
+                --build-number=$UPDATED_BUILD_NUMBER
+
           # - name: Launch Custom Android Emulator
           #   script: | 
           #       export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
