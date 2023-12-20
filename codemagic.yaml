@@ -98,6 +98,7 @@ workflows:
               echo "ZAdnji latest broj od googlea je: $LATEST_GOOGLE_PLAY_BUILD_NUMBER"
               if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
                 UPDATED_BUILD_NUMBER=$BUILD_NUMBER
+                              echo "ZUPDATED_BUILD_NUMBERje: $UPDATED_BUILD_NUMBER"
               else
                 UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
               fi
