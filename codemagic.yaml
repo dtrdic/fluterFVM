@@ -138,7 +138,7 @@ workflows:
               - pull_request #test12
           branch_patterns:
             - pattern: '*'
-              include: true 
+              include: false
               source: false 
           cancel_previous_builds: true
       scripts:
