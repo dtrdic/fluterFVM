@@ -135,7 +135,7 @@ workflows:
       triggering:
           events:
               - push
-              - pull_request #test1
+              - pull_request #test12
           branch_patterns:
             - pattern: '*'
           cancel_previous_builds: true
