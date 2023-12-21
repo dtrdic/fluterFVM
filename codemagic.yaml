@@ -137,7 +137,7 @@ workflows:
               - push
               - pull_request #test12
           branch_patterns:
-            - pattern: '*'
+            - pattern: 'main'
           cancel_previous_builds: true
       scripts:
         # - name: java 17 install
