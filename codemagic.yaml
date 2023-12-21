@@ -132,13 +132,13 @@ workflows:
             - firebase_credentials
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
-      # triggering:
-      #     events:
-      #         - push
-      #         - tag
-      #     branch_patterns:
-      #       - pattern: main, test
-      #     cancel_previous_builds: true
+      triggering:
+          events:
+              - push
+              - pull_request
+          branch_patterns:
+            - pattern: '*'
+          cancel_previous_builds: true
       scripts:
         # - name: java 17 install
         #   script: |
