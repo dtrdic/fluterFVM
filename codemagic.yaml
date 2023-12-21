@@ -140,7 +140,7 @@ workflows:
             - pattern: '*'
               include: true
               source: true 
-            - pattern: testis
+            - pattern: '*'
               include: false
               source: false
           cancel_previous_builds: true
