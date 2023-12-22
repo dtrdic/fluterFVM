@@ -54,7 +54,7 @@ workflows:
           branch_patterns: 
           - pattern: "main"
             include: true 
-            source: true #test1
+            source: true #test12
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
@@ -134,10 +134,15 @@ workflows:
           APP_ID: 6450783332 # <-- Put your APP ID here 
       triggering:
           events:
-              - push
-              - pull_request
+              #- push
+              - pull_request #test12dasd
           branch_patterns:
             - pattern: '*'
+              include: true
+              source: true 
+            # - pattern: 'testis'
+            #   include: false
+            #   source: false
           cancel_previous_builds: true
       scripts:
         # - name: java 17 install
