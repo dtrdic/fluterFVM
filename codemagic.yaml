@@ -113,6 +113,11 @@ workflows:
             track: internal
             changes_not_sent_for_review: true
             submit_as_draft: true
+          scripts:
+            - name: To get mapping.txt URL
+              script: | 
+                ARTIFACT_TYPE=".txt" 
+                ARTIFACT_URL=$(echo $CM_ARTIFACT_LINKS | jq -r '.[] | select(.name | endswith("'"$ARTIFACT_TYPE"'")) | .url')
 
 
     ios-workflow:
