@@ -118,7 +118,7 @@ workflows:
               script: | 
                 ARTIFACT_TYPE=".txt" 
                 ARTIFACT_URL=$(echo $CM_ARTIFACT_LINKS | jq -r '.[] | select(.name | endswith("'"$ARTIFACT_TYPE"'")) | .url')
-
+                echo "ovo je ARTIFACT_URL: $ARTIFACT_URL"
 
     ios-workflow:
       name: iOS Workflow
