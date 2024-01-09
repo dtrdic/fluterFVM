@@ -38,7 +38,7 @@ workflows:
         max_build_duration: 120
         instance_type: mac_mini_m1
         environment:
-          flutter: 3.16.0 
+          java: 17
           android_signing: 
             - testKeystore
           groups:
@@ -153,7 +153,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        xcode: 15
+        xcode: 14.3.1
         #flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
