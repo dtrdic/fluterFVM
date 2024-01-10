@@ -125,7 +125,7 @@ workflows:
           #       app_id: 1:701760780130:android:78886c544e828688f09e3b
           email:
             recipients:
-              - david@nevercode.io
+              ["david@nevercode.io", "dtrdic2@gmail.com"]
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
             track: internal
