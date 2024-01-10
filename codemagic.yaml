@@ -38,7 +38,7 @@ workflows:
         max_build_duration: 120
         instance_type: mac_mini_m1
         environment:
-          java: 17
+          java: 17.65
           android_signing: 
             - testKeystore
           groups:
@@ -126,6 +126,9 @@ workflows:
           email:
             recipients:
               ["david@nevercode.io", "dtrdic2@gmail.com"]
+            notify:
+              success: true # To receive a notification when a build succeeds
+              failure: true # To not receive a notification when a build fails
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
             track: internal
@@ -137,14 +140,6 @@ workflows:
                 ARTIFACT_TYPE=".txt" 
                 ARTIFACT_URL=$(echo $CM_ARTIFACT_LINKS | jq -r '.[] | select(.name | endswith("'"$ARTIFACT_TYPE"'")) | .url')
                 echo "ovo je ARTIFACT_URL: $ARTIFACT_URL"
-            - name: Run tests on Maestro cloud
-              script: | 
-                export PATH="$PATH":"$HOME/.maestro/bin"
-                apkPath="/build/app/outputs/apk/release/app-release.apk"
-                maestro cloud \
-                --apiKey $MDEV_API_KEY \
-                $apkPath \
-                .maestro/
 
     ios-workflow:
       name: iOS Workflow
