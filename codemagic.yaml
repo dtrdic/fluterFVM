@@ -148,7 +148,7 @@ workflows:
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
-        xcode: 14.3.1
+        xcode: 14.3.1vsd
         #flutter: fvm
         ios_signing:
           distribution_type: ad_hoc
@@ -239,6 +239,13 @@ workflows:
         #     credentials: $GOOGLE_APPLICATION_CREDENTIALS
         #     track: internal
         scripts:
+            - name: Report build status
+              script: | 
+                if [  -f ~/SUCCESS ] ; then
+                  # build successful
+                else
+                  # build failed
+                fi
             - name: Upload debug symbols to Firebase Crashlytics
               script: | 
                 echo "Find build artifacts"
@@ -251,6 +258,7 @@ workflows:
                   ls -d -- ios/Pods/*
                   $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
                 fi
+
 
     shorebird-workflow: 
         name: shorebird Workflow
