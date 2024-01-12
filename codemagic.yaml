@@ -242,9 +242,9 @@ workflows:
             - name: Report build status
               script: | 
                 if [  -f ~/SUCCESS ] ; then
-                  # build successful
+                  echo ("build successful")
                 else
-                  # build failed
+                  echo ("build failed")
                 fi
             - name: Upload debug symbols to Firebase Crashlytics
               script: | 
