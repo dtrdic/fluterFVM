@@ -96,7 +96,7 @@ workflows:
           #     mv build/**/outputs/**/*.aab \
           #       build/**/outputs/**/app-release-renamed.aab
         artifacts:
-          - build/**/outputs/**/*.aab
+          - build/**/outputs/**/*.aab2
           - build/**/outputs/**/app-release-renamed.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
