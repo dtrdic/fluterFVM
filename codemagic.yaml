@@ -69,20 +69,20 @@ workflows:
           - name: Get Flutter packages
             script: |
               flutter packages pub get
-          - name: Build AAB with Flutter
-            script: |
-              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
-              if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
-                UPDATED_BUILD_NUMBER=$BUILD_NUMBER
-              else
-                UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
-              fi
-              flutter build appbundle --release \
-                --build-name=1.0.$UPDATED_BUILD_NUMBER \
-                --build-number=$UPDATED_BUILD_NUMBER
-                # --obfuscate \
-                # --split-debug-info \
-                #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
+          # - name: Build AAB with Flutter
+          #   script: |
+          #     LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
+          #     if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
+          #       UPDATED_BUILD_NUMBER=$BUILD_NUMBER
+          #     else
+          #       UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
+          #     fi
+          #     flutter build appbundle --release \
+          #       --build-name=1.0.$UPDATED_BUILD_NUMBER \
+          #       --build-number=$UPDATED_BUILD_NUMBER
+          #       # --obfuscate \
+          #       # --split-debug-info \
+          #       #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
           - name: Build APK
             script: |
               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
