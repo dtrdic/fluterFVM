@@ -45,6 +45,7 @@ workflows:
             - shorebird_token
             - firebase_credentials 
             - google_credentials3
+            - github_token
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal 
@@ -113,6 +114,18 @@ workflows:
             track: internal
             changes_not_sent_for_review: true
             submit_as_draft: true
+          scripts:
+            - name: Check publishing status
+              script: | 
+                PUBLISHING_STATUS=$(curl -H "Content-Type: application/json" \
+                    -H "x-auth-token: $GITHUB_TOKEN" \
+                    --request GET https://api.codemagic.io/builds/$CM_BUILD_ID | jq '.build.buildActions[] | select (.type == "publishing") | .status')
+                
+                if [ "$PUBLISHING_STATUS" == "success" ] ; then
+                  echo "do what you want on success"
+                else
+                  echo "do what you want on failure"
+                fi
 
 
     ios-workflow:
