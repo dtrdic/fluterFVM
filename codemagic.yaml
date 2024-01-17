@@ -166,7 +166,7 @@ workflows:
               #- push
               - pull_request #test12dasd
           branch_patterns:
-            - pattern: '*'
+            - pattern: 'main'
               include: true
               source: true 
             # - pattern: 'testis'
