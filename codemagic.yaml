@@ -159,7 +159,7 @@ workflows:
         groups:
             - test_device
             - firebase_credentials
-            - appstore_credentials
+            - appstore_credentials ##ovo prije nije bilo iz nekog razloga a succesfgul build
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
       triggering:
