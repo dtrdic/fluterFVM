@@ -148,8 +148,8 @@ workflows:
       name: iOS Workflow
       instance_type: mac_mini_m1
       max_build_duration: 120
-      integrations:
-        app_store_connect: DavidAPIkey 
+      # integrations:
+      #   app_store_connect: DavidAPIkey 
       environment:
         xcode: 15
         #flutter: fvm
@@ -229,10 +229,10 @@ workflows:
           notify:
             success: true # To receive a notification when a build succeeds
             failure: false # To not receive a notification when a build fails
-        app_store_connect:
-          auth: integration 
-          submit_to_testflight: false
-          submit_to_app_store: true
+        # app_store_connect:
+        #   auth: integration 
+        #   submit_to_testflight: false
+        #   submit_to_app_store: true
           #submit_to_app_store: true #test2
         # firebase:
         #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT 
