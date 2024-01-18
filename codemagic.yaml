@@ -178,7 +178,7 @@ workflows:
         - name: Install capabilities
           script: |
             app-store-connect bundle-ids enable-capabilities \
-                BUNDLE_ID_RESOURCE_ID \
+                B5J6V3KQ96 \
                 --capability=HealthKit|Push Notifications
         # - name: java 17 install
         #   script: |
