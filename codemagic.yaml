@@ -178,7 +178,7 @@ workflows:
         - name: Install capabilities
           script: |
             app-store-connect bundle-ids enable-capabilities \
-                io.codemagic.dtrdic6 \
+                BUNDLE_ID_RESOURCE_ID \
                 --capability=HealthKit|Push Notifications
         # - name: java 17 install
         #   script: |
