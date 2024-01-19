@@ -179,7 +179,7 @@ workflows:
           script: |
             app-store-connect bundle-ids enable-capabilities \
                 B5J6V3KQ96 \
-                --capability "HealthKit", "Push Notifications"
+                --capability "HealthKit" | "Push Notifications"
         # - name: java 17 install
         #   script: |
         #     brew update
