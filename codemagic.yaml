@@ -175,6 +175,36 @@ workflows:
             #   source: false
           cancel_previous_builds: true
       scripts:
+        - name: Install bundle ids
+          script: |
+            # CLIENTS=("001" "002" "003")
+            # TEAM_ID="4b443430-51cb-00b6-bfbb-60e71ddaa13a"
+            # KEY_ID="LY64D59898"
+            # PRIVATE_KEY_PATH="/Users/kevin/Documents/Apple Certs KS/AuthKey_LY64D57798_AppStoreConnect.p8"
+            # CM_API_KEY="YOUR_CODEMAGIC_API_KEY"
+
+            # for CLIENT in "${CLIENTS[@]}"; do
+            #   BUNDLE_ID="com.example.client${CLIENT}"
+            #   echo "CLIENT: $CLIENT | BUNDLE_ID: $BUNDLE_ID"  
+
+            #   curl -H "Content-Type: application/json" -H "x-auth-token: $CM_API_KEY" \
+            #     --data '{
+            #       "appId": "62f12bd754bf379f7b80f532", 
+            #       "workflowId": "ios-qa-client-release",
+            #       "branch": "main",
+            #       "environment": { 
+            #         "variables": { 
+            #           "CLIENT_ID": "'${CLIENT}'",
+            #           "BUNDLE_ID": "'${BUNDLE_ID}'"
+            #         }
+            #       }
+            #     }' \
+            #   https://api.codemagic.io/builds
+            # done
+
+            app-store-connect bundle-ids create --issuer-id=7d812fe2-8abd-47ca-9d27-3ed7e62d7b6d --key-id=3STNJZ5LS4 --private-key=@file:"/Users/david/Desktop/CodeMagic CI CD/AuthKey_U497K69YXL.p8"
+            #@file:"/Users/kevin/Documents/Apple Certs KS/AuthKey_LY64D5F898_AppStoreConnect.p8"
+
         - name: Install capabilities
           script: |
             app-store-connect bundle-ids enable-capabilities \
