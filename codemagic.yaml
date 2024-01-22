@@ -202,7 +202,7 @@ workflows:
             #   https://api.codemagic.io/builds
             # done
 
-            app-store-connect bundle-ids create --issuer-id=7d812fe2-8abd-47ca-9d27-3ed7e62d7b6d --key-id=3STNJZ5LS4 --private-key=@file:"/Users/david/Desktop/CodeMagic CI CD/AuthKey_U497K69YXL.p8"
+            app-store-connect bundle-ids create --issuer-id=7d812fe2-8abd-47ca-9d27-3ed7e62d7b6d --key-id=3STNJZ5LS4 --private-key=@file:"/Users/david/Desktop/DavidAPIkey/AuthKey_3STNJZ5LS4.p8"
             #@file:"/Users/kevin/Documents/Apple Certs KS/AuthKey_LY64D5F898_AppStoreConnect.p8"
 
         - name: Install capabilities
