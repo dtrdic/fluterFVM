@@ -1,456 +1,535 @@
+# Check out https://docs.codemagic.io/yaml/building-a-react-native-app/ for more information
+# Please review and update values
+
+# TODO --- look at SHH build by passing flag
+
+definitions: 
+
+  instance_mac_pro: &instance_mac_pro
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+
+  env_versions: &env_versions
+    # node: 16.9.0
+    xcode: 14.2
+    cocoapods: default
+    # FYI Using custom ruby version increases build time dramatically
+  ios_artifacts:
+    - &ipa build/ios/ipa/*.ipa
+    - &xcode_log /tmp/xcodebuild_logs/*.log
+    - &dsym $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+    - &app $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+
+  android_artifacts:
+    - &bundle android/app/build/outputs/**/*.aab
+    - &apk android/app/build/outputs/**/*.apk
+
+  email_release: &email_release
+    email:
+      recipients:
+        - francis@coastr.com
+        - rajesh@coastr.com
+      notify:
+        success: true
+        failure: true
+
+  email_develop: &email_develop
+    email:
+      recipients:
+        - francis@coastr.com
+        - rajesh@coastr.com
+      notify:
+        success: true
+        failure: true    
+
+  email_qa: &email_qa
+    email:
+      recipients:
+        - francis@coastr.com
+        - rajesh@coastr.com
+        - harish@coastr.com
+        - nishtha@coastr.com
+        - karthik@coastr.com
+        - siddesh@coastr.com
+      notify:
+        success: true
+        failure: true    
+
+  scripts:
+    - &setup_amplify 
+      name: Setup Amplify 
+      script: |
+        npm install -g @aws-amplify/cli
+        bash scripts/amplifySetup.sh
+      
+    - &setup_appcenter 
+      name: Setup Appcenter
+      script: |
+        echo "Injecting secrets..."
+        # echo "Updating Google JSON"
+        # echo $GOOGLE_SERVICES_JSON | base64 --decode > "$CM_BUILD_DIR/android/app/google-services.json"
+        # echo "Updating Google plist"
+        # echo $GOOGLE_SERVICES_PLIST | base64 --decode > "$CM_BUILD_DIR/ios/GoogleService-Info.plist"
+        echo "Updating android secret"
+        echo $APPCENTER_ANDROID_SECRET | base64 --decode > "$CM_BUILD_DIR/android/app/src/main/assets/appcenter-config.json"
+        echo "Updating iOS secret"
+        echo $APPCENTER_IOS_SECRET | base64 --decode > "$CM_BUILD_DIR/ios/AppCenter-Config.plist"
+        echo "Finished injecting secrets."
+
+    - &setup_rn_env_default
+      name: Setup env
+      script: |
+        # Creates an .env from ENV variables for use with react-native-config
+        cd $CM_BUILD_DIR
+        ENV_WHITELIST=${ENV_WHITELIST:-"^RN_"}
+        printf "Creating an .env file with the following whitelist:\n"
+        printf "%s\n" $ENV_WHITELIST
+        set | egrep -e $ENV_WHITELIST | sed 's/^RN_//g' > rn-default.env
+        printf "\n.env created with contents:\n\n"
+        cat rn-default.env
+
+    
+    - &install_npm
+      name: Install npm dependencies
+      script: |
+        yarn install
+
+    - &check_gql
+      name: Running GQL Schema checks
+      script: |
+        yarn generate-gql
+
+  ios_scripts:
+    - &ios_initialize_keychain
+      name: Set up keychain to be used for codesigning using Codemagic CLI 'keychain' command
+      script: |
+        keychain initialize
+    - &fetch_signing_files
+      name: Fetch signing files
+      script: |
+        app-store-connect fetch-signing-files "$BUNDLE_IDENTIFIER" --type IOS_APP_STORE --create
+    - &add_certs_to_keychain
+      name: Add certs to keychain
+      script: |
+        keychain add-certificates
+    - &use_profiles
+      name: Set up code signing settings on Xcode project
+      script: |
+        xcode-project use-profiles --warn-only
+    - &increment_ios_build_number
+      name: Increment build number
+      script: |
+        #!/bin/sh
+        set -e
+        set -x
+        cd $FCI_BUILD_DIR/ios
+        agvtool new-version -all $(($BUILD_NUMBER + 1))
+        agvtool new-version -all $(($(app-store-connect get-latest-testflight-build-number "$APP_ID") + 1))
+    - &build_ipa
+      name: Build ipa
+      script: |
+        xcode-project build-ipa --workspace "$FCI_BUILD_DIR/ios/$XCODE_WORKSPACE" --scheme "$XCODE_SCHEME" 
+    - &install_pods
+      name: Install CocoaPods dependencies
+      script: |
+        gem install bundle
+        cd ios && pod install
+
+  android_scripts:
+    - &set_android_sdk
+      name: Set Android SDK location
+      script: |
+        echo "sdk.dir=$ANDROID_SDK_ROOT" > "$FCI_BUILD_DIR/android/local.properties"
+    
+    - &bundle_release
+      name: Build Android release AAB
+      script: |
+        # Set environment variable so it can be used to increment build number in android/app/build.gradle
+        # Note that tracks can be specified when retrieving latest build number from Google Play, for example:
+        # export NEW_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$BUNDLE_IDENTIFIER" --tracks=alpha) + 1))
+        export LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$BUNDLE_IDENTIFIER") + 1))
+        cd android && ./gradlew bundleRelease
+
+    - &release_apk
+      name: Build Android release APK
+      script: |
+        # Set environment variable so it can be used to increment build number in android/app/build.gradle
+        # Note that tracks can be specified when retrieving latest build number from Google Play, for example:
+        # export NEW_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$BUNDLE_IDENTIFIER" --tracks=alpha) + 1))
+        export LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$BUNDLE_IDENTIFIER") + 1))
+        cd android && ./gradlew assembleRelease
+        
+    - &qa_release_apk
+      name: Build Android release APK
+      script: |
+        # Set environment variable so it can be used to increment build number in android/app/build.gradle
+        # Note that tracks can be specified when retrieving latest build number from Google Play, for example:
+        # export NEW_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$BUNDLE_IDENTIFIER" --tracks=alpha) + 1))
+        export LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$BUNDLE_IDENTIFIER") + 1))
+        cd android && ./gradlew assembleRelease
+
+  whitelabelling:
+    # TODO - Add script to download assets from GDrive and copy them to relevant places
+    - &download_whitelabel_assets
+      name: Download Assets to tmp folder
+      script: |
+        sudo pip3 install awscli --upgrade
+        aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID" --profile default
+        aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY" --profile default
+        aws configure set region "$AWS_REGION" --profile default
+        aws s3 cp s3://coastr-customer-mobile-app-whitelabelling/$CLIENT_ID /tmp/whitelabels/$CLIENT_ID --recursive
+  
+    - &prepare_build_assets
+      name: Whitelabel the base App
+      script: |
+        bundle install
+        # sudo gem install fastlane
+        bundle exec fastlane prepare_build_codemagic wl_id:$CLIENT_ID
+    - &ios_prepare_build_machine
+      name: Prepare the build machine with required iOS envs
+      script: |
+        # Creates iOS creds
+        source $CM_BUILD_DIR/scripts/prepare-ios-ci.sh
+
+    - &android_prepare_build_machine
+      name: Prepare the build machine with required Android envs
+      script: |
+        # creates GCLOUD_SERVICE_ACCOUNT
+        
+        source /tmp/whitelabels/$CLIENT_ID/deployment.env
+        
+        echo "Setting for $WHITE_LABEL_NAME"
+
+        echo 'GCLOUD_SERVICE_ACCOUNT_CREDENTIALS<<DELIMITER' >> $CM_ENV
+        echo "$GCLOUD_SERVICE_ACCOUNT_CREDENTIALS" >> $CM_ENV
+        echo 'DELIMITER' >> $CM_ENV
+
+
+    - &ios_setup_deployment_env
+        name: Set value from deployment.env
+        script: |
+        
+          source /tmp/whitelabels/$CLIENT_ID/deployment.env
+
+          echo "Setting for $WHITE_LABEL_NAME"
+
+          echo "XCODE_PROJECT_NAME=$XCODE_PROJECT_NAME" >> $CM_ENV
+          echo "XCODE_SCHEME=$XCODE_SCHEME" >> $CM_ENV
+          echo "XCODE_WORKSPACE=$XCODE_WORKSPACE" >> $CM_ENV
+          echo "APP_ID=$APP_ID" >> $CM_ENV
+
+          echo "APP_STORE_CONNECT_KEY_IDENTIFIER=$APP_STORE_CONNECT_KEY_IDENTIFIER" >> $CM_ENV
+          echo "APP_STORE_CONNECT_ISSUER_ID=$APP_STORE_CONNECT_ISSUER_ID" >> $CM_ENV
+
+          echo "APP_STORE_CONNECT_PRIVATE_KEY<<DELIMITER" >> $CM_ENV
+          echo "$APP_STORE_CONNECT_PRIVATE_KEY" >> $CM_ENV
+          echo "DELIMITER" >> $CM_ENV
+
+          # echo "CERTIFICATE_PRIVATE_KEY<<DELIMITER" >> $CM_ENV
+          # echo "$CERTIFICATE_PRIVATE_KEY" >> $CM_ENV
+          # echo "DELIMITER" >> $CM_ENV
+
 workflows:
-    trigger:
-      name: trigger builds for different branches
+  release-android:
+      name: Android Production
+      <<: *instance_mac_pro
+      cache:
+        cache_paths:
+          - $HOME/.gradle/caches
       environment:
-        groups:
-          - firebase_credentials
-          - google_play_credentials2
-          - token
+            groups:
+              - cross_platform
+              - aws_config
+              - amplify
+              - dummy_credentials
+              - rn_config_group
+              - rn_config
+            <<: *env_versions
+            vars:
+              CLIENT_ID: "$CLIENT_ID" # <-- Send this via API
+              GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
       scripts:
-        - name: Trigger multiple client builds
-          script: |
-            WORKFLOW="android-workflow"  # Replace with your workflow ID
-            APP_ID="645a0fafc5f77d006a400bf1"  # Replace with your App ID
+          - *setup_amplify
+          - *install_npm
+          - *setup_rn_env_default
 
-            # Define an array of branch names
-            BRANCHES=("main" "master" "dev")
+          - *download_whitelabel_assets
 
-            for BRANCH in ${BRANCHES[@]}; do
-              echo "Triggering workflow $WORKFLOW for branch $BRANCH"
+          - *android_prepare_build_machine
 
-              Make the POST request to trigger the build for the current branch
-              curl -H "Content-Type: application/json" -H "x-auth-token: $CM_API_KEY" \
-                --data '{
-                  "appId": "645a0fafc5f77d006a400bf1",
-                  "workflowId": "android-workflow",
-                  "branch": "'${BRANCH}'",
-                  "environment": {
-                      "variables": {
-                          "PACKAGE_NAME": "io.codemagic.dtrdic6"
-                      }
-                  }
-                }' \
-                https://api.codemagic.io/builds
-            done
+          - *prepare_build_assets
 
-    android-workflow:
-        name: Android Workflow
-        max_build_duration: 120
-        instance_type: mac_mini_m1
-        environment:
-          flutter: 3.16.0 
-          android_signing: 
-            - testKeystore
-          groups:
-            - shorebird_token
-            - firebase_credentials 
-            - google_credentials3
-            - github_token
-          vars:
-            PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: internal 
-        triggering:
-          events:
-              - push
-          branch_patterns: 
-          - pattern: "release/*"
-            include: true 
-            source: true #test12 test2
-        # when:
-        #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
+          - *set_android_sdk
+          - *bundle_release
 
-        scripts:
-          - name: flutter version
-            script: |
-              flutter --version
-          - name: Set up local.properties
-            script: |
-              echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-          - name: Get Flutter packages
-            script: |
-              flutter packages pub get
-          # - name: Build AAB with Flutter
-          #   script: |
-          #     LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
-          #     if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
-          #       UPDATED_BUILD_NUMBER=$BUILD_NUMBER
-          #     else
-          #       UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
-          #     fi
-          #     flutter build appbundle --release \
-          #       --build-name=1.0.$UPDATED_BUILD_NUMBER \
-          #       --build-number=$UPDATED_BUILD_NUMBER
-          #       # --obfuscate \
-          #       # --split-debug-info \
-          #       #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
-          - name: Build APK
-            script: |
-              LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
-              if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
-                UPDATED_BUILD_NUMBER=$BUILD_NUMBER
-              else
-                UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
-              fi
-              flutter build apk --release \
-                --build-name=1.0.$UPDATED_BUILD_NUMBER \
-                --build-number=$UPDATED_BUILD_NUMBER
-                # --obfuscate \
-                # --split-debug-info \
-                #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
-          # - name: Launch Custom Android Emulator
-          #   script: | 
-          #       export PATH="$PATH":"$ANDROID_HOME/cmdline-tools/latest/bin"
-          #       echo y | sdkmanager "system-images;android-33;google_apis;x86_64"
-          #       echo no | avdmanager create avd -n emulator -k "system-images;android-33;google_apis;x86_64" --name "EWEGO_EMUL_API_33" -n Android33 --package "system-images;android-33;google_apis;x86_64" --tag "google_apis" --device "Galaxy Nexus"
-
-          #       emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
-          #       adb wait-for-device
-          # - name: Rename the apk file
-          #   script: | 
-          #     mv build/**/outputs/**/*.aab \
-          #       build/**/outputs/**/app-release-renamed.aab
-        artifacts:
-          - build/**/outputs/**/*.aab
-          - build/app/outputs/apk/release/app-release.apk
-          - build/**/outputs/**/app-release-renamed.aab
-          - build/**/outputs/**/mapping.txt
-          - flutter_drive.log
-          - debug-info.zip
-        publishing:
-          # firebase:
-          #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-          #     android:
-          #       app_id: 1:701760780130:android:78886c544e828688f09e3b
-          email:
-            recipients:
-              - david@nevercode.io
+      artifacts:
+          - *bundle
+      publishing:
+          <<: *email_release
           google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
-            track: internal
-            changes_not_sent_for_review: true
-            submit_as_draft: true
-          scripts:
-            - name: Check publishing status
-              script: | 
-                PUBLISHING_STATUS=$(curl -H "Content-Type: application/json" \
-                    -H "x-auth-token: $GITHUB_TOKEN" \
-                    --request GET https://api.codemagic.io/builds/$CM_BUILD_ID | jq '.build.buildActions[] | select (.type == "publishing") | .status')
-                echo "PUBLISHING_STATUS is: $PUBLISHING_STATUS"
-
-                if [ "$PUBLISHING_STATUS" == "success" ] ; then
-                  echo "do what you want on success"
-                else
-                  echo "do what you want on failure"
-                fi
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS_HOLDER
+            track: production   # Any default or custom track that is not in draft status!
+            submit_as_draft: false # Optional boolean. Publish artifacts under a draft release. Can not be used together with rollout_fraction. Defaults to false
 
 
-    ios-workflow:
-      name: iOS Workflow
-      instance_type: mac_mini_m1
-      max_build_duration: 120
-      integrations:
-        app_store_connect: DavidAPIkey 
+
+  release-ios:
+      name: iOS Production
+      <<: *instance_mac_pro
+      cache:
+        cache_paths:
+          - $HOME/Library/Caches/CocoaPods
       environment:
-        xcode: 15
-        #flutter: fvm
-        ios_signing:
-          distribution_type: app_store
-          bundle_identifier: io.codemagic.dtrdic6
-        groups:
-            - test_device
-            - firebase_credentials
-            - appstore_credentials ##ovo prije nije bilo iz nekog razloga a succesfgul build
-        vars:
-          APP_ID: 6450783332 # <-- Put your APP ID here 
+          groups:
+            - certificate_credentials # <-- (Includes CERTIFICATE_PRIVATE_KEY - Put your Certificate Private Key here)
+            - cross_platform
+            - aws_config
+            - amplify
+            - dummy_credentials
+            - rn_config_group
+            - rn_config
+
+          <<: *env_versions
+          vars:
+              CLIENT_ID: "$CLIENT_ID" # <-- Send this via API
+              APP_STORE_CONNECT_PRIVATE_KEY: $APP_STORE_CONNECT_PRIVATE_KEY
+              APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER
+              APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID
+      scripts:
+          - *setup_amplify
+          - *install_npm
+          - *setup_rn_env_default
+
+          - *download_whitelabel_assets
+                      
+          - *ios_setup_deployment_env
+
+          - *prepare_build_assets
+
+          - *install_pods
+          - *ios_initialize_keychain
+          - *fetch_signing_files
+          - *add_certs_to_keychain
+          - *use_profiles
+          - *increment_ios_build_number
+          - *build_ipa
+      artifacts:
+          - *ipa
+          - *xcode_log
+          - *dsym
+          - *app
+
+      publishing:
+          <<: *email_release
+
+          app_store_connect:                 
+            api_key: $APP_STORE_CONNECT_PRIVATE_KEY         # Contents of the API key, can also reference environment variable such as $APP_STORE_CONNECT_PRIVATE_KEY
+            key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER       # Alphanumeric value that identifies the API key, can also reference environment variable such as $APP_STORE_CONNECT_KEY_IDENTIFIER
+            issuer_id: $APP_STORE_CONNECT_ISSUER_ID         # Alphanumeric value that identifies who created the API key, can also reference environment variable such as $APP_STORE_CONNECT_ISSUER_ID
+            submit_to_testflight: false                     # Optional boolean, defaults to false. Whether or not to submit the uploaded build to TestFlight beta review. Required for distributing to beta groups. Note: This action is performed during post-processing.
+            submit_to_app_store: true # Optional boolean, defaults to false. Whether or not to submit the uploaded build to App Store review. Note: This action is performed during post-processing.
+            release_type: MANUAL # Optional, defaults to MANUAL. Supported values: MANUAL, AFTER_APPROVAL or SCHEDULED
+            # earliest_release_date: 2021-12-01T14:00:00+00:00 # Optional. Timezone-aware ISO8601 timestamp with hour precision when scheduling the release. This can be only used when release type is set to SCHEDULED. It cannot be set to a date in the past.
+
+  pilot-ios:
+      name: iOS Production Pilot
+      <<: *instance_mac_pro
+      cache:
+        cache_paths:
+          - $HOME/Library/Caches/CocoaPods
+      environment:
+          groups:
+            - certificate_credentials # <-- (Includes CERTIFICATE_PRIVATE_KEY - Put your Certificate Private Key here)
+            - cross_platform
+            - aws_config
+            - amplify
+            - dummy_credentials
+            - rn_config_group
+            - rn_config
+
+          <<: *env_versions
+          vars:
+              CLIENT_ID: "$CLIENT_ID" # <-- Send this via API
+              APP_STORE_CONNECT_PRIVATE_KEY: $APP_STORE_CONNECT_PRIVATE_KEY
+              APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER
+              APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID
+      scripts:
+          - *setup_amplify
+          - *install_npm
+          - *setup_rn_env_default
+
+          - *download_whitelabel_assets
+                      
+          - *ios_setup_deployment_env
+
+          - *prepare_build_assets
+
+          - *install_pods
+          - *ios_initialize_keychain
+          - *fetch_signing_files
+          - *add_certs_to_keychain
+          - *use_profiles
+          - *increment_ios_build_number
+          - *build_ipa
+      artifacts:
+          - *ipa
+          - *xcode_log
+          - *dsym
+          - *app
+
+      publishing:
+          <<: *email_release
+          app_store_connect:                 
+            api_key: $APP_STORE_CONNECT_PRIVATE_KEY         # Contents of the API key, can also reference environment variable such as $APP_STORE_CONNECT_PRIVATE_KEY
+            key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER       # Alphanumeric value that identifies the API key, can also reference environment variable such as $APP_STORE_CONNECT_KEY_IDENTIFIER
+            issuer_id: $APP_STORE_CONNECT_ISSUER_ID         # Alphanumeric value that identifies who created the API key, can also reference environment variable such as $APP_STORE_CONNECT_ISSUER_ID
+  
+  pilot-android:
+      name: Android Pilot
+      <<: *instance_mac_pro
+      cache:
+        cache_paths:
+          - $HOME/.gradle/caches
+      environment:
+            groups:
+              - cross_platform
+              - aws_config
+              - amplify
+              - dummy_credentials
+              - rn_config_group
+              - rn_config
+
+            <<: *env_versions
+
+            vars:
+              CLIENT_ID: "$CLIENT_ID" # <-- Send this via API
+      scripts:
+          - *setup_amplify
+          - *install_npm
+          - *setup_rn_env_default
+
+          - *download_whitelabel_assets
+
+          - *prepare_build_assets
+
+          - *set_android_sdk
+          - *release_apk
+
+      artifacts:
+          - *apk
+      publishing:
+          <<: *email_develop
+  
+  testing-android:
+      name: Android Testing
+      <<: *instance_mac_pro
+      cache:
+        cache_paths:
+          - $HOME/.gradle/caches
+      environment:
+            groups:
+              - cross_platform
+              - aws_config
+              - amplify
+              - dummy_credentials
+              - rn_config_group
+              - rn_config
+              - rn_config_testing
+              - discord
+              - gql_acc
+
+            <<: *env_versions
+
+            vars:
+              CLIENT_ID: "CoastrQA" # <-- Send this via API
+              AMPLIFY_ENV: "testing"
       triggering:
-          events:
-              #- push
-              - pull_request #test12dasd testtest2
-          branch_patterns:
-            - pattern: main
-              include: true
-              source: true 
-            # - pattern: 'testis'
-            #   include: false
-            #   source: false
-          cancel_previous_builds: true
+        events:
+          - push
+        branch_patterns: 
+          - pattern: testing
+            include: true
+        cancel_previous_builds: true
       scripts:
-        - name: Install bundle ids
-          script: |
-            BUNDLE_NAME=("001" "002" "003")
-            ISSUER_ID="7d812fe2-8abd-47ca-9d27-3ed7e62d7b6d"
-            KEY_ID="3STNJZ5LS4"
-            PRIVATE_KEY_PATH="/Users/david/Desktop/DavidAPIkey/AuthKey_3STNJZ5LS4.p8"
+          - *setup_amplify
+          - *install_npm
+          - *setup_rn_env_default
 
-            for BUNDLE in "${BUNDLE_NAME[@]}"; do
-              echo "Creating bundle id for BUNDLE: $BUNDLE"
+          - *download_whitelabel_assets
 
-              # Constructing bundle id based on BUNDLE ID
-              BUNDLE_ID="com.example.random${BUNDLE}"
+          - *prepare_build_assets
 
-              # Creating bundle id on App Store Connect
-              app-store-connect bundle-ids create \
-                --issuer-id="$ISSUER_ID" \
-                --key-id="$KEY_ID" \
-                --private-key="@file:${PRIVATE_KEY_PATH}" \
-                "$BUNDLE_ID"
+          - *check_gql
 
-              echo "Bundle id created for BUNDLE: $BUNDLE"
-            done
+          - *set_android_sdk
+          - *qa_release_apk
 
-            app-store-connect bundle-ids create --issuer-id=7d812fe2-8abd-47ca-9d27-3ed7e62d7b6d --key-id=3STNJZ5LS4 --private-key=@file:"/Users/david/Desktop/DavidAPIkey/AuthKey_3STNJZ5LS4.p8" com.example.random1
-            #@file:"/Users/kevin/Documents/Apple Certs KS/AuthKey_LY64D5F898_AppStoreConnect.p8"
-
-        - name: Install capabilities
-          script: |
-            app-store-connect bundle-ids enable-capabilities \
-                B5J6V3KQ96 \
-                --capability "HealthKit" "Push Notifications"
-        # - name: java 17 install
-        #   script: |
-        #     brew update
-        #     brew install openjdk@17
-        #     java --version
-        # - name: set Java 17 as default
-        #   script: |
-        #     echo 'export JAVA_HOME="/usr/local/opt/openjdk@17"' >> ~/.zshrc
-        #     echo 'export PATH="/usr/local/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
-        # - name: java version
-        #   script: |
-        #     source ~/.zshrc
-        #     java --version
-        # - name: brew install 16
-        #   script: |
-        #     brew install node@16
-        #     brew unlink node
-        #     brew link --force --overwrite node@16
-        #     node --version
-        - name: Set up code signing settings on Xcode project 
-          script: |
-            xcode-project use-profiles
-        - name: Get Flutter packages
-          script: | 
-            flutter packages pub get
-        - name: Install pods
-          script: | 
-            find . -name "Podfile" -execdir pod install \;
-        # - name: Run tests
-        #   script: | 
-        #     xcode-project run-tests \
-        #     --workspace "ios/Runner.xcworkspace" \
-        #     --scheme "Runner" \
-        #     --device "$TEST_DEVICE" \
-        #     --test-flags="-quiet"
-        - name: Flutter build ipa and automatic versioning
-          script: |
-            agvtool new-version -all $(($BUILD_NUMBER + 1))
-            flutter build ipa --release --flavor free \
-              --build-name=1.0.$BUILD_NUMBER \
-              --build-number=$BUILD_NUMBER \
-              --export-options-plist=/Users/builder/export_options.plist
       artifacts:
-        - /tmp/xcodebuild_logs/*.log
-        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
-        - build/ios/ipa/*.ipa
-        - flutter_drive.log
-       # - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+          - *apk
       publishing:
-        email:
-          recipients:
-            - david@nevercode.io
-          notify:
-            success: true # To receive a notification when a build succeeds
-            failure: false # To not receive a notification when a build fails
-        app_store_connect:
-          auth: integration 
-          submit_to_testflight: true
-          submit_to_app_store: true
-          beta_groups: 
-            - sharks
-        # firebase:
-        #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT 
-        #     ios:
-        #       app_id: 1:701760780130:ios:d06fc5333b7c4ed3f09e3b
-        # google_play:
-        #     credentials: $GOOGLE_APPLICATION_CREDENTIALS
-        #     track: internal
-        # scripts:
-        #     - name: Upload debug symbols to Firebase Crashlytics
-        #       script: | 
-        #         echo "Find build artifacts"
-        #         dsymPath=$(find $CM_BUILD_DIR/build/ios/archive/Runner.xcarchive -name "Runner.app.dSYM")
-        #         if [[ -z ${dsymPath} ]]
-        #         then
-        #           echo "No debug symbols were found, skip publishing to Firebase Crashlytics"
-        #         else
-        #           echo "Publishing debug symbols from $dsymPath to Firebase Crashlytics"
-        #           ls -d -- ios/Pods/*
-        #           $CM_BUILD_DIR/ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios $dsymPath
-        #         fi
-
-    shorebird-workflow: 
-        name: shorebird Workflow
-        max_build_duration: 120
-        instance_type: mac_mini_m1
-        labels:
-          - ${PACKAGE_NAME}
-        environment:
-          #flutter: fvm
-          android_signing:
-            - testKeystore
-          groups:
-            - shorebird_token
-            - firebase_credentials
-            - google_credentials3
-          vars:
-            PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: internal
-        scripts:
-          - name: Build aab
-            script: | 
-                flutter build appbundle 
-          - name: 🐦 Setup Shorebird
-            script: |
-              # Install Shorebird
-              curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
-
-              # Add Shorebird to PATH
-              echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
-          - name: 🚀 Shorebird INIT
-            script:  shorebird init
-          - name: 🚀 Shorebird release
-            script:  shorebird release android
-          - name: 🚀 Shorebird Patch
-            script:  shorebird patch android --force
-        
-        artifacts:
-          - build/**/outputs/**/*.aab
-          - build/**/outputs/**/mapping.txt
-          - flutter_drive.log
-          - debug-info.zip
-        publishing:
-          # firebase:
-          #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-          #     android:
-          #       app_id: 1:701760780130:android:78886c544e828688f09e3b
-          email:
-            recipients:
-              - david@nevercode.io
-          google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
-            track: internal
-            changes_not_sent_for_review: true
-            submit_as_draft: true
-
-    windows-android-workflow:
-        name: Windows publish Android Workflow
-        max_build_duration: 120
-        instance_type: windows_x2
-        environment:
-          android_signing:
-            - testKeystore
-          groups:
-            - windows_credentials
-            - google_credentials3
-        # triggering:
-        #   events:
-        #       - push
-        #   branch_patterns:
-        #   - pattern: "main"
-        #     include: true
-        #     source: false          
-        scripts:
-          - name: Get Flutter packages
-            script: | 
-                flutter packages pub get
-          - name: Configure for Windows
-            script: flutter config --enable-windows-desktop
-          - name: Build Windows
-            script: flutter build windows
-          - name: Package Windows
-            script: flutter pub run msix:create
-          - name: Package Windows
-            script: |
-              flutter pub add msix
-              flutter pub run msix:create --display-name='FlutterFvm' --publisher-display-name='FlutterFvm' --publisher='PublisherID' --identity-name='gizard.FlutterFVM' --version=1.0.0.0 --store=true
-        
-        artifacts:
-          - build/windows/**/*.msix
-        publishing:
-          partner_center:
-            store_id: $APP_ID # <-- You can find the `store_id` inside your Partner Center app by going to [Product management > Product Identity].
-            tenant_id: $TENANT_ID # <-- You will get `tenant_id` from the Azure AD Overview page.
-            client_id: $CLIENT_ID # <-- You will also get `client_id` from the Azure AD Overview page.
-            client_secret: $CLIENT_SECRET # <-- `client_secret` is retrieved from the application environment variable
-          email:
-            recipients:
-              - david@nevercode.io #test3
-
-    discord-workflow:
-      name: Discord integration Workflow
-      instance_type: mac_mini_m1
-      max_build_duration: 60
+          <<: *email_qa
+  
+  testing-ios:
+      name: iOS Testing
+      <<: *instance_mac_pro
+      cache:
+        cache_paths:
+          - $HOME/Library/Caches/CocoaPods
       environment:
-        android_signing:
-          - testKeystore
-        groups:
-          - discord_credentials 
-        flutter: stable
-        cocoapods: default 
-      # triggering:
-      #   events:
-      #     - push
-      scripts:        
-        - name: set up local properties
-          script: |
-            echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
-        - name: Get packages and build debug apk
-          script: |
-            flutter packages pub get && flutter build apk --debug
-        - name: Create a changelog
-          script: |
-              if [[ -z ${CM_PREVIOUS_COMMIT} ]]
-              then
-                echo "No finished builds found to generate changelog" | tee release_notes.txt
-              else
-                echo "$(git-changelog generate --previous-commit $CM_PREVIOUS_COMMIT)" | tee release_notes.txt
-              fi      
-        - name:  exit code 1
-          script: |
-            exit code 1
+          groups:
+            - certificate_credentials # <-- (Includes CERTIFICATE_PRIVATE_KEY - Put your Certificate Private Key here)
+            - cross_platform
+            - aws_config
+            - amplify
+            - dummy_credentials
+            - rn_config_group
+            - rn_config
+            - rn_config_testing
+            - discord
+            - gql_acc
+
+          <<: *env_versions
+          vars:
+              CLIENT_ID: "CoastrQA" # <-- Send this via API
+              AMPLIFY_ENV: "testing"
+              APP_STORE_CONNECT_PRIVATE_KEY: $APP_STORE_CONNECT_PRIVATE_KEY
+              APP_STORE_CONNECT_KEY_IDENTIFIER: $APP_STORE_CONNECT_KEY_IDENTIFIER
+              APP_STORE_CONNECT_ISSUER_ID: $APP_STORE_CONNECT_ISSUER_ID
+      triggering:
+        events:
+          - push
+        branch_patterns: 
+          - pattern: testing
+            include: true
+        cancel_previous_builds: true
+      scripts:
+          - *setup_amplify
+          - *install_npm
+          - *setup_rn_env_default
+          - *download_whitelabel_assets
+          - *ios_setup_deployment_env
+          - *prepare_build_assets
+          - *check_gql
+          - *install_pods
+          - *ios_initialize_keychain
+          - *fetch_signing_files
+          - *add_certs_to_keychain
+          - *use_profiles
+          - *increment_ios_build_number
+          - *build_ipa
       artifacts:
-        - build/**/outputs/**/*.apk
-        - build/**/outputs/**/*.aab
-        - build/**/outputs/**/mapping.txt
-        - flutter_drive.log
+          - *ipa
+          - *xcode_log
+          - *dsym
+          - *app
+
       publishing:
-        scripts:
-        - name: Discord notification
-          script: |
-            if [[ $CM_BUILD_STEP_STATUS == "failure" ]]; then
-              # Handle the error case here
-              echo "Here is the message for the failing step"
-            else
-              # Send the Discord notification as you did before
-              set -ex
-
-              APP_LINK=$(echo $CM_ARTIFACT_LINKS | jq -r '.[] | select(.name=="app.apk") | .url')
-
-              # Get first 7 digits of commit number
-              COMMIT=$(echo "${CM_COMMIT}" | sed 's/^\(........\).*/\1/;q')
-
-              # Get commit message
-              COMMIT_MESSAGE=$(git log --format=%B -n 1 $CM_COMMIT)
-
-              # Get commit author
-              AUTHOR=$(git show -s --format='%ae' $CM_COMMIT)
-
-              curl -H "Content-Type: multipart/form-data" \
-              -F 'payload_json={"username" : "codemagic-bot", "content": "**Commit:** `'"$COMMIT"'`\n\n**Commit message:** '"$COMMIT_MESSAGE"'\n\n**Branch:** '"$CM_BRANCH"'\n\n**Author:** '"$AUTHOR"'\n\n**Artifacts: **\n\n'"$APP_LINK"'\n\n"}' \
-              -F "file1=@release_notes.txt" \
-              $WEBHOOK_URL
-            fi
-          
-        email:
-          recipients:
-            - david@nevercode.io
+          <<: *email_develop
+          app_store_connect:                 
+            api_key: $APP_STORE_CONNECT_PRIVATE_KEY         # Contents of the API key, can also reference environment variable such as $APP_STORE_CONNECT_PRIVATE_KEY
+            key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER       # Alphanumeric value that identifies the API key, can also reference environment variable such as $APP_STORE_CONNECT_KEY_IDENTIFIER
+            issuer_id: $APP_STORE_CONNECT_ISSUER_ID         # Alphanumeric value that identifies who created the API key, can also reference environment variable such as $APP_STORE_CONNECT_ISSUER_ID
+            submit_to_testflight: false                     # Optional boolean, defaults to false. Whether or not to submit the uploaded build to TestFlight beta review. Required for distributing to beta groups. Note: This action is performed during post-processing.
+            # beta_groups:                                  # Specify the names of beta tester groups that will get access to the build once it has passed beta review. 
+            #      - group name 1
+            #      - group name 2  
