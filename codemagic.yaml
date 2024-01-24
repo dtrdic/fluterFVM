@@ -69,21 +69,7 @@ workflows:
           - name: Get Flutter packages
             script: |
               flutter packages pub get
-          # - name: Build AAB with Flutter
-          #   script: |
-          #     LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
-          #     if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
-          #       UPDATED_BUILD_NUMBER=$BUILD_NUMBER
-          #     else
-          #       UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
-          #     fi
-          #     flutter build appbundle --release \
-          #       --build-name=1.0.$UPDATED_BUILD_NUMBER \
-          #       --build-number=$UPDATED_BUILD_NUMBER
-          #       # --obfuscate \
-          #       # --split-debug-info \
-          #       #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
-          - name: Build APK
+          - name: Build AAB with Flutter
             script: |
               LATEST_GOOGLE_PLAY_BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))
               if [ -z $LATEST_GOOGLE_PLAY_BUILD_NUMBER ]; then
@@ -91,7 +77,7 @@ workflows:
               else
                 UPDATED_BUILD_NUMBER=$(($LATEST_GOOGLE_PLAY_BUILD_NUMBER + 1))
               fi
-              flutter build apk --release \
+              flutter build appbundle --release \
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \
                 --build-number=$UPDATED_BUILD_NUMBER
                 # --obfuscate \
@@ -117,10 +103,10 @@ workflows:
           - flutter_drive.log
           - debug-info.zip
         publishing:
-          # firebase:
-          #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-          #     android:
-          #       app_id: 1:701760780130:android:78886c544e828688f09e3b
+          firebase:
+              firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+              android:
+                app_id: 1:701760780130:android:78886c544e828688f09e3b
           email:
             recipients:
               - david@nevercode.io
@@ -161,48 +147,20 @@ workflows:
             - appstore_credentials ##ovo prije nije bilo iz nekog razloga a succesfgul build
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
-      triggering:
-          events:
-              - push
-              #- pull_request #test12dasd testtest2
-          branch_patterns:
-            - pattern: crap/*
-              include: true
-              source: false 
+      # triggering:
+      #     events:
+      #         - push
+      #         #- pull_request #test12dasd testtest2
+      #     branch_patterns:
+      #       - pattern: crap/*
+      #         include: true
+      #         source: false 
             # - pattern: 'testis'
             #   include: false
             #   source: false
           cancel_previous_builds: true
       scripts:
-        # - name: Install bundle ids
-        #   script: |
-        #     BUNDLE_NAME=("001" "002" "003")
-        #     ISSUER_ID="7d812fe2-8abd-47ca-9d27-3ed7e62d7b6d"
-        #     KEY_ID="3STNJZ5LS4"
-        #     PRIVATE_KEY_PATH="/Users/david/Desktop/DavidAPIkey/AuthKey_3STNJZ5LS4.p8"
 
-        #     for BUNDLE in "${BUNDLE_NAME[@]}"; do
-        #       echo "Creating bundle id for BUNDLE: $BUNDLE"
-
-        #       # Constructing bundle id based on BUNDLE ID
-        #       BUNDLE_ID="com.example.random${BUNDLE}"
-
-        #       # Creating bundle id on App Store Connect
-        #       app-store-connect bundle-ids create \
-        #         --issuer-id="$ISSUER_ID" \
-        #         --key-id="$KEY_ID" \
-        #         --private-key="@file:${PRIVATE_KEY_PATH}" \
-        #         "$BUNDLE_ID"
-
-        #       echo "Bundle id created for BUNDLE: $BUNDLE"
-        #     done
-
-        # - name: Install capabilities
-        #   script: |
-        #     app-store-connect bundle-ids enable-capabilities \
-        #         B5J6V3KQ96 \
-        #         --capability "HealthKit" "Push Notifications"
-                
         # - name: java 17 install
         #   script: |
         #     brew update
@@ -263,8 +221,8 @@ workflows:
           auth: integration 
           submit_to_testflight: true
           submit_to_app_store: true
-          beta_groups: 
-            - sharks
+          # beta_groups: 
+          #   - sharks
         # firebase:
         #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT 
         #     ios:
