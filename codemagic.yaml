@@ -48,7 +48,7 @@ workflows:
             - github_token
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: Production 
+            GOOGLE_PLAY_TRACK: Alpha 
         triggering:
           events:
               - push
