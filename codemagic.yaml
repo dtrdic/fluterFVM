@@ -112,9 +112,9 @@ workflows:
               - david@nevercode.io
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
-            track: Alpha
+            track: Production
             changes_not_sent_for_review: true
-            submit_as_draft: true
+            submit_as_draft: false
           scripts:
             - name: Check publishing status
               script: | 
