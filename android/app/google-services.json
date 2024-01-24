@@ -41,6 +41,80 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701760780130:android:0d47604cb2123e95f09e3b",
+        "android_client_info": {
+          "package_name": "io.codemagic.dtrdic8"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701760780130-ourmqjsuc6ska6jrb8hfg4irrlpfej10.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDtx511F15LUvcXvf3x4SZFxU1HyUTm24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701760780130-ourmqjsuc6ska6jrb8hfg4irrlpfej10.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "701760780130-17omlk3eii4llhm8aa6vc5mg4r9mlttm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.codemagic.dtrdic6",
+                "app_store_id": "6450783332"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701760780130:android:bc60fb5a8075cb95f09e3b",
+        "android_client_info": {
+          "package_name": "io.codemagic.dtrdic9"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701760780130-ourmqjsuc6ska6jrb8hfg4irrlpfej10.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDtx511F15LUvcXvf3x4SZFxU1HyUTm24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701760780130-ourmqjsuc6ska6jrb8hfg4irrlpfej10.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "701760780130-17omlk3eii4llhm8aa6vc5mg4r9mlttm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "io.codemagic.dtrdic6",
+                "app_store_id": "6450783332"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
