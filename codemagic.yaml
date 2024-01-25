@@ -150,7 +150,7 @@ workflows:
       triggering:
           events:
               #- push
-              - pull_request #test12dasd testtest22tesat
+              - pull_request #test12dasd testtest22tesattest
           branch_patterns:
             - pattern: uat2
               include: true
