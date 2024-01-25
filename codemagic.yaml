@@ -146,14 +146,14 @@ workflows:
             - firebase_credentials
             - appstore_credentials ##ovo prije nije bilo iz nekog razloga a succesfgul build
         vars:
-          APP_ID: 6450783332 # <-- Put your APP ID here 
-      # triggering:
-      #     events:
-      #         - push
-      #         #- pull_request #test12dasd testtest2
-      #     branch_patterns:
-      #       - pattern: crap/*
-      #         include: true
+          APP_ID: 6450783332 # <-- Put your APP ID here test
+      triggering:
+          events:
+              - push
+              #- pull_request #test12dasd testtest2
+          branch_patterns:
+            - pattern: uat
+              include: true
       #         source: false 
             # - pattern: 'testis'
             #   include: false
