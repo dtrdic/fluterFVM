@@ -154,7 +154,7 @@ workflows:
           branch_patterns:
             - pattern: uat2
               include: true
-              source: false 
+              source: true 
             # - pattern: 'testis'
             #   include: false
             #   source: false
