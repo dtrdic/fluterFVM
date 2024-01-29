@@ -414,7 +414,7 @@ workflows:
     web-workflow: 
         name: Web Workflow
         max_build_duration: 120
-        instance_type: linux_x2
+        #instance_type: linux_x2
         labels:
           - ${PACKAGE_NAME}
         environment:
@@ -422,7 +422,6 @@ workflows:
           android_signing:
             - testKeystore
           groups:
-            - shorebird_token
             - firebase_credentials
             - google_credentials3
           vars:
