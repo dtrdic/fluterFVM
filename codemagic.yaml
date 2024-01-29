@@ -435,11 +435,11 @@ workflows:
             script: |
               flutter config --enable-web
               flutter build web --release
-              cd build/web
+              cd $CM_BUILD_DIR/build/web
               7z a -r ../web.zip ./*
         
         artifacts:
-          - build/web.zip
+          - $CM_BUILD_DIR/build/web.zip
           - flutter_drive.log
           - debug-info.zip
         #publishing:
