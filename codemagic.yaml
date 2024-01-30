@@ -60,9 +60,9 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
-          - name: flutter version
+          - name: install just
             script: |
-              flutter --version
+              brew install just
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -132,7 +132,7 @@ workflows:
 
     ios-workflow:
       name: iOS Workflow
-      instance_type: mac_mini_m1
+      instance_type: mac_mini_m2
       max_build_duration: 120
       integrations:
         app_store_connect: DavidAPIkey 
@@ -142,6 +142,7 @@ workflows:
           distribution_type: app_store
           bundle_identifier: io.codemagic.dtrdic6
         groups:
+            - aws_credentials
             - test_device
             - firebase_credentials
             - appstore_credentials ##ovo prije nije bilo iz nekog razloga a succesfgul build
@@ -155,10 +156,9 @@ workflows:
             - pattern: main
               include: true
               source: false 
-            # - pattern: 'testis'
-            #   include: false
-            #   source: false
           cancel_previous_builds: true
+      when:
+        condition: not event.pull_request.draft
       scripts:
 
         # - name: java 17 install
