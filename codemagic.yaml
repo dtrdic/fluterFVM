@@ -60,9 +60,18 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:
-          - name: flutter version
-            script: |
-              flutter --version
+          - name: Install npm dependencies    # Add Appium and WebDriverIO dependencies
+            script: npm install && npm install -g appium && npm install --save webdriverio @wdio/cli
+
+          - name: Launch emulator             # Insert before the build command
+            script: | 
+              react-native run-android  &
+              adb wait-for-device
+          - name: Launch Appium
+            script: appium
+          - name: Run WebDriver test suite
+            script: npx wdio ./wdio.conf.js
+            
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
