@@ -62,7 +62,7 @@ workflows:
         scripts:
           - name: install just
             script: |
-              brew install just
+              npm install just
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
