@@ -49,13 +49,13 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: Alpha 
-        triggering:
-          events:
-              - push
-          branch_patterns: 
-          - pattern: "*"
-            include: true 
-            source: true #test12test test2
+        # triggering:
+        #   events:
+        #       - push
+        #   branch_patterns: 
+        #   - pattern: "*"
+        #     include: true 
+        #     source: true #test12test test2
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
@@ -200,6 +200,7 @@ workflows:
         - name: versioning
           script: | 
             LATEST_BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_ID") + 1))
+            cd ./ios
             agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
         - name: Flutter build ipa and automatic versioning
           script: |
