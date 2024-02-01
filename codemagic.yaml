@@ -51,7 +51,7 @@ workflows:
             GOOGLE_PLAY_TRACK: Alpha 
         triggering:
           events:
-              - push
+              - pull_request
           branch_patterns: 
           - pattern: "release/*"
             include: true 
@@ -59,10 +59,10 @@ workflows:
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
-        scripts:
-          - name: flutter version
+        scripts:          
+          - name: CM_PULL_REQUEST_DEST
             script: |
-              flutter --version
+              CM_PULL_REQUEST_DEST
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
