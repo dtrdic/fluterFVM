@@ -55,7 +55,7 @@ workflows:
           branch_patterns: 
           - pattern: "release/*"
             include: true 
-            source: false #test12
+            source: false #test12dsa
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
