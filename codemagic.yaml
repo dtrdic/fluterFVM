@@ -197,9 +197,12 @@ workflows:
         #     --scheme "Runner" \
         #     --device "$TEST_DEVICE" \
         #     --test-flags="-quiet"
+        - name: versioning
+          script: | 
+            LATEST_BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_ID") + 1))
+            agvtool new-version -all $(($LATEST_BUILD_NUMBER + 1))
         - name: Flutter build ipa and automatic versioning
           script: |
-            agvtool new-version -all $(($BUILD_NUMBER + 1))
             flutter build ipa --release --flavor free \
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
