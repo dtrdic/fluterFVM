@@ -199,6 +199,8 @@ workflows:
         #     --test-flags="-quiet"
         - name: versioning
           script: | 
+            FLUTTER_VERSION=$(grep 'version:' pubspec.yaml | head -n 1 | awk '{print $2}' | cut -d'+' -f2)
+            echo "FLUTTER_VERSION is: $FLUTTER_VERSION"
             LATEST_BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_ID") + 1))
             cd ./ios
             agvtool new-version -all $(($LATEST_BUILD_NUMBER))
