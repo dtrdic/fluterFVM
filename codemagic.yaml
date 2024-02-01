@@ -51,9 +51,9 @@ workflows:
             GOOGLE_PLAY_TRACK: Alpha 
         triggering:
           events:
-              - pull_request
+              - push
           branch_patterns: 
-          - pattern: "release/*"
+          - pattern: "*"
             include: true 
             source: true #test12test
         # when:
