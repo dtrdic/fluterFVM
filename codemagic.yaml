@@ -62,7 +62,8 @@ workflows:
         scripts:          
           - name: CM_PULL_REQUEST_DEST
             script: |
-              $CM_PULL_REQUEST_DEST
+              echo "CM_PULL_REQUEST je: ENV["CM_PULL_REQUEST"]"
+              echo "CM_PULL_REQUEST je: $CM_PULL_REQUEST"
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
