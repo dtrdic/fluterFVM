@@ -60,9 +60,6 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:          
-          - name: CM_PULL_REQUEST_DEST
-            script: |
-              echo "CM_PULL_REQUEST_DEST is: $CM_PULL_REQUEST_DEST"
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -138,6 +135,7 @@ workflows:
         app_store_connect: DavidAPIkey 
       environment:
         #flutter: fvm
+        xcode: 15.3
         ios_signing:
           distribution_type: app_store
           bundle_identifier: io.codemagic.dtrdic6
@@ -345,6 +343,57 @@ workflows:
           email:
             recipients:
               - david@nevercode.io #test3
+
+
+    windows-release-workflow:
+        name: Windows .msixbundle bundle
+        max_build_duration: 120
+        instance_type: windows_x2
+        environment:
+          android_signing:
+            - testKeystore
+          groups:
+            - windows_credentials
+            - google_credentials3
+        # triggering:
+        #   events:
+        #       - push
+        #   branch_patterns:
+        #   - pattern: "main"
+        #     include: true
+        #     source: false          
+        scripts:
+          - name: Force upgrade packages
+            script: |
+              flutter update-packages --force-upgrade
+          - name: Get Flutter packages
+            script: |
+              flutter packages pub get
+          - name: Build Windows and create MSIX package
+            script: |
+              dart run msix:create --store --windows-build-args="--dart-define=CLIENT_ID=$env:CLIENT_ID --dart-define=CLIENT_SECRET=$env:CLIENT_SECRET --dart-define=AUTH_API_URL=$env:AUTH_API_URL --dart-define=MOTIVIEW_API_URL=$env:MOTIVIEW_API_URL --dart-define=QR_ENCRYPTION_KEY=$env:QR_ENCRYPTION_KEY --dart-define=QR_ENCRYPTION_IV=$env:QR_ENCRYPTION_IV"
+          - name: Create msixbundle for Microsoft Store
+            script: |
+              mkdir 'makeappx' ; cd ./makeappx
+              git init
+              git remote add -f origin https://github.com/microsoft/MSIX-Toolkit.git 
+              git sparse-checkout init
+              git sparse-checkout  set "WindowsSDK/10/10.0.20348.0/x64"
+              git pull origin master
+              mv .\WindowsSDK\10\10.0.20348.0\x64\ ..\make
+              cd ..\make
+              $commitHash = $env:CM_COMMIT.Substring(0, 7)
+              $outputName = "motiview-$commitHash.msixbundle"
+              $outputPath = "..\build\windows\x64\runner\Release\$outputName"
+              .\makeappx.exe bundle /d "..\msix\" /p $outputPath /v
+        artifacts:
+          - build\windows\x64\runner\Release\*.msixbundle
+        publishing:
+          partner_center:
+            store_id: $WIN_STORE_ID # <-- You can find the `store_id` inside your Partner Center app by going to [Product management > Product Identity].
+            tenant_id: $WIN_TENANT_ID # <-- You will get `tenant_id` from the Azure AD Overview page.
+            client_id: $WIN_CLIENT_ID # <-- You will also get `client_id` from the Azure AD Overview page.
+            client_secret: $WIN_CLIENT_SECRET # <-- `client_secret` is retrieved from the application environment variable
 
     discord-workflow:
       name: Discord integration Workflow
