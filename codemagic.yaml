@@ -49,6 +49,9 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: Alpha 
+        cache:
+          cache_paths:
+            - $CM_BUILD_DIR/node_modules
         # triggering:
         #   events:
         #       - push
