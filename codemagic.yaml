@@ -88,10 +88,10 @@ workflows:
 
           #       emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
           #       adb wait-for-device
-          # - name: Rename the apk file
-          #   script: | 
-          #     mv build/**/outputs/**/*.aab \
-          #       build/**/outputs/**/app-release-renamed.aab
+          - name: Rename the apk file
+            script: | 
+              mv build/**/outputs/**/*.aab \
+                build/**/outputs/**/app-release-renamed.aab
         artifacts:
           - build/**/outputs/**/*.aab
           - build/app/outputs/apk/release/app-release.apk
