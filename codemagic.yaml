@@ -135,7 +135,7 @@ workflows:
         app_store_connect: DavidAPIkey 
       environment:
         #flutter: fvm
-        xcode: 15.3
+        xcode: 15.2
         ios_signing:
           distribution_type: app_store
           bundle_identifier: io.codemagic.dtrdic6
@@ -204,8 +204,9 @@ workflows:
           script: |
             flutter build ipa --release \
               --build-name=1.0.$BUILD_NUMBER \
-              --build-number=$BUILD_NUMBER \
-              --export-options-plist=/Users/builder/export_options.plist
+              --build-number=$BUILD_NUMBER 
+              # \
+              # --export-options-plist=/Users/builder/export_options.plist
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
