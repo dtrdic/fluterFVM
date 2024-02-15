@@ -48,7 +48,7 @@ workflows:
             - github_token
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
-            GOOGLE_PLAY_TRACK: Alpha 
+            GOOGLE_PLAY_TRACK: internal 
         # triggering:
         #   events:
         #       - push
@@ -109,7 +109,7 @@ workflows:
               - david@nevercode.io
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
-            track: Production
+            track: internal
             changes_not_sent_for_review: true
             submit_as_draft: false
           scripts:
