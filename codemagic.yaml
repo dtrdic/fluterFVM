@@ -88,14 +88,14 @@ workflows:
 
           #       emulator -memory 2048 -avd Android33 -no-audio -gpu swiftshader_indirect -debug-init -wipe-data &   
           #       adb wait-for-device
-          - name: Rename the apk file
+          - name: Rename the aab file
             script: | 
-              mv build/**/outputs/**/*.aab \
-                build/**/outputs/**/app-release-renamed.aab
+              mv build/app/outputs/bundle/release/app-release.aab \
+                build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
         artifacts:
           - build/**/outputs/**/*.aab
           - build/app/outputs/apk/release/app-release.apk
-          - build/**/outputs/**/app-release-renamed.aab
+          - build/app/outputs/bundle/release/my_renamed_binary_name-release.aab
           - build/**/outputs/**/mapping.txt
           - flutter_drive.log
           - debug-info.zip
