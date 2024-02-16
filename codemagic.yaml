@@ -208,6 +208,7 @@ workflows:
               --export-options-plist=/Users/builder/export_options.plist
       artifacts:
         - /tmp/xcodebuild_logs/*.log
+        - /tmp/xcodebuild_logs/iosApp.log
         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
         - build/ios/ipa/*.ipa
         - flutter_drive.log
