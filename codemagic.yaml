@@ -165,43 +165,17 @@ workflows:
             #   source: false
           cancel_previous_builds: true
       scripts:
-
-        # - name: java 17 install
-        #   script: |
-        #     brew update
-        #     brew install openjdk@17
-        #     java --version
-        # - name: set Java 17 as default
-        #   script: |
-        #     echo 'export JAVA_HOME="/usr/local/opt/openjdk@17"' >> ~/.zshrc
-        #     echo 'export PATH="/usr/local/opt/openjdk@17/bin:$PATH"' >> ~/.zshrc
-        # - name: java version
-        #   script: |
-        #     source ~/.zshrc
-        #     java --version
-        # - name: brew install 16
-        #   script: |
-        #     brew install node@16
-        #     brew unlink node
-        #     brew link --force --overwrite node@16
-        #     node --version
-        
-        - name: Set up code signing settings on Xcode project 
-          script: |
-            xcode-project use-profiles
-        - name: Get Flutter packages
+        - name: Set up keychain to be used for code signing using Codemagic CLI 'keychain' command
+          script: keychain initialize
+        - name: Fetch signing files
           script: | 
-            flutter packages pub get
-        - name: Install pods
-          script: | 
-            find . -name "Podfile" -execdir pod install \;
-        # - name: Run tests
-        #   script: | 
-        #     xcode-project run-tests \
-        #     --workspace "ios/Runner.xcworkspace" \
-        #     --scheme "Runner" \
-        #     --device "$TEST_DEVICE" \
-        #     --test-flags="-quiet"
+            app-store-connect fetch-signing-files "$BUNDLE_ID" \
+              --type IOS_APP_STORE \
+              --create
+        - name: Set up signing certificate
+          script: keychain add-certificates
+        - name: Set up code signing settings on Xcode project
+          script: xcode-project use-profiles
         - name: versioning
           script: | 
             LATEST_BUILD_NUMBER=$(($(app-store-connect get-latest-app-store-build-number "$APP_ID") + 1))
