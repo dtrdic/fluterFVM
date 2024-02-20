@@ -63,7 +63,7 @@ workflows:
           - name: install git
             script: |
               git --version 
-              brew install git  
+              sudo apt install git
           - name: version git
             script: |
               git --version
