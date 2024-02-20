@@ -36,7 +36,7 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: mac_mini_m1
+        instance_type: linux_x2
         environment:
           flutter: 3.16.0 
           android_signing: 
@@ -59,7 +59,14 @@ workflows:
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
-        scripts:          
+        scripts:   
+          - name: install git
+            script: |
+              git --version 
+              brew install git  
+          - name: version git
+            script: |
+              git --version
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
