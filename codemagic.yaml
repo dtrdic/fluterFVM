@@ -63,7 +63,7 @@ workflows:
           - name: install git
             script: |
               git --version 
-              sudo apt install git
+              sudo apt-get install git
           - name: version git
             script: |
               git --version
