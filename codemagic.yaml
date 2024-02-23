@@ -38,7 +38,8 @@ workflows:
         max_build_duration: 120
         instance_type: linux_x2
         environment:
-          flutter: 3.16.0 
+          node: 19.7.0
+          npm: 9.5.0
           android_signing: 
             - testKeystore
           groups:
@@ -49,15 +50,15 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal 
-        # triggering:
-        #   events:
-        #       - push
-        #   branch_patterns: 
-        #   - pattern: "*"
-        #     include: true 
-        #     source: true #test12test test2
-        # when:
-        #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
+        triggering:
+          events:
+              - push
+          branch_patterns: 
+          - pattern: "*"
+            include: true 
+            source: true #test12test test2
+        when:
+          condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:   
           - name: install git
@@ -136,13 +137,13 @@ workflows:
 
     ios-workflow:
       name: iOS Workflow
-      instance_type: mac_pro
+      instance_type: mac_mini_m1
       max_build_duration: 120
       integrations:
         app_store_connect: DavidAPIkey 
       environment:
         #flutter: fvm
-        xcode: 14.2
+        #xcode: 15.2
         ios_signing:
           distribution_type: app_store
           bundle_identifier: io.codemagic.dtrdic6
