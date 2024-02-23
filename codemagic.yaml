@@ -69,7 +69,7 @@ workflows:
           - name: railway login 
             script: |
               echo "RAILWAY_TOKEN je: $RAILWAY_TOKEN"
-              $RAILWAY_TOKEN railway run
+              RAILWAY_TOKEN=$RAILWAY_TOKEN railway run
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
