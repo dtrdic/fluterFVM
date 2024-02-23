@@ -51,10 +51,10 @@ workflows:
             GOOGLE_PLAY_TRACK: internal 
         triggering:
           events:
-              - tag
-          tag_patterns:
-            - include: true
-              pattern: firebase-*
+              - push
+          # tag_patterns:
+          #   - include: true
+          #     pattern: firebase-*
           branch_patterns: 
           - pattern: "*"
             include: true 
