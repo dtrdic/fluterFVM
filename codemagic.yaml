@@ -68,7 +68,7 @@ workflows:
               brew install railway
           - name: railway login 
             script: |
-              railway login --browserless
+              RAILWAY_TOKEN=$RAILWAY_TOKEN railway run
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
