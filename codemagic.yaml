@@ -36,10 +36,8 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: linux_x2
+        instance_type: mac_mini_m1
         environment:
-          node: 19.7.0
-          npm: 9.5.0
           android_signing: 
             - testKeystore
           groups:
@@ -47,12 +45,16 @@ workflows:
             - firebase_credentials 
             - google_credentials3
             - github_token
+            - railway_token
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal 
         triggering:
           events:
-              - push
+              - tag
+          tag_patterns:
+            - include: true
+              pattern: firebase-*
           branch_patterns: 
           - pattern: "*"
             include: true 
@@ -61,13 +63,12 @@ workflows:
           condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:   
-          - name: install git
+          - name: install railway
             script: |
-              git --version 
-              sudo apt-get install git
-          - name: version git
+              brew install railway
+          - name: railway login 
             script: |
-              git --version
+              railway login --browserless
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -121,6 +122,9 @@ workflows:
             changes_not_sent_for_review: true
             submit_as_draft: false
           scripts:
+            - name: Deploy to Railway
+              script: |
+                railway up
             - name: Check publishing status
               script: | 
                 PUBLISHING_STATUS=$(curl -H "Content-Type: application/json" \
