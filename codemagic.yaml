@@ -60,13 +60,6 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:   
-          - name: install git
-            script: |
-              git --version 
-              sudo apt-get install git
-          - name: version git
-            script: |
-              git --version
           - name: Set up local.properties
             script: |
               echo "flutter.sdk=$HOME/programs/flutter" > "$CM_BUILD_DIR/android/local.properties"
@@ -83,7 +76,8 @@ workflows:
               fi
               flutter build appbundle --release \
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \
-                --build-number=$UPDATED_BUILD_NUMBER
+                -t lib/main_dev.dart \
+                --build-number=100 + $BUILD_NUMBER
                 # --obfuscate \
                 # --split-debug-info \
                 #ovaj obsuficate napravi 3 fajla(debug symbols) u Clone/debug-info floder 
