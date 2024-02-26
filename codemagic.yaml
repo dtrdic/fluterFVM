@@ -43,7 +43,7 @@ workflows:
           groups:
             - shorebird_token
             - firebase_credentials 
-            - google_credentials3
+            - google_credentials
             - github_token
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
@@ -108,7 +108,7 @@ workflows:
             recipients:
               - david@nevercode.io
           google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
             track: internal
             changes_not_sent_for_review: true
             submit_as_draft: false
