@@ -108,7 +108,7 @@ workflows:
             recipients:
               - david@nevercode.io
           google_play:
-            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+            credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
             track: internal
             changes_not_sent_for_review: true
             submit_as_draft: false
