@@ -75,7 +75,6 @@ workflows:
               fi
               flutter build appbundle --release \
                 --build-name=1.0.$UPDATED_BUILD_NUMBER \
-                -t lib/main_dev.dart \
                 --build-number=100 + $BUILD_NUMBER
                 # --obfuscate \
                 # --split-debug-info \
