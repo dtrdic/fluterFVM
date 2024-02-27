@@ -66,6 +66,7 @@
 		633886922B8DC3B500A02A54 /* FVMServiceExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FVMServiceExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		633886942B8DC3B600A02A54 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		633886962B8DC3B600A02A54 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		633886A22B8DCA2F00A02A54 /* FVMServiceExtensionRelease-free.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "FVMServiceExtensionRelease-free.entitlements"; sourceTree = "<group>"; };
 		71259722059481D23EF2A85D /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +104,7 @@
 		633886932B8DC3B600A02A54 /* FVMServiceExtension */ = {
 			isa = PBXGroup;
 			children = (
+				633886A22B8DCA2F00A02A54 /* FVMServiceExtensionRelease-free.entitlements */,
 				633886942B8DC3B600A02A54 /* NotificationService.swift */,
 				633886962B8DC3B600A02A54 /* Info.plist */,
 			);
@@ -636,6 +638,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "FVMServiceExtension/FVMServiceExtensionRelease-free.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
