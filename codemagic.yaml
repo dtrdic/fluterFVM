@@ -145,6 +145,7 @@ workflows:
             - test_app_store 
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
+          BUNDLE_ID: "io.codemagic.dtrdic6"
       triggering:
           events:
               #- push
