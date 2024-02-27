@@ -185,10 +185,10 @@ workflows:
         #     brew unlink node
         #     brew link --force --overwrite node@16
         #     node --version
-        - name: Install bundle extension
-          script: |
-            app-store-connect bundle-ids create \
-              io.codemagic.dtrdic6.FVMServiceExtension 
+        # - name: Install bundle extension
+        #   script: |
+        #     app-store-connect bundle-ids create \
+        #       io.codemagic.dtrdic6.FVMServiceExtension 
         
         - name: Set up code signing settings on Xcode project 
           script: |
