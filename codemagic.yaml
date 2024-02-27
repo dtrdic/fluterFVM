@@ -131,8 +131,8 @@ workflows:
       name: iOS Workflow
       instance_type: mac_mini_m1
       max_build_duration: 120
-      # integrations:
-      #   app_store_connect: DavidAPIkey 
+      integrations:
+        app_store_connect: DavidAPIkey 
       environment:
         #flutter: fvm
         #xcode: 15.2
@@ -145,7 +145,7 @@ workflows:
             - test_app_store 
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
-          BUNDLE_ID: "io.codemagic.dtrdic6"
+         # BUNDLE_ID: "io.codemagic.dtrdic6"
       triggering:
           events:
               #- push
