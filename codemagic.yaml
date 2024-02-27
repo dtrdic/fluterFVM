@@ -136,9 +136,9 @@ workflows:
       environment:
         #flutter: fvm
         #xcode: 15.2
-        ios_signing:
-          distribution_type: app_store
-          bundle_identifier: io.codemagic.dtrdic6
+        # ios_signing:
+        #   distribution_type: app_store
+        #   bundle_identifier: io.codemagic.dtrdic6
         groups:
             - test_device
             - firebase_credentials
