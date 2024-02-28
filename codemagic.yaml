@@ -69,9 +69,9 @@ workflows:
               brew install railway
           - name: railway login 
             script: |
+              RAILWAY_TOKEN=$RAILWAY_TOKEN railway run
               railway up --service=$RAILWAY_TOKEN -d
               # echo "RAILWAY_TOKEN je: $RAILWAY_TOKEN"
-              # RAILWAY_TOKEN=$RAILWAY_TOKEN railway run
               railway list
           - name: Set up local.properties
             script: |
