@@ -61,8 +61,8 @@ workflows:
           - pattern: "*"
             include: true 
             source: true #test12test test2
-        when:
-          condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
+        # when:
+        #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:   
           - name: install railway
@@ -70,8 +70,9 @@ workflows:
               brew install railway
           - name: railway login 
             script: |
-              railway link
               echo "RAILWAY_TOKEN je: $RAILWAY_TOKEN"
+              railway list
+              railway link
               RAILWAY_TOKEN=$RAILWAY_TOKEN railway run
           - name: Set up local.properties
             script: |
