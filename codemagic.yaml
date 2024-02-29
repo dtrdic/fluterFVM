@@ -56,7 +56,7 @@ workflows:
           branch_patterns: 
             - pattern: "main"
               include: true 
-              source: true #test12test test2
+              source: true #test12test test2test3
           # tag_patterns:
           #   - include: true
           #     pattern: firebase-*
