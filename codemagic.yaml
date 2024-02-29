@@ -64,6 +64,10 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:   
+          - name: create new bundle id
+            script: |
+              app-store-connect bundle-ids create \
+              com.test.FCMFCMNotificationServiceExtension
           - name: install railway
             script: |
               brew install railway
