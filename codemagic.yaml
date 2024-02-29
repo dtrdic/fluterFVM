@@ -50,13 +50,13 @@ workflows:
           vars:
             PACKAGE_NAME: "io.codemagic.dtrdic6"
             GOOGLE_PLAY_TRACK: internal 
-        triggering:
-          events:
-            - push
-          branch_patterns: 
-            - pattern: "main"
-              include: true 
-              source: true #test12test test2test3
+        # triggering:
+        #   events:
+        #     - push
+        #   branch_patterns: 
+        #     - pattern: "main"
+        #       include: true 
+        #       source: true #test12test test2test3
           # tag_patterns:
           #   - include: true
           #     pattern: firebase-*
@@ -64,10 +64,6 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:   
-          - name: create new bundle id
-            script: |
-              app-store-connect bundle-ids create \
-              com.test.FCMFCMNotificationServiceExtension
           - name: install railway
             script: |
               brew install railway
@@ -198,7 +194,10 @@ workflows:
         #     brew unlink node
         #     brew link --force --overwrite node@16
         #     node --version
-        
+        - name: create new bundle id
+          script: |
+              app-store-connect bundle-ids create \
+              com.test.FCMFCMNotificationServiceExtension
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
