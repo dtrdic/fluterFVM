@@ -406,12 +406,12 @@ workflows:
               .\makeappx.exe bundle /d "..\msix\" /p $outputPath /v
         artifacts:
           - build\windows\x64\runner\Release\*.msixbundle
-        publishing:
-          partner_center:
-            store_id: $WIN_STORE_ID # <-- You can find the `store_id` inside your Partner Center app by going to [Product management > Product Identity].
-            tenant_id: $WIN_TENANT_ID # <-- You will get `tenant_id` from the Azure AD Overview page.
-            client_id: $WIN_CLIENT_ID # <-- You will also get `client_id` from the Azure AD Overview page.
-            client_secret: $WIN_CLIENT_SECRET # <-- `client_secret` is retrieved from the application environment variable
+        # publishing:
+        #   partner_center:
+        #     store_id: $WIN_STORE_ID # <-- You can find the `store_id` inside your Partner Center app by going to [Product management > Product Identity].
+        #     tenant_id: $WIN_TENANT_ID # <-- You will get `tenant_id` from the Azure AD Overview page.
+        #     client_id: $WIN_CLIENT_ID # <-- You will also get `client_id` from the Azure AD Overview page.
+        #     client_secret: $WIN_CLIENT_SECRET # <-- `client_secret` is retrieved from the application environment variable
 
     discord-workflow:
       name: Discord integration Workflow
