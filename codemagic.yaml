@@ -53,13 +53,13 @@ workflows:
         triggering:
           events:
               - push
+          branch_patterns: 
+              - pattern: "main"
+                include: true 
+                source: true #test12test test2
           # tag_patterns:
           #   - include: true
           #     pattern: firebase-*
-          branch_patterns: 
-          - pattern: "*"
-            include: true 
-            source: true #test12test test2
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
