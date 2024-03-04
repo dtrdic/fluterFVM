@@ -197,8 +197,8 @@ workflows:
         - name: create new bundle id
           script: |
               
-              app-store-connect bundle-ids create \
-              com.test.FCMFCMNotificationServiceExtension --create
+              app-store-connect bundle-ids --create \
+              com.test.FCMFCMNotificationServiceExtension 
         # - name: create new provisioning profile and bundle id
         #   script: |
         #       app-store-connect fetch-signing-files com.test.FCMFCMNotificationServiceExtension2 --type IOS_APP_STORE --create             
