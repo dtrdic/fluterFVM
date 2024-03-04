@@ -194,14 +194,14 @@ workflows:
         #     brew unlink node
         #     brew link --force --overwrite node@16
         #     node --version
-        # - name: create new bundle id
-        #   script: |
-              
-        #       app-store-connect bundle-ids create \
-        #       com.test.FCMFCMNotificationServiceExtension
-        - name: create new provisioning profile and bundle id
+        - name: create new bundle id
           script: |
-              app-store-connect fetch-signing-files com.test.FCMFCMNotificationServiceExtension2 --type IOS_APP_STORE --create             
+              
+              app-store-connect bundle-ids create \
+              com.test.FCMFCMNotificationServiceExtension --create
+        # - name: create new provisioning profile and bundle id
+        #   script: |
+        #       app-store-connect fetch-signing-files com.test.FCMFCMNotificationServiceExtension2 --type IOS_APP_STORE --create             
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
