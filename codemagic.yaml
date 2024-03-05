@@ -194,11 +194,11 @@ workflows:
         #     brew unlink node
         #     brew link --force --overwrite node@16
         #     node --version
-        - name: create new bundle id
-          script: |
+        # - name: create new bundle id
+        #   script: |
               
-              app-store-connect bundle-ids \
-              com.test.FCMFCMNotificationServiceExtension --create
+        #       app-store-connect bundle-ids \
+        #       com.test.FCMFCMNotificationServiceExtension --create
         # - name: create new provisioning profile and bundle id
         #   script: |
         #       app-store-connect fetch-signing-files com.test.FCMFCMNotificationServiceExtension2 --type IOS_APP_STORE --create             
