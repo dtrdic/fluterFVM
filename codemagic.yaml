@@ -228,8 +228,9 @@ workflows:
             flutter build ipa --release \
               --build-name=1.0.$BUILD_NUMBER \
               --build-number=$BUILD_NUMBER \
-              --export-options-plist=/Users/builder/export_options.plist \
-              --flavor=free
+              --export-options-plist=/Users/builder/export_options.plist
+              #  \
+              # --flavor=free
 
       artifacts:
         - /tmp/xcodebuild_logs/*.log
