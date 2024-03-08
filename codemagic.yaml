@@ -36,7 +36,7 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: mac_mini_m2
+        instance_type: mac_mini_m1
         environment:
           java: 17
           android_signing: 
@@ -230,6 +230,7 @@ workflows:
               --build-number=$BUILD_NUMBER \
               --export-options-plist=/Users/builder/export_options.plist \
               --flavor=free
+
       artifacts:
         - /tmp/xcodebuild_logs/*.log
         - /tmp/xcodebuild_logs/iosApp.log
@@ -373,7 +374,7 @@ workflows:
     windows-release-workflow:
         name: Windows .msixbundle bundle
         max_build_duration: 120
-        instance_type: windows_x2
+        instance_type: linux_x2
         environment:
           android_signing:
             - testKeystore
@@ -388,6 +389,10 @@ workflows:
         #     include: true
         #     source: false          
         scripts:
+          - name: run emulator
+            script: |
+              flutter emulators
+              flutter emulators --launch emulator
           - name: Force upgrade packages
             script: |
               flutter update-packages --force-upgrade
