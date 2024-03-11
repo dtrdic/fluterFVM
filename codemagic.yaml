@@ -168,10 +168,10 @@ workflows:
           branch_patterns:
             - pattern: main
               include: true
-              source: false 
+              source: true 
             - pattern: release/*
-              include: false
-              source: false
+              include: true
+              source: true
           #cancel_previous_builds: true
       scripts:
 
