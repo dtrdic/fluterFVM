@@ -164,14 +164,14 @@ workflows:
       triggering:
           events:
               - push
-              - pull_request #test12dasd testtest22$testtest
+              - pull_request #test12dasd testtest22$testtesttest2
           branch_patterns:
             - pattern: main
               include: true
-              source: false 
+              source: true 
             - pattern: release/*
-              include: false
-              source: false
+              include: true
+              source: true
           #cancel_previous_builds: true
       scripts:
 
