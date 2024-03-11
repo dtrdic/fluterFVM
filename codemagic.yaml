@@ -169,7 +169,7 @@ workflows:
             # - pattern: main
             #   include: true
             #   source: true 
-            - pattern: release/*
+            - pattern: release/11
               include: true
               source: true
           #cancel_previous_builds: true
