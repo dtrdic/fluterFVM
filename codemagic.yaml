@@ -163,7 +163,7 @@ workflows:
           APP_ID: 6450783332 # <-- Put your APP ID here 
       triggering:
           events:
-              #- push
+              - push
               - pull_request #test12dasd testtest22$testtesttest23text
           branch_patterns:
             # - pattern: main
