@@ -163,16 +163,16 @@ workflows:
           APP_ID: 6450783332 # <-- Put your APP ID here 
       triggering:
           events:
-              #- push
+              - push
               - pull_request #test12dasd testtest22$test
           branch_patterns:
             - pattern: main
               include: true
               source: false 
-            # - pattern: 'testis'
-            #   include: false
-            #   source: false
-          cancel_previous_builds: true
+            - pattern: release/*
+              include: false
+              source: false
+          #cancel_previous_builds: true
       scripts:
 
         # - name: java 17 install
