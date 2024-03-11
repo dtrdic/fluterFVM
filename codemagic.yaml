@@ -171,7 +171,7 @@ workflows:
             #   source: true 
             - pattern: release/*
               include: true
-              source: true
+              source: false
           #cancel_previous_builds: true
       scripts:
 
