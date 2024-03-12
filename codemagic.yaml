@@ -151,7 +151,7 @@ workflows:
         app_store_connect: DavidAPIkey 
       environment:
         #flutter: fvm
-        #xcode: 15.2
+        xcode: 14.2
         ios_signing:
           distribution_type: app_store
           bundle_identifier: io.codemagic.dtrdic6
