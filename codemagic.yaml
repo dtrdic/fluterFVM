@@ -192,10 +192,10 @@ workflows:
         - name: quasar install
           script: |
             npm install -g @quasar/cli
-        - name: create new bundle id
-          script: |
-              app-store-connect bundle-ids create \
-              com.test.FCMFCMNotificationServiceExtension
+        # - name: create new bundle id
+        #   script: |
+        #       app-store-connect bundle-ids create \
+        #       com.test.FCMFCMNotificationServiceExtension
         - name: Set up code signing settings on Xcode project 
           script: |
             xcode-project use-profiles
