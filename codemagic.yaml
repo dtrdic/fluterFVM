@@ -36,7 +36,7 @@ workflows:
     android-workflow:
         name: Android Workflow
         max_build_duration: 120
-        instance_type: mac_mini_m2
+        instance_type: linux_x2
         environment:
           java: 17
           android_signing: 
@@ -64,9 +64,9 @@ workflows:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
         scripts:   
-          - name: install railway
+          - name: install npm
             script: |
-              brew install railway
+              npm install
           - name: railway login 
             script: |
               RAILWAY_TOKEN=$RAILWAY_TOKEN railway run
