@@ -117,9 +117,6 @@ workflows:
             changes_not_sent_for_review: true
             submit_as_draft: false
           scripts:
-            - name: Deploy to Railway
-              script: |
-                railway up
             - name: Check publishing status
               script: | 
                 PUBLISHING_STATUS=$(curl -H "Content-Type: application/json" \
