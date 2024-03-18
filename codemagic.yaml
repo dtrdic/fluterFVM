@@ -296,6 +296,10 @@ workflows:
         #     include: true
         #     source: false          
         scripts:
+          - name: install ClangCL
+            script: |
+              brew install llvm
+              clang-cl --version
           - name: Get Flutter packages
             script: | 
                 flutter packages pub get
