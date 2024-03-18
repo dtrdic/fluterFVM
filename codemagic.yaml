@@ -140,9 +140,9 @@ workflows:
         #   distribution_type: app_store
         #   bundle_identifier: io.codemagic.dtrdic6
         groups:
-            - test_device
+           # - test_device
             - firebase_credentials
-            - test_app_store 
+            #- test_app_store 
         vars:
           APP_ID: 6450783332 # <-- Put your APP ID here 
          # BUNDLE_ID: "io.codemagic.dtrdic6"
