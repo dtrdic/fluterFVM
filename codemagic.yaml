@@ -281,7 +281,7 @@ workflows:
     windows-android-workflow:
         name: Windows publish Android Workflow
         max_build_duration: 120
-        instance_type: windows_x2
+        instance_type: linux_x2
         environment:
           android_signing:
             - testKeystore
@@ -296,6 +296,9 @@ workflows:
         #     include: true
         #     source: false          
         scripts:
+          - name: apt install clang-15
+            script: |
+              apt install clang-15
           - name: install ClangCL
             script: |
               mkdir clang_cl_download
