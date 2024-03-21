@@ -337,17 +337,17 @@ workflows:
           groups:
             - windows_credentials
             - google_credentials3
-        # triggering:
-        #   events:
-        #       - push
+        triggering:
+          events:
+              - push
         #   branch_patterns:
         #   - pattern: "main"
         #     include: true
         #     source: false          
         scripts:
-          - name: Force upgrade packages
+          - name: install clang
             script: |
-              flutter update-packages --force-upgrade
+              apt install clang-cl 15.0.1
           - name: Get Flutter packages
             script: |
               flutter packages pub get
