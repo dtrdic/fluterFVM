@@ -298,7 +298,7 @@ workflows:
         scripts:
           - name: install ClangCL
             script: |
-              brew intall clang-cl 15.0.1
+              brew install clang-cl 15.0.1
           - name: Get Flutter packages
             script: | 
                 flutter packages pub get
