@@ -298,7 +298,21 @@ workflows:
         scripts:
           - name: install ClangCL
             script: |
-              brew install clang-cl@15.0.1
+              mkdir clang_cl_download
+              cd clang_cl_download
+
+              # Download Clang-CL 15.0.1 installer from LLVM releases
+              wget https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.1/LLVM-15.0.1-win64.exe
+
+              # Install Clang-CL silently
+              .\LLVM-15.0.1-win64.exe /S
+
+              # Add Clang-CL bin directory to the system PATH
+              $clangBinPath = "C:\Program Files\LLVM\bin"
+              [Environment]::SetEnvironmentVariable("PATH", "$($env:PATH);$clangBinPath", [System.EnvironmentVariableTarget]::Machine)
+
+              # Verify Clang-CL installation
+              clang-cl --version
           - name: Get Flutter packages
             script: | 
                 flutter packages pub get
