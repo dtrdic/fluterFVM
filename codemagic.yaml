@@ -298,8 +298,7 @@ workflows:
         scripts:
           - name: install ClangCL
             script: |
-              brew install llvm
-              clang-cl --version
+              apt intall clang-cl 15.0.1
           - name: Get Flutter packages
             script: | 
                 flutter packages pub get
