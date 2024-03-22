@@ -317,14 +317,17 @@ workflows:
           groups:
             - windows_credentials
             - google_credentials3
-        # triggering:
-        #   events:
-        #       - push
+        triggering:
+          events:
+              - push
         #   branch_patterns:
         #   - pattern: "main"
         #     include: true
         #     source: false          
         scripts:
+          - name: clang-cl
+            script: | 
+                sudo apt clang-cl 15.0.1
           - name: Get Flutter packages
             script: | 
                 flutter packages pub get
