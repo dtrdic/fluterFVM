@@ -62,7 +62,7 @@ workflows:
               source: true #test12test test2test3
           tag_patterns:
             - include: true
-              pattern: "v+([0-9]).+([0-9]).+([0-9])'+'+([0-999])"
+              pattern: "v+([0-9]).+([0-9]).+([0-9])'+'+'([0-999])"
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
 
