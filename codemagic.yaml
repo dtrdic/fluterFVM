@@ -376,6 +376,9 @@ workflows:
         #     include: true
         #     source: false          
         scripts:
+          - name: brew install llvm
+            script: |
+              brew install llvm
           - name: Force upgrade packages
             script: |
               flutter update-packages --force-upgrade
