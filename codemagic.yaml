@@ -378,7 +378,7 @@ workflows:
         scripts:
           - name:  install llvm
             script: |
-                # Change directory to the llvm-project folder
+                git clone https://github.com/llvm/llvm-project.git
                 cd llvm-project
                 
                 # Create a build directory
