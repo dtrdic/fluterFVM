@@ -57,7 +57,7 @@ workflows:
             #- push
             - tag
           branch_patterns: 
-            - pattern: "main"
+            - pattern: main
               include: true 
               #source: true #test12test test2test33
           tag_patterns:
