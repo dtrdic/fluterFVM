@@ -378,12 +378,20 @@ workflows:
         scripts:
           - name:  install llvm
             script: |
-              git clone https://github.com/llvm/llvm-project.git
-              cd llvm-project
-              mkdir build
-              cd build
-              cmake -DLLVM_ENABLE_PROJECTS=clang -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" ../llvm
-              make
+                # Change directory to the llvm-project folder
+                cd llvm-project
+                
+                # Create a build directory
+                mkdir build
+                
+                # Change directory to the build folder
+                cd build
+                
+                # Generate Visual Studio solution and project files using CMake
+                cmake -DLLVM_ENABLE_PROJECTS=clang -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" ../llvm
+                
+                # Build the solution using MSBuild
+                MSBuild.exe llvm.sln /p:Configuration=Release
           - name: Force upgrade packages
             script: |
               flutter update-packages --force-upgrade
