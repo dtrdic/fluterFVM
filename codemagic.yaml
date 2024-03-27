@@ -379,12 +379,10 @@ workflows:
           - name:  install llvm
             script: |
               # Define the URL for the LLVM installer
-              wget https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.1/LLVM-15.0.1-win64.exe
-
-              $installerPath = "C:\Users\builder\clone\LLVM-15.0.1-win64.exe"
-
-              # Start the installation process
-              Start-Process -FilePath $installerPath -ArgumentList "/S" -Wait -NoNewWindow
+              #wget https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.1/LLVM-15.0.1-win64.exe
+              wget https://aka.ms/vs/17/release/vs_community.exe;
+              $process = Start-Process -FilePath vs_community.exe -ArgumentList "modify", "--productId", "Microsoft.VisualStudio.Product.Community", "--channelId", "VisualStudio.17.Release", " --add", " Microsoft.VisualStudio.Component.VC.Llvm.ClangToolset", "Microsoft.VisualStudio.Component.VC.Llvm.Clang", "--passive", "--wait" -Wait -PassThru;
+              Write-Output $process.ExitCode;
           - name: clung version
             script: |
               clang-cl --version
