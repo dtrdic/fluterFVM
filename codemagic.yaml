@@ -388,7 +388,7 @@ workflows:
               # Write-Output $process.ExitCode
 
               # Download Visual Studio 2022 Community bootstrapper
-              wget https://aka.ms/vs/17/release/vs_community.exe -OutFile vs_community.exe
+              wget https://aka.ms/vs/17/release/vs_community.exe
 
               # Start the installation process with Clung component
               $process = Start-Process -FilePath .\vs_community.exe -ArgumentList "--add Microsoft.VisualStudio.Component.VC.Llvm.ClangToolset --add Microsoft.VisualStudio.Component.VC.Llvm.Clang --wait --quiet" -Wait -PassThru
