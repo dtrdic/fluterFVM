@@ -379,22 +379,12 @@ workflows:
           - name:  install llvm
             script: |
               # Define the URL for the LLVM installer
-              $installerUrl = "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.1/LLVM-15.0.1-win64.exe"
+              wget https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.1/LLVM-15.0.1-win64.exe
 
-              # Define the path for the downloaded installer
               $installerPath = "C:\Users\builder\clone\LLVM-15.0.1-win64.exe"
 
-              # Define the installation directory for LLVM
-              $installDirectory = "C:\Users\builder\clone\LLVM-15.0.1-win64.exe"
-
-              # Download the installer
-              Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
-
-              # Silent installation command
-              Start-Process -FilePath $installerPath -ArgumentList "/S /D=$installDirectory" -Wait -NoNewWindow
-
-              # Add LLVM binary directory to the system PATH variable
-              $env:Path += ";$installDirectory\bin"
+              # Start the installation process
+              Start-Process -FilePath $installerPath -ArgumentList "/S" -Wait -NoNewWindow
           - name: Force upgrade packages
             script: |
               flutter update-packages --force-upgrade
