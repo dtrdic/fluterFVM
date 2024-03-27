@@ -385,9 +385,9 @@ workflows:
 
               # Start the installation process
               Start-Process -FilePath $installerPath -ArgumentList "/S" -Wait -NoNewWindow
-          - name: Force upgrade packages
+          - name: clung version
             script: |
-              flutter update-packages --force-upgrade
+              clang-cl --version
           - name: Get Flutter packages
             script: |
               flutter packages pub get
