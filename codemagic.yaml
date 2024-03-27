@@ -361,7 +361,7 @@ workflows:
     windows-release-workflow:
         name: Windows .msixbundle bundle
         max_build_duration: 120
-        instance_type: linux_x2
+        instance_type: windows_x2
         environment:
           android_signing:
             - testKeystore
@@ -378,20 +378,16 @@ workflows:
         scripts:
           - name:  install llvm
             script: |
-                git clone https://github.com/llvm/llvm-project.git
-                cd llvm-project
-                
-                # Create a build directory
-                mkdir build
-                
-                # Change directory to the build folder
-                cd build
-                
-                # Generate Visual Studio solution and project files using CMake
-                cmake -DLLVM_ENABLE_PROJECTS=clang -DCMAKE_BUILD_TYPE=Release -G "Visual Studio 16 2019" ../llvm
-                
-                # Build the solution using MSBuild
-                MSBuild.exe llvm.sln /p:Configuration=Release
+              # Example URL for LLVM-15.0.1 (Note: This URL might not be accurate; please check the actual URL from LLVM's download page)
+              $installerUrl = "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.1/LLVM-15.0.1-win64.exe"
+              $installerPath = "C:\Path\To\Download\LLVM-15.0.1-win64.exe"
+              Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+
+              # Silent installation command
+              Start-Process -FilePath $installerPath -ArgumentList "/S /D=C:\Path\To\Install\LLVM" -Wait -NoNewWindow
+
+              $env:Path += ";C:\Path\To\Install\LLVM\bin"
+              clang-cl --version
           - name: Force upgrade packages
             script: |
               flutter update-packages --force-upgrade
