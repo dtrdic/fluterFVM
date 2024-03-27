@@ -383,9 +383,23 @@ workflows:
               # $process = Start-Process -FilePath vs_community.exe -ArgumentList "modify", "--productId", "Microsoft.VisualStudio.Product.Community", "--channelId", "VisualStudio.17.Release", " --add", " Microsoft.VisualStudio.Component.VC.Llvm.ClangToolset", "Microsoft.VisualStudio.Component.VC.Llvm.Clang", "--passive", "--wait" -Wait -PassThru
               # Write-Output $process.ExitCode
 
-              wget https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.1/LLVM-15.0.1-win64.exe
-              $process = Start-Process -FilePath LLVM-15.0.1-win64.exe
-              Write-Output $process.ExitCode
+              # wget https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.1/LLVM-15.0.1-win64.exe
+              # $process = Start-Process -FilePath LLVM-15.0.1-win64.exe
+              # Write-Output $process.ExitCode
+
+              # Download Visual Studio 2022 Community bootstrapper
+              wget https://aka.ms/vs/17/release/vs_community.exe -OutFile vs_community.exe
+
+              # Start the installation process with Clung component
+              $process = Start-Process -FilePath .\vs_community.exe -ArgumentList "--add Microsoft.VisualStudio.Component.VC.Llvm.ClangToolset --add Microsoft.VisualStudio.Component.VC.Llvm.Clang --wait --quiet" -Wait -PassThru
+
+              # Check the exit code of the installation process
+              if ($process.ExitCode -eq 0) {
+                  Write-Output "Clung installed successfully."
+              } else {
+                  Write-Output "Clung installation failed with exit code $($process.ExitCode)."
+              }
+
           - name: clung version
             script: |
               clang-cl --version
