@@ -115,8 +115,8 @@ workflows:
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
             track: internal
-            # changes_not_sent_for_review: true
-            # submit_as_draft: false
+            changes_not_sent_for_review: true
+            submit_as_draft: false
           scripts:
             - name: Push git tags
               script: | 
