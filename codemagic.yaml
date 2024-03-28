@@ -105,31 +105,30 @@ workflows:
           - flutter_drive.log
           - debug-info.zip
         publishing:
-          firebase:
-              firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
-              android:
-                app_id: 1:701760780130:android:78886c544e828688f09e3b
+          # firebase:
+          #     firebase_service_account: $FIREBASE_SERVICE_ACCOUNT
+          #     android:
+          #       app_id: 1:701760780130:android:78886c544e828688f09e3b
           email:
             recipients:
               - david@nevercode.io
           google_play:
             credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS3
             track: internal
-            changes_not_sent_for_review: true
-            submit_as_draft: false
+            # changes_not_sent_for_review: true
+            # submit_as_draft: false
           scripts:
             - name: Push git tags
               script: | 
-                #!/usr/bin/env bash
-                set -e # exit on first failed command
-                set -x # print all executed commands to the log
+                # #!/usr/bin/env bash
+                # set -e # exit on first failed command
+                # set -x # print all executed commands to the log
 
                 if [ "$CM_BUILD_STEP_STATUS" = "success" ]
                 then
                   new_version=v9.0.$BUILD_NUMBER
                   git tag $new_version
-                  git push "https://x-access-token:$GITHUB_TOKEN@github.com/dtrdic/fluterFVM.git" $new_version
-                  #git push "https://your-username:$APP_PASSWORD@your-git-service.com/your-repo.git" --tags
+                  git push "https://x-access-token:$GITHUB_TOKEN@github.com/dtrdic/fluterFVM.git" --tags
                 fi
             # - name: Check publishing status
             #   script: | 
