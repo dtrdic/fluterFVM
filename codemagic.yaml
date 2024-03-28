@@ -54,12 +54,12 @@ workflows:
           events:
             #- push
             - tag
-          tag_patterns:
-            - include: true
-              pattern: v+([0-9]).+([0-9]).+([0-9])++([0-999])
           branch_patterns: 
             - pattern: main
               include: true 
+          tag_patterns:
+            - include: true
+              pattern: v+([0-9]).+([0-9]).+([0-9])++([0-999])
               #source: true #test12test test2test334
         # when:
         #   condition: (not event.pull_request.draft) and not (event.pull_request.head.ref == "TestPR")
