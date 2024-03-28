@@ -124,12 +124,10 @@ workflows:
                 # set -e # exit on first failed command
                 # set -x # print all executed commands to the log
 
-                if [ "$CM_BUILD_STEP_STATUS" = "success" ]
-                then
                   new_version=v9.0.$BUILD_NUMBER
                   git tag $new_version
                   git push "https://x-access-token:$GITHUB_TOKEN@github.com/dtrdic/fluterFVM.git" $new_version
-                fi
+       
             # - name: Check publishing status
             #   script: | 
             #     PUBLISHING_STATUS=$(curl -H "Content-Type: application/json" \
