@@ -124,7 +124,7 @@ workflows:
                 # set -e # exit on first failed command
                 # set -x # print all executed commands to the log
 
-                  new_version=v9.0.$BUILD_NUMBER
+                  new_version=v9.0.1+$BUILD_NUMBER
                   git tag $new_version
                   git push "https://x-access-token:$GITHUB_TOKEN@github.com/dtrdic/fluterFVM.git" $new_version
        
