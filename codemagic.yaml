@@ -36,10 +36,8 @@ workflows:
     android-workflow:
         name: Android Workflow(maintag)
         max_build_duration: 120
-        instance_type: linux_x2
+        instance_type: mac_mini_m2
         environment:
-          node: 20.11.1
-          npm: 10.2.4
           #java: 17
           android_signing: 
             - testKeystore
@@ -120,18 +118,31 @@ workflows:
             changes_not_sent_for_review: true
             submit_as_draft: false
           scripts:
-            - name: Check publishing status
+            - name: Push git tags
               script: | 
-                PUBLISHING_STATUS=$(curl -H "Content-Type: application/json" \
-                    -H "x-auth-token: $GITHUB_TOKEN" \
-                    --request GET https://api.codemagic.io/builds/$CM_BUILD_ID | jq '.build.buildActions[] | select (.type == "publishing") | .status')
-                echo "PUBLISHING_STATUS is: $PUBLISHING_STATUS"
+                #!/usr/bin/env bash
+                set -e # exit on first failed command
+                set -x # print all executed commands to the log
 
-                if [ "$PUBLISHING_STATUS" == "success" ] ; then
-                  echo "do what you want on success"
-                else
-                  echo "do what you want on failure"
+                if [ "$CM_BUILD_STEP_STATUS" = "success" ]
+                then
+                  new_version=v9.0.$BUILD_NUMBER
+                  git tag $new_version
+                  git push "https://x-access-token:$GITHUB_TOKEN@github.com/dtrdic/fluterFVM.git" $new_version
+                  #git push "https://your-username:$APP_PASSWORD@your-git-service.com/your-repo.git" --tags
                 fi
+            # - name: Check publishing status
+            #   script: | 
+            #     PUBLISHING_STATUS=$(curl -H "Content-Type: application/json" \
+            #         -H "x-auth-token: $GITHUB_TOKEN" \
+            #         --request GET https://api.codemagic.io/builds/$CM_BUILD_ID | jq '.build.buildActions[] | select (.type == "publishing") | .status')
+            #     echo "PUBLISHING_STATUS is: $PUBLISHING_STATUS"
+
+            #     if [ "$PUBLISHING_STATUS" == "success" ] ; then
+            #       echo "do what you want on success"
+            #     else
+            #       echo "do what you want on failure"
+            #     fi
 
 
     ios-workflow:
