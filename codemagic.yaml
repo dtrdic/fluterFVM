@@ -128,7 +128,7 @@ workflows:
                 then
                   new_version=v9.0.$BUILD_NUMBER
                   git tag $new_version
-                  git push "https://x-access-token:$GITHUB_TOKEN@github.com/dtrdic/fluterFVM.git" --tags
+                  git push "https://x-access-token:$GITHUB_TOKEN@github.com/dtrdic/fluterFVM.git" $new_version
                 fi
             # - name: Check publishing status
             #   script: | 
